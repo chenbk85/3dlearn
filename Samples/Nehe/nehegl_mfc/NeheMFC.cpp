@@ -72,11 +72,11 @@ BOOL CNeheMFCApp::InitInstance()
 	//  of your final executable, you should remove from the following
 	//  the specific initialization routines you do not need.
 
-#ifdef _AFXDLL
-	Enable3dControls();			// Call this when using MFC in a shared DLL
-#else
-	Enable3dControlsStatic();	// Call this when linking to MFC statically
-#endif
+//#ifdef _AFXDLL
+//	Enable3dControls();			// Call this when using MFC in a shared DLL
+//#else
+//	Enable3dControlsStatic();	// Call this when linking to MFC statically
+//#endif
 	
 	
 		
@@ -117,7 +117,7 @@ BOOL CNeheMFCApp::InitInstance()
 			m_isVisible = TRUE;
 
 			// At This Point We Should Have A Window That Is Setup To Render OpenGL
-			if (m_appMain.Initialize() == FALSE)					// Call User Intialization
+			if (m_render.Initialize() == FALSE)					// Call User Intialization
 			{
 				// Failure
 				TerminateApplication ();							// Close Window, This Will Handle The Shutdown
@@ -150,9 +150,9 @@ BOOL CNeheMFCApp::InitInstance()
 						{
 							// Process Application Loop
 							tickCount = GetTickCount ();				// Get The Tick Count
-							m_appMain.Update (tickCount - m_lastTickCount);	// Update The Counter
+							m_render.Update (tickCount - m_lastTickCount);	// Update The Counter
 							m_lastTickCount = tickCount;			// Set Last Count To Current Count
-							m_appMain.Draw ();									// Draw Our Scene
+							m_render.Draw ();									// Draw Our Scene
 
 							SwapBuffers (m_pDC->m_hDC);					// Swap Buffers (Double Buffering)
 						}
@@ -161,7 +161,7 @@ BOOL CNeheMFCApp::InitInstance()
 			}															// If (Initialize (...
 
 			// Application Is Finished
-			m_appMain.Deinitialize ();											// User Defined DeInitialization
+			m_render.Deinitialize ();											// User Defined DeInitialization
 
 			DestroyOpenGLWindow ();									// Destroy The Active Window
 		}

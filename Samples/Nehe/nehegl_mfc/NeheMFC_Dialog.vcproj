@@ -274,26 +274,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="NeheMFC.rc"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCResourceCompilerTool"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCResourceCompilerTool"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="nehewindow.cpp"
 				>
 				<FileConfiguration
@@ -312,6 +292,10 @@
 						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\Render.cpp"
+				>
 			</File>
 			<File
 				RelativePath="StdAfx.cpp"
@@ -357,6 +341,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Render.h"
+				>
+			</File>
+			<File
 				RelativePath="Resource.h"
 				>
 			</File>
@@ -372,6 +360,26 @@
 			<File
 				RelativePath="res\NeheMFC.ico"
 				>
+			</File>
+			<File
+				RelativePath="NeheMFC.rc"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCResourceCompilerTool"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCResourceCompilerTool"
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="res\NeheMFC.rc2"

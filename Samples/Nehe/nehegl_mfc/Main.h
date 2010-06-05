@@ -26,6 +26,8 @@ public:
 	CMain();
 	virtual ~CMain();
 
+	void DrawAxis();
+
 };
 
 #endif // !defined(AFX_MAIN_H__05A74DD2_C37A_4085_A563_7ED88F625CB7__INCLUDED_)
