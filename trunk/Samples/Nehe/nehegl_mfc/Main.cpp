@@ -64,6 +64,10 @@ BOOL CMain::Initialize()
 	glShadeModel (GL_SMOOTH);									// Select Smooth Shading
 	glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);			// Set Perspective Calculations To Most Accurate
 
+
+	//// 设置视口的大小
+	//gluPerspective(45.0f,(GLfloat)width/(GLfloat)height,0.1f,100.0f);
+
 	return TRUE;
 }
 
@@ -105,27 +109,47 @@ void CMain::Update(DWORD milliseconds)
 void CMain::Draw()
 {
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);		// Clear Screen And Depth Buffer
-	glLoadIdentity ();											// Reset The Modelview Matrix
+	glLoadIdentity ();	
+
+	gluLookAt(5.0f, 5.0f , 5.0f , 0.0f ,0.0f ,0.0f ,0.0f ,0.0f , 1.0f );
+	// Translate 6 Units Into The Screen
 	
-	glTranslatef (0.0f, 0.0f, -6.0f);							// Translate 6 Units Into The Screen
+	//glTranslatef (0.0f, 0.0f, -6.0f);
+
+	DrawAxis();
 	glRotatef (angle, 0.0f, 1.0f, 0.0f);						// Rotate On The Y-Axis By angle
 
-	for (rot1=0; rot1<2; rot1++)								// 2 Passes
-	{
-		glRotatef(90.0f,0.0f,1.0f,0.0f);						// Rotate 90 Degrees On The Y-Axis
-		glRotatef(180.0f,1.0f,0.0f,0.0f);						// Rotate 180 Degress On The X-Axis
-		for (rot2=0; rot2<2; rot2++)							// 2 Passes
-		{
-			glRotatef(180.0f,0.0f,1.0f,0.0f);					// Rotate 180 Degrees On The Y-Axis
-			glBegin (GL_TRIANGLES);								// Begin Drawing Triangles
-				glColor3f (1.f, 0.f, 0.f);	glVertex3f( 0.0f, 1.0f, 0.0f);
-				glColor3f (0.f, 1.f, 0.f);	glVertex3f(-1.0f,-1.0f, 1.0f);
-				glColor3f (0.f, 0.f, 1.f);	glVertex3f( 1.0f,-1.0f, 1.0f);
-			glEnd ();											// Done Drawing Triangles
-		}
-	}
+
+	glColor3f(1.0f , 1.0f,0.0f);
+
+	glBegin(GL_LINE_LOOP);							//  绘制正方形
+	glVertex3f(-1.0f, 1.0f, 0.0f);					// 左上
+	glVertex3f( 1.0f, 1.0f, 0.0f);					// 右上
+	glVertex3f( 1.0f,-1.0f, 0.0f);					// 左下
+	glVertex3f(-1.0f,-1.0f, 0.0f);					// 右下
+	glEnd();		
 
 	glFlush ();													// Flush The GL Rendering Pipeline
 }
 
 
+void CMain::DrawAxis()
+{
+	CONST float axsisLen = 4.0f;
+	glBegin(GL_LINES);	
+	glColor3f(1.0f , 0.0f,0.0f);
+	glVertex3f(-0, 0.0f, 0.0f);		
+	glVertex3f( axsisLen, 0.0f, 0.0f);	
+
+	glColor3f(0.0f , 1.0f,0.0f);
+	glVertex3f( 0.0f,-0, 0.0f);		
+	glVertex3f(0.0f,axsisLen, 0.0f);		
+
+	glColor3f(0.0f , 0.0f,1.0f);
+	glVertex3f( 0.0f,-0.0f, -0 );		
+	glVertex3f(0.0f,-0.0f, axsisLen );		
+
+	glEnd();		
+
+
+}

@@ -21,6 +21,8 @@
 #include "NeheWindow.h"
 #include "Main.h"
 
+#include "Render.h"
+
 class CNeheMFCApp : public CWinApp
 {
 public:
@@ -35,7 +37,7 @@ public:
 
 
 	CNeheWindow	m_wndMain;
-	CMain		m_appMain;
+	Render		m_render;
 	BOOL		m_isProgramLooping;
 	BOOL		m_createFullScreen;
 
