@@ -17,3 +17,6 @@
 
 == SVN路径 ==
 svn/trunk/Samples/3DIICHAP15
+
+== 开发环境 ==
+Windows+VS2005+DircetX9
