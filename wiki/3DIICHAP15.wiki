@@ -1,5 +1,5 @@
 =3DIICHAP15-纯软编码渲染引擎=
-100%出自《3D游戏大师设计》
+100%出自《3D游戏大师设计》第十五章。
 
 == 简介 ==
 
@@ -19,4 +19,4 @@
 svn/trunk/Samples/3DIICHAP15
 
 == 开发环境 ==
-Windows+VS2005+DircetX9
+Windows+VS2005+DircetX9.
