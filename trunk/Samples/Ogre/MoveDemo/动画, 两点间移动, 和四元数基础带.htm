@@ -1,0 +1,347 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-cn" lang="zh-cn" dir="ltr">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>文档:教程:中级教程:中级教程一 - Ogre3D开放资源地带</title>
+
+
+	</head>
+<body class="mediawiki ltr ns-0 ns-subject page-文档_教程_中级教程_中级教程一 skin-monobook">
+<div id="column-content">
+  <div id="content"> <a name="top" id="top"></a>
+    <h1 id="firstHeading" class="firstHeading">文档:教程:中级教程:中级教程一</h1>
+    <div id="bodyContent">
+      <h3 id="siteSub">出自Ogre3D开放资源地带</h3>
+      <div id="contentSub"></div>
+      <div id="jump-to-nav">跳转到: <a href="#column-one">导航</a>, <a href="#searchInput">搜索</a></div>
+      <!-- start content -->
+      <p><b>中级教程一</b> </p>
+      <p><b>来自 Ogre wiki</b> </p>
+      <p><i>动画, 两点间移动, 和四元数基础</i> </p>
+      <p>作者： <a href="http://gamingdementia.blogspot.com/|Clay" class="external text" target="_blank" title="http://gamingdementia.blogspot.com/|Clay" rel="nofollow">Culver</a>. </p>
+      <p>内容 </p>
+      <table id="toc" class="toc" summary="目录">
+        <tr>
+          <td><div id="toctitle">
+            <h2>目录</h2>
+          </div>
+            <ul>
+              <li class="toclevel-1"><a href="#.E4.BB.8B.E7.BB.8D"><span class="tocnumber">1</span> <span class="toctext">介绍</span></a></li>
+              <li class="toclevel-1"><a href="#.E5.89.8D.E6.9C.9F.E5.87.86.E5.A4.87"><span class="tocnumber">2</span> <span class="toctext">前期准备</span></a></li>
+              <li class="toclevel-1"><a href="#.E5.87.86.E5.A4.87.E5.BC.80.E5.A7.8B"><span class="tocnumber">3</span> <span class="toctext">准备开始</span></a></li>
+              <li class="toclevel-1"><a href="#.E8.AE.BE.E7.BD.AE.E5.9C.BA.E6.99.AF"><span class="tocnumber">4</span> <span class="toctext">设置场景</span></a></li>
+              <li class="toclevel-1"><a href="#.E5.8A.A8.E7.94.BB"><span class="tocnumber">5</span> <span class="toctext">动画</span></a></li>
+              <li class="toclevel-1"><a href="#.E7.A7.BB.E5.8A.A8.E8.A7.92.E8.89.B2"><span class="tocnumber">6</span> <span class="toctext">移动角色</span></a></li>
+              <li class="toclevel-1"><a href="#.E5.B7.A9.E5.9B.BA.E7.BB.83.E4.B9.A0"><span class="tocnumber">7</span> <span class="toctext">巩固练习</span></a>
+                <ul>
+                  <li class="toclevel-2"><a href="#.E7.AE.80.E5.8D.95.E9.97.AE.E9.A2.98"><span class="tocnumber">7.1</span> <span class="toctext">简单问题</span></a></li>
+                  <li class="toclevel-2"><a href="#.E4.B8.AD.E7.BA.A7.E9.97.AE.E9.A2.98"><span class="tocnumber">7.2</span> <span class="toctext">中级问题</span></a></li>
+                  <li class="toclevel-2"><a href="#.E5.9B.B0.E9.9A.BE.E9.97.AE.E9.A2.98"><span class="tocnumber">7.3</span> <span class="toctext">困难问题</span></a></li>
+                  <li class="toclevel-2"><a href="#.E4.B8.93.E5.AE.B6.E9.97.AE.E9.A2.98"><span class="tocnumber">7.4</span> <span class="toctext">专家问题</span></a></li>
+                </ul>
+              </li>
+            </ul></td>
+        </tr>
+      </table>
+      <script type="text/javascript"> if (window.showTocToggle) { var tocShowText = "显示"; var tocHideText = "隐藏"; showTocToggle(); } </script>
+      <a name=".E4.BB.8B.E7.BB.8D" id=".E4.BB.8B.E7.BB.8D"></a>
+      <h2> <span class="mw-headline"> <b>介绍</b></span></h2>
+      <p>这个教程里包括怎么样得到一个模型，并添加模型动画，最后让模型可以在两个预先定义的点之间走动。在此将讲述如何用基本的四元数方法保持模型移动的时候正面一直朝着我们指定的方向。你必须一点点的将代码加入到你的项目中，并在每次加入新代码后编译并察看demo运行的结果。 </p>
+      <p>本课的最终代码在<a href="http://www.ogre3d.org/wiki/index.php/IntermediateTutorial1Source" class="external text" target="_blank" title="http://www.ogre3d.org/wiki/index.php/IntermediateTutorial1Source" rel="nofollow">这里</a>。 </p>
+      <a name=".E5.89.8D.E6.9C.9F.E5.87.86.E5.A4.87" id=".E5.89.8D.E6.9C.9F.E5.87.86.E5.A4.87"></a>
+      <h2> <span class="mw-headline"><b>前期准备</b></span></h2>
+      <p>首先，这个指南假设你已经知道如何设置Ogre的项目环境以及如何正确编译项目。该例子同样使用STL 中的queue数据结构。那么预先了解如何使用queue是必要的，至少你需要知道什么是模版。如果你不熟悉STL，那么我像你推荐<a href="http://www.stlchina.org/" class="external text" target="_blank" title="http://www.stlchina.org/" rel="nofollow">STL</a>参考[<a href="/wiki/index.php?title=Special:%E7%BD%91%E7%BB%9C%E4%B9%A6%E6%BA%90/0596005563" class="internal">ISBN 0596005563</a>]，它可以帮助你在将来花费更少的时间。 </p>
+      <a name=".E5.87.86.E5.A4.87.E5.BC.80.E5.A7.8B" id=".E5.87.86.E5.A4.87.E5.BC.80.E5.A7.8B"></a>
+      <h2> <span class="mw-headline"> <b>准备开始</b></span></h2>
+      <p>首先，你需要为这个Demo创建一个新项目，在项目中添加一个名为&quot;MoveDemo.cpp&quot;的文件并加入如下代码： </p>
+      <pre>#include &quot;ExampleApplication.h&quot;
+
+#include &lt;deque&gt;
+using namespace std;
+
+class MoveDemoListener&nbsp;: public ExampleFrameListener
+{
+public:
+
+    MoveDemoListener(RenderWindow* win, Camera* cam, SceneNode *sn,
+        Entity *ent, std::deque&lt;Vector3&gt; &amp;walk)
+       &nbsp;: ExampleFrameListener(win, cam, false, false), mNode(sn), mEntity(ent), mWalkList( walk )
+    {
+    } // MoveDemoListener
+
+    /* This function is called to start the object moving to the next position
+       in mWalkList.
+    */
+    bool nextLocation( )
+    {
+        return true;
+    } // nextLocation( )
+
+    bool frameStarted(const FrameEvent &amp;evt)
+    {
+        return ExampleFrameListener::frameStarted(evt);
+    }
+protected:
+    Real mDistance;                  // The distance the object has left to travel
+    Vector3 mDirection;              // The direction the object is moving
+    Vector3 mDestination;            // The destination the object is moving towards
+
+    AnimationState *mAnimationState; // The current animation state of the object
+
+    Entity *mEntity;                 // The Entity we are animating
+    SceneNode *mNode;                // The SceneNode that the Entity is attached to
+    std::deque&lt;Vector3&gt; mWalkList;   // The list of points we are walking to
+
+    Real mWalkSpeed;                 // The speed at which the object is moving
+};
+
+
+class MoveDemoApplication&nbsp;: public ExampleApplication
+{
+protected:
+public:
+    MoveDemoApplication()
+    {
+    }
+
+    ~MoveDemoApplication() 
+    {
+    }
+protected:
+    Entity *mEntity;                // The entity of the object we are animating
+    SceneNode *mNode;               // The SceneNode of the object we are moving
+    std::deque&lt;Vector3&gt; mWalkList;  // A deque containing the waypoints
+
+    void createScene(void)
+    {
+    }
+
+    void createFrameListener(void)
+    {
+        mFrameListener= new MoveDemoListener(mWindow, mCamera, mNode, mEntity, mWalkList);
+        mFrameListener-&gt;showDebugOverlay(true);
+        mRoot-&gt;addFrameListener(mFrameListener);
+    }
+
+};
+
+
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+#define WIN32_LEAN_AND_MEAN
+#include &quot;windows.h&quot;
+
+
+INT WINAPI WinMain( HINSTANCE hInst, HINSTANCE, LPSTR strCmdLine, INT )
+#else
+int main(int argc, char **argv)
+#endif
+{
+    // Create application object
+    MoveDemoApplication app;
+
+    try {
+        app.go();
+    } catch( Exception&amp; e ) {
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+        MessageBox( NULL, e.getFullDescription().c_str(), &quot;An exception has occured!&quot;,
+            MB_OK | MB_ICONERROR | MB_TASKMODAL);
+#else
+        fprintf(stderr, &quot;An exception has occured:&nbsp;%s\n&quot;,
+                e.getFullDescription().c_str());
+#endif
+    }
+
+
+    return 0;
+}
+  </pre>
+      <p>在我们继续讲解之前，你可以编译这部分代码看下效果。 </p>
+      <a name=".E8.AE.BE.E7.BD.AE.E5.9C.BA.E6.99.AF" id=".E8.AE.BE.E7.BD.AE.E5.9C.BA.E6.99.AF"></a>
+      <h2> <span class="mw-headline"><b>设置场景</b></span></h2>
+      <p>在我们开始之前，需要注意的是已经在MoveDemoApplication中预先定义的三个变量。我们创建的entity实例保存在变量mEntity中，我们创建的node实例保存在mNode中，另外mWalkList包含了所有我们希望对象行走到的节点。 </p>
+      <p>定位到MoveDemoApplication::createScene函数并且加入以下代码。首先，我们来设置环境光(ambient light)到最大，这样可以让我们看到我们放在场景中的所有对象。 </p>
+      <pre>       // Set the default lighting.
+       mSceneMgr-&gt;setAmbientLight( ColourValue( 1.0f, 1.0f, 1.0f ) );
+  </pre>
+      <p>接下来我们来在屏幕上创建一个可以使用的机器人。要做到这点我们需要在创建SceneNode之前先为机器人创建一个entity使得我们可以对其进行旋转。 </p>
+      <pre>       // Create the entity
+       mEntity = mSceneMgr-&gt;createEntity( &quot;Robot&quot;, &quot;robot.mesh&quot; );
+
+       // Create the scene node
+       mNode = mSceneMgr-&gt;getRootSceneNode( )-&gt;
+           createChildSceneNode( &quot;RobotNode&quot;, Vector3( 0.0f, 0.0f, 25.0f ) );
+       mNode-&gt;attachObject( mEntity );
+  </pre>
+      <p>以上这些都是非常基础的，所以我认为不需要再对以上的描述做任何解释。在接下来的代码片断，我们将开始告诉机器人那些地方是它需要到达的。这里需要你们了解一些STL的知识，deque对象是一个高效的双端对列。我们只需要使用它的几个简单的方法。push_front和push_back方法分别将对象放入队列的前端和后端，front和back方法分别返回当前队列前端和后端的元素（PS：注意，这里最好有判空的习惯，用if( empty() ) )pop_front和pop_back两个方法分别从队列两端移除对象。最后，empty方法返回该队列是否为空。下面这些代码添加了两个Vector到队列中，在后面我们移动robot的时候会用到它们。 </p>
+      <pre>       // Create the walking list
+       mWalkList.push_back( Vector3( 550.0f,  0.0f,  50.0f  ) );
+       mWalkList.push_back( Vector3(-100.0f,  0.0f, -200.0f ) );
+  </pre>
+      <p>接下来，我们在场景里放置一些物体，以标记这个机器人应该朝哪走去。这样使我们能看见机器人在场景里相对于其它物体进行移动。注意它们的位置的负Y部分，这些物体被放在机器人移动目的地的正下方，当它到达指定地点时，它就站在这些物体上面。 </p>
+      <pre>       // Create objects so we can see movement
+       Entity *ent;
+       SceneNode *node;
+
+       ent = mSceneMgr-&gt;createEntity( &quot;Knot1&quot;, &quot;knot.mesh&quot; );
+       node = mSceneMgr-&gt;getRootSceneNode( )-&gt;createChildSceneNode( &quot;Knot1Node&quot;,
+           Vector3(  0.0f, -10.0f,  25.0f ) );
+       node-&gt;attachObject( ent );
+       node-&gt;setScale( 0.1f, 0.1f, 0.1f );
+
+       ent = mSceneMgr-&gt;createEntity( &quot;Knot2&quot;, &quot;knot.mesh&quot; );
+       node = mSceneMgr-&gt;getRootSceneNode( )-&gt;createChildSceneNode( &quot;Knot2Node&quot;,
+           Vector3( 550.0f, -10.0f,  50.0f ) );
+       node-&gt;attachObject( ent );
+       node-&gt;setScale( 0.1f, 0.1f, 0.1f );
+
+       ent = mSceneMgr-&gt;createEntity( &quot;Knot3&quot;, &quot;knot.mesh&quot; );
+       node = mSceneMgr-&gt;getRootSceneNode( )-&gt;createChildSceneNode( &quot;Knot3Node&quot;,
+           Vector3(-100.0f, -10.0f,-200.0f ) );
+       node-&gt;attachObject( ent );
+       node-&gt;setScale( 0.1f, 0.1f, 0.1f );
+  </pre>
+      <p>最后，我们要创建一个摄像机从适合的角度来观察它。我们来把摄像机移动到更多的位置。 </p>
+      <pre>       // Set the camera to look at our handywork
+       mCamera-&gt;setPosition( 90.0f, 280.0f, 535.0f );
+       mCamera-&gt;pitch( Degree(-30.0f) );
+       mCamera-&gt;yaw( Degree(-15.0f) );
+  </pre>
+      <p>现在编译并运行代码。你应该能看到这个样子：
+        [<a href="http://www.idleengineer.net/images/tutorial_01.png" class="external autonumber" target="_blank" title="http://www.idleengineer.net/images/tutorial_01.png" rel="nofollow">[1]</a>] </p>
+      <p>在进入下一个部分之前，注意一下MoveDemoListener的构造器，它在MoveDemoApplication::createFrameListener方法里的第一行被调用。除了传入BaseFrameListener的标准参数，还有场景节点、实体、双端队列。 </p>
+      <a name=".E5.8A.A8.E7.94.BB" id=".E5.8A.A8.E7.94.BB"></a>
+      <h2> <span class="mw-headline"><b>动画</b></span></h2>
+      <p>现在我们来设置一些基本的动画。在Ogre里动画是非常简单的。要做的话，你需要从实体对象里获取AnimationState，设置它的选项，并激活它。这样就能使动画活动起来，但你还必须在每一帧后给它添加时间，才能让动画动起来。我们设置成每次移动一步。首先，找到MoveDemoListener的构造函数，并添加以下代码： </p>
+      <pre>      // Set idle animation
+      mAnimationState = ent-&gt;getAnimationState(&quot;Idle&quot;);
+      mAnimationState-&gt;setLoop(true);
+      mAnimationState-&gt;setEnabled(true);
+  </pre>
+      <p>第二行从实体中获取到了AnimationState。第三行我们调用setLoop( true )，让动画不停地循环。而在一些动画里(比如死亡动画)，我们可能要把这个设置为false。第四行才把这个动画真正激活。但等等...我们从哪里获取的“Idle”？这个魔术般的常量是怎么飞到这里来的？每个mesh都有它们自己定义的动画集。为了能够查看某个mesh的全部动画，你需要下载OgreMeshViewer才能看到。 </p>
+      <p>现在，如果我们编译并运行这个demo，我们看见了...nothing! 这是因为我们还需要在每一帧里根据时间来更新这个动画的状态。找到MoveDemoListener::frameStarted方法，在方法的开头添加这一行： </p>
+      <pre>       mAnimationState-&gt;addTime(evt.timeSinceLastFrame);
+  </pre>
+      <p>现在来编译并运行程序。你应该可以看了一个机器人正在原地踏步了。 </p>
+      <a name=".E7.A7.BB.E5.8A.A8.E8.A7.92.E8.89.B2" id=".E7.A7.BB.E5.8A.A8.E8.A7.92.E8.89.B2"></a>
+      <h2> <span class="mw-headline"> <b>移动角色</b></span></h2>
+      <p>现在我们执行棘手的任务，开始让这个机器人从一点走到另一点。在我们开始之前，我想介绍一下保存在MoveDemoListener类里的成员变量。我们将使用4个变量来完成移动机器人的任务。首先，我们把机器人移动的方向保存到mDirection里面。我们再把当前机器人前往的目的地保存在mDestination里。然后在mDistance保存机器人离目的地的距离。最后，在mWalkSpeed里我们保存机器人的移动速度。 </p>
+      <p>首先清空MoveDemoListener构造器，我们会用稍微不同的代码来替换。我们要做的第一件事是设置这个类的变量。我们将把行走速度设为每秒35个单位。有一个大问题要注意，我们故意把mDirection设成零向量，因为后面我们会用它来判断机器人是否正在行走。 </p>
+      <pre>       // Set default values for variables
+       mWalkSpeed = 35.0f;
+       mDirection = Vector3::ZERO;
+  </pre>
+      <p>好了，搞定了。我们要让机器人动起来。为了让机器人移动，我们只须告诉它改变动画。然而，我们只想要若存在另一个要移动到的地点，就让机器人开始移动。为了这个目的，我们调用nextLocation 函数。把代码加到MoveDemoListener::frameStarted方法的顶部，在调用AnimationState::addTime之前： </p>
+      <pre>      if (mDirection == Vector3::ZERO) 
+      {
+          if (nextLocation()) 
+          {
+              // Set walking animation
+              mAnimationState = mEntity-&gt;getAnimationState(&quot;Walk&quot;);
+              mAnimationState-&gt;setLoop(true);
+              mAnimationState-&gt;setEnabled(true);
+          }
+      }
+  </pre>
+      <p>如果你现在编译并运行，这个机器人将原地行走。这是由于机器人是以ZERO方向出发的，而我们的MoveDemoListener::nextLocation函数总是返回true。在后面的步骤中，我们将给MoveDemoListener::nextLocation函数添加更多的一点智能。 </p>
+      <p>现在，我们准备要真正在场景里移动机器人了。为了这样做，我们需要在每一帧里让我移动一点点。找到MoveDemoListener::frameStarted方法，我们将在调用AnimationState::addTime之前，我们先前的if语句之后，添加以下代码。这段代码将处理当机器人实际移动的情况;mDirection&nbsp;!= Vector3::ZERO。 </p>
+      <pre>       else
+       {
+           Real move = mWalkSpeed * evt.timeSinceLastFrame;
+           mDistance -= move;
+  </pre>
+      <p>现在，我们要检测一下我们是否“走过”了目标地点。即，如果现在mDistance小于0，我们需要“跳”到这点上，并设置移动到下一个地点。注意，我们把mDirection设置成零向量。如果nextLocation方法不改变mDirection(即没有其它地方可去)，我们就不再四处移动了。 </p>
+      <pre>           if (mDistance &lt;= 0.0f)
+           {
+               mNode-&gt;setPosition(mDestination);
+               mDirection = Vector3::ZERO;
+  </pre>
+      <p>现在我们移动到了这个点，我们需要设置运动到下一个点。只要我们知道有否需要移动到下一个地点，我们就能设置正确的动画；如果有其它地点要去，就行走。如果没有其它目的地，则停滞。 </p>
+      <pre>              // Set animation based on if the robot has another point to walk to. 
+              if (! nextLocation())
+              {
+                  // Set Idle animation                     
+                  mAnimationState = mEntity-&gt;getAnimationState(&quot;Idle&quot;);
+                  mAnimationState-&gt;setLoop(true);
+                  mAnimationState-&gt;setEnabled(true);
+              } 
+              else
+              {
+                  // Rotation Code will go here later
+              }
+          }
+  </pre>
+      <p>注意，如果queue里已经没有更多的地点要走的话，我们没有必要再次设置行走动画。既然机器人已经在行走了，没有必要再告诉他这么做。然而，如果机器人还要走向另一个地点，我们就要把它旋转以面对那个地点。现在，我们在else括号旁边留下注释占位符;记住这个地点，因为我们后面还要回来。 </p>
+      <p>这里考虑的是当我们离目标地点很近的时候。现在我们需要处理一般情况，当我们正在到达而没有到达的时候。为此，我们在机器人的行走方向上对它进行平移，用move变量指定的值。通过添加以下代码来实现： </p>
+      <pre>           else
+           {
+               mNode-&gt;translate(mDirection * move);
+           } // else
+       } // if
+  </pre>
+      <p>我们差不多做完了，除了还要设置运动需要的变量。如果我们正确地设置了运动变量，我们的机器人就会朝它该去的方向行走。看看MoveDemoListener::nextLocation方法，如果我们用完了所有的地点，它返回false。这是函数的第一行。(注意你要保留函数底部的return true语句) </p>
+      <pre>       if (mWalkList.empty())
+           return false;
+  </pre>
+      <p>现在我们来设置变量。首先我们从双端队列里取出一个向量。通过目标向量减去场景节点的当前向量，我们得取方向向量。然而我们仍有一个问题，还记得我们要在frameStarted方法里用mDirection乘以移动量吗？如果我们这么做，我们必须把方向向量转换成单位向量(即，它的长度等于一)。normalise函数为我们做了这些事，并返回向量的原始长度。唾手可得，我们需要设置到目的地的距离。 </p>
+      <pre>      mDestination = mWalkList.front();  // this gets the front of the deque
+      mWalkList.pop_front();             // this removes the front of the deque
+  </pre>
+      <pre>      mDirection = mDestination - mNode-&gt;getPosition();
+      mDistance = mDirection.normalise();
+  </pre>
+      <p>编译并运行代码。搞定! 现在机器人行走到每一个地点，但它总是面朝着Vector3::UNIT_X方向(它的默认)。我们需要当它向地点移动时，改变它的朝向。 </p>
+      <p>我们需要做的是获得机器人脸的方向，然后用旋转函数将它旋转到正确的位置。在我们上一次留下注释占位符的地方，插入如下代码。第一行获得了机器人脸的朝向。第二行建立了一个四元组，它表示从当前方向到目标方向的旋转。第三行才是真正旋转了这个机器人。 </p>
+      <pre>       Vector3 src = mNode-&gt;getOrientation() * Vector3::UNIT_X;
+       Ogre::Quaternion quat = src.getRotationTo(mDirection);
+       mNode-&gt;rotate(quat);
+  </pre>
+      <p>我们在基础教程4里已经对四元组进行过简单的介绍，但在这里才是我们对它的第一次使用。基本上说，四元组就是在三维空间里对旋转的表示。它们被用来跟踪物体是如何在空间里放置的，也可能被用来在Ogre里对物体进行旋转。我们在第一行里调用getOrientation方法，返回了一个表示机器人在空间里面向方向的四元组。因为Ogre不知道机器人的哪一面才是它的正面，所以我们必须用UNIT_X方向乘以这个朝向，以取得机器人当前的朝向。我们把这个方向保存在src变量里。在第二行，getRotationTo方法返回给我们一个四元组，它表示机器人从目前的朝向到我们想让它朝向方向的旋转。第三行，我们旋转节点，以让它面向一个新的方向。 </p>
+      <p>我们创建的代码只剩下一个问题了。这里有一种特殊情况将会使SceneNode::rotate失败。如果我们正试图让机器人旋转180度，旋转代码会因为除以0的错误而崩掉。为了解决这个问题，我们需要测试我们是否执行180度的旋转。如果是，我们只要用yaw来将机器人旋转180度，而不是用rotate。为此，删除我们刚才放入的代码，并用这些代替： </p>
+      <pre>      Vector3 src = mNode-&gt;getOrientation() * Vector3::UNIT_X;
+      if ((1.0f + src.dotProduct(mDirection)) &lt; 0.0001f) 
+      {
+          mNode-&gt;yaw(Degree(180));
+      }
+      else
+      {
+          Ogre::Quaternion quat = src.getRotationTo(mDirection);
+          mNode-&gt;rotate(quat);
+      } // else
+  </pre>
+      <p>这些代码的意思应该是比较清楚的，除了包在if语句里的内容。如果两个向量是互相反向的(即，它们之间的角度是180度)，它们的点乘就将是-1。所以，如果我们把两个向量点乘而且结果等于-1.0f，则我们用yaw旋转180度，否则我们用rotate代替。为什么我加上1.0f，并检查它是否小于0.0001f? 不要忘了浮点舍入错误。你应该从来不直接比较两个浮点数的大小。最后，需要注意的是，这两个向量的点乘永远是落在[-1,1]这个区域之间的。如果还不太清楚的话，你应该先去学一学最基本的线性代数再来做图像编程! 至少你应该复习一下四元组与旋转基础，查阅关于一本关于基础的向量及矩阵运算的书籍。 </p>
+      <p>好了，我们的代码完成了! 编译并运行这个Demo，你会看见一个机器人朝着指定的地点走动。 </p>
+      <a name=".E5.B7.A9.E5.9B.BA.E7.BB.83.E4.B9.A0" id=".E5.B7.A9.E5.9B.BA.E7.BB.83.E4.B9.A0"></a>
+      <h2> <span class="mw-headline"><b>巩固练习</b></span></h2>
+      <a name=".E7.AE.80.E5.8D.95.E9.97.AE.E9.A2.98" id=".E7.AE.80.E5.8D.95.E9.97.AE.E9.A2.98"></a>
+      <h3> <span class="mw-headline"><b>简单问题</b></span></h3>
+      <p>1. 添加更多的点到路径中。同时在他点的位置放上Knonts来观察他想去哪里。 </p>
+      <p>2. 机器人走完他的有效路程后就应该不存在了！当机器人完成行走，他就应该用执行死亡动画来代替待机动画。死亡的动画叫“Die”。 </p>
+      <a name=".E4.B8.AD.E7.BA.A7.E9.97.AE.E9.A2.98" id=".E4.B8.AD.E7.BA.A7.E9.97.AE.E9.A2.98"></a>
+      <h3> <span class="mw-headline"><b>中级问题</b></span></h3>
+      <p>1. 看完教程后，你注意到了mWalkSpeed有点问题吗？我们只是一次性设置了一个值，然后就再也没变过。就好像是一个类的不变的静态变量。试着改变一下这个变量。（提示：可以定义键盘的+和-分别表示加速和减速） </p>
+      <p>2. 代码中有些地方非常取巧，例如跟踪机器人是否正在走，用了mDirection向量跟Vector3::ZERO比较。如果我们换用一个bool型变量mWalking来跟踪机器人是否在移动也许会更好。实现这个改变。 </p>
+      <a name=".E5.9B.B0.E9.9A.BE.E9.97.AE.E9.A2.98" id=".E5.9B.B0.E9.9A.BE.E9.97.AE.E9.A2.98"></a>
+      <h3> <span class="mw-headline"><b>困难问题</b></span></h3>
+      <p>1. 这个类的一个局限是你不能在创建对象后再给机器人行走的路线增加新的目的地点。修补这个问题，实现一个带有一个Vector3参数的新方法，并且将它插入mWalkList队列。（提示：如果机器人还未完成行走过程，你就只需要将目的地点插入队列尾即可。如果机器人已经走完全程，你将需要让它再次开始行走，然后调用nextLocation开始再次行走。） </p>
+      <a name=".E4.B8.93.E5.AE.B6.E9.97.AE.E9.A2.98" id=".E4.B8.93.E5.AE.B6.E9.97.AE.E9.A2.98"></a>
+      <h3> <span class="mw-headline"><b>专家问题</b></span></h3>
+      <p>1. 这个类的另一个主要局限是它只跟踪一个物体。重新实现这个类，使之可以彼此独立地移动任意数量的物体。（提示：你可以再创建一个类，这个类包含移动一个物体所需要知道的全部东西。把它存储在一个STL对象中，以便以后可以通过key获取数据。）如果可以不注册附加的framelistener，你会得到加分。 </p>
+      <p>2. 做完上面的改变，你也许注意到了机器人可能会彼此发生碰撞。修复它，或者创建一个聪明的寻路函数，或者当机器人碰撞时检测，阻止它们彼此穿透而过。 </p>
+      <p><br />
+      </p>
+      <pre>                                     --<a href="/wiki/index.php?title=User:Xiao7cn&amp;action=edit&amp;redlink=1" class="new" title="User:Xiao7cn (尚未撰写)">Xiao7cn</a> 11:01 2008年3月1日 (CST)Xiao7cn(FriedChicken)翻译
+  </pre>
+      <!-- 
+NewPP limit report
+Preprocessor node count: 12/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+      <!-- Saved in parser cache with key ogredcn_wiki-ogre3d_:pcache:idhash:127-0!1!0!!zh-cn!2!edit=0 and timestamp 20101201023352 -->
+      <!-- end content -->
+      <div class="visualClear"></div>
+    </div>
+  </div>
+</div>
+</body></html>
