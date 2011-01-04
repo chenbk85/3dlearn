@@ -7,9 +7,8 @@
 //{
 //}
 
-MoveDemoListener::MoveDemoListener(RenderWindow* win, Camera* cam, SceneNode *sn,
-								   Entity *ent, std::deque<Vector3> &walk)
-								   : ExampleFrameListener(win, cam, false, false), mNode(sn), mEntity(ent), mWalkList( walk )
+MoveDemoListener::MoveDemoListener(RenderWindow* win, Camera* cam, SceneNode *sn, Entity *ent, std::deque<Vector3> &walk)
+ : NoxFrameListener(win, cam, false, false), mNode(sn), mEntity(ent), mWalkList( walk )
 {
 
 	//// Set idle animation
@@ -121,5 +120,5 @@ bool MoveDemoListener::frameStarted(const FrameEvent &evt)
 	mAnimationState->addTime(evt.timeSinceLastFrame);
 
 
-	return ExampleFrameListener::frameStarted(evt);
+	return NoxFrameListener::frameStarted(evt);
 }

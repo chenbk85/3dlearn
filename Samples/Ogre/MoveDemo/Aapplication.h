@@ -24,141 +24,51 @@ Description: Base class for all the OGRE examples
 #include "Ogre.h"
 #include "OgreConfigFile.h"
 
-#include "FrameListener.h"
+
+#include <OISEvents.h>
+#include <OISInputManager.h>
+#include <OISKeyboard.h>
+#include <OISMouse.h>
+
+#include <SdkTrays.h>
+#include <SdkCameraMan.h>
 
 
-// Static plugins declaration section
-// Note that every entry in here adds an extra header / library dependency
-#ifdef OGRE_STATIC_LIB
-#  define OGRE_STATIC_GL
-#  if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-#    define OGRE_STATIC_Direct3D9
-// dx10 will only work on vista, so be careful about statically linking
-#    if OGRE_USE_D3D10
-#      define OGRE_STATIC_Direct3D10
-#    endif
-#    if OGRE_USE_D3D11
-#      define OGRE_STATIC_Direct3D11
-#    endif
-#  endif
-#  define OGRE_STATIC_BSPSceneManager
-#  define OGRE_STATIC_ParticleFX
-#  define OGRE_STATIC_CgProgramManager
-#  ifdef OGRE_USE_PCZ
-#    define OGRE_STATIC_PCZSceneManager
-#    define OGRE_STATIC_OctreeZone
-#  else
-#    define OGRE_STATIC_OctreeSceneManager
-#  endif
-#  if OGRE_PLATFORM == OGRE_PLATFORM_IPHONE
-#     undef OGRE_STATIC_CgProgramManager
-#     undef OGRE_STATIC_GL
-#     define OGRE_STATIC_GLES 1
-#     ifdef __OBJC__
-#       import <UIKit/UIKit.h>
-#     endif
-#  endif
-#  include "OgreStaticPluginLoader.h"
-#endif
-
-#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE || OGRE_PLATFORM == OGRE_PLATFORM_IPHONE
-#   include "macUtils.h"
-#endif
-
-#ifdef USE_RTSHADER_SYSTEM
-
-/** This class simply demonstrates basic usage of the CRTShader system.
-It sub class the material manager listener class and when a target scheme callback
-is invoked with the shader generator scheme it tries to create an equvialent shader
-based technique based on the default technique of the given material.
-*/
-class ShaderGeneratorTechniqueResolverListener : public MaterialManager::Listener
-{
-public:
-
-	ShaderGeneratorTechniqueResolverListener(RTShader::ShaderGenerator* pShaderGenerator)
-	{
-		mShaderGenerator = pShaderGenerator;
-	}
-
-	virtual Technique* handleSchemeNotFound(unsigned short schemeIndex, 
-		const String& schemeName, Material* originalMaterial, unsigned short lodIndex, 
-		const Renderable* rend)
-	{		
-		// Case this is the default shader generator scheme.
-		if (schemeName == RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME)
-		{
-			MaterialRegisterIterator itFind = mRegisteredMaterials.find(originalMaterial);
-			bool techniqueCreated = false;
-
-			// This material was not registered before.
-			if (itFind == mRegisteredMaterials.end())
-			{
-				techniqueCreated = mShaderGenerator->createShaderBasedTechnique(
-					originalMaterial->getName(), 
-					MaterialManager::DEFAULT_SCHEME_NAME, 
-					schemeName);				
-			}
-			mRegisteredMaterials[originalMaterial] = techniqueCreated;
-		}
-
-		return NULL;
-	}
-
-protected:
-	typedef std::map<Material*, bool>		MaterialRegisterMap;
-	typedef MaterialRegisterMap::iterator	MaterialRegisterIterator;
+#include "NoxFrameListener.h"
+#include "NoxMouseListener.h"
 
 
-protected:
-	MaterialRegisterMap				mRegisteredMaterials;		// Registered material map.
-	RTShader::ShaderGenerator*		mShaderGenerator;			// The shader generator instance.
-};
-#endif
+
 
 using namespace Ogre;
 
-/** Base class which manages the standard startup of an Ogre application.
-Designed to be subclassed for specific examples if required.
-*/
-class ExampleApplication
+
+class Application
 {
 public:
 	/// Standard constructor
-	ExampleApplication()
+	Application()
 	{
-		mFrameListener = 0;
+		//mFrameListener = 0;
 		mRoot = 0;
 		// Provide a nice cross platform solution for locating the configuration files
 		// On windows files are searched for in the current working directory, on OS X however
 		// you must provide the full path, the helper function macBundlePath does this for us.
-#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-		mResourcePath = macBundlePath() + "/Contents/Resources/";
-		mConfigPath = mResourcePath;
-#elif OGRE_PLATFORM == OGRE_PLATFORM_IPHONE
-		mResourcePath = macBundlePath() + "/";
-		mConfigPath = mResourcePath;
-#else
 		mResourcePath = "";
 		mConfigPath = mResourcePath;
-#endif
+		mCameraMan = NULL;
 
-#ifdef USE_RTSHADER_SYSTEM
-		mShaderGenerator	 = NULL;		
-		mMaterialMgrListener = NULL;
-#endif
 	}
 	/// Standard destructor
-	virtual ~ExampleApplication()
+	virtual ~Application()
 	{
-		if (mFrameListener)
-			delete mFrameListener;
+
+		if (mCameraMan)
+			OGRE_DELETE mCameraMan;
+
 		if (mRoot)
 			OGRE_DELETE mRoot;
 
-#ifdef OGRE_STATIC_LIB
-		mStaticPluginLoader.unload();
-#endif
 	}
 
 	/// Start the example
@@ -171,29 +81,24 @@ public:
 
 		// clean up
 		destroyScene();	
-
-#ifdef USE_RTSHADER_SYSTEM
-		// Finalize shader generator.
-		finalizeShaderGenerator();
-#endif
-
 	}
 
 protected:
 	Root *mRoot;
-#ifdef OGRE_STATIC_LIB
-	StaticPluginLoader mStaticPluginLoader;
-#endif
 	Camera* mCamera;
+	OgreBites::SdkCameraMan* mCameraMan;       // basic camera controller
 	SceneManager* mSceneMgr;
-	ExampleFrameListener* mFrameListener;
 	RenderWindow* mWindow;
 	Ogre::String mResourcePath;
 	Ogre::String mConfigPath;
-#ifdef USE_RTSHADER_SYSTEM
-	RTShader::ShaderGenerator*					mShaderGenerator;			// The Shader generator instance.
-	ShaderGeneratorTechniqueResolverListener*	mMaterialMgrListener;		// Material manager listener.	
-#endif
+
+
+	//OIS Input devices
+	OIS::InputManager* mInputManager;
+	OIS::Mouse*    mMouse;
+	OIS::Keyboard* mKeyboard;
+
+
 
 	// These internal methods package up the stages in the startup process
 	/** Sets up the application - returns false if the user chooses to abandon configuration. */
@@ -202,19 +107,15 @@ protected:
 
 		String pluginsPath;
 		// only use plugins.cfg if not static
-#ifndef OGRE_STATIC_LIB
 #if OGRE_DEBUG_MODE
 		pluginsPath = mResourcePath + "plugins_d.cfg";
 #else
 		pluginsPath = mResourcePath + "plugins.cfg";
 #endif
-#endif
 
 		mRoot = OGRE_NEW Root(pluginsPath, 
 			mConfigPath + "ogre.cfg", mResourcePath + "Ogre.log");
-#ifdef OGRE_STATIC_LIB
-		mStaticPluginLoader.load();
-#endif
+
 		setupResources();
 
 		bool carryOn = configure();
@@ -224,12 +125,7 @@ protected:
 		chooseSceneManager();
 		createCamera();
 		createViewports();
-#ifdef USE_RTSHADER_SYSTEM
-		// Initialize shader generator.
-		carryOn = initializeShaderGenerator(mSceneMgr);
-		if (!carryOn) 
-			return false;
-#endif
+
 
 		// Set default mipmap level (NB some APIs ignore this)
 		TextureManager::getSingleton().setDefaultNumMipmaps(5);
@@ -242,81 +138,26 @@ protected:
 		// Create the scene
 		createScene();
 
-		createFrameListener();
+		createListener();
 
 		return true;
 
 	}
-#ifdef USE_RTSHADER_SYSTEM
-	virtual bool initializeShaderGenerator(SceneManager* sceneMgr)
-	{	
-		if (RTShader::ShaderGenerator::initialize())
-		{
-			mShaderGenerator = RTShader::ShaderGenerator::getSingletonPtr();
 
-			// Set the scene manager.
-			mShaderGenerator->setSceneManager(sceneMgr);
 
-			// Setup core libraries and shader cache path.
-			ResourceGroupManager::LocationList resLocationsList = ResourceGroupManager::getSingleton().getResourceLocationList(ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
-			ResourceGroupManager::LocationList::iterator it = resLocationsList.begin();
-			ResourceGroupManager::LocationList::iterator itEnd = resLocationsList.end();
-			String shaderCoreLibsPath;
-			String shaderCachePath;
 
-			// Default cache path is current directory;
-			shaderCachePath = "./";
-
-			// Try to find the location of the core shader lib functions and use it
-			// as shader cache path as well - this will reduce the number of generated files
-			// when running from different directories.
-			for (; it != itEnd; ++it)
-			{
-
-				if ((*it)->archive->getName().find("RTShaderLib") != String::npos)
-				{
-					shaderCoreLibsPath = (*it)->archive->getName() + "/";
-					shaderCachePath    = shaderCoreLibsPath;
-					break;
-				}
-			}
-
-			// Core shader libs not found -> shader generating will fail.
-			if (shaderCoreLibsPath.empty())			
-				return false;			
-
-			// Add resource location for the core shader libs. 
-			ResourceGroupManager::getSingleton().addResourceLocation(shaderCoreLibsPath , "FileSystem");
-
-			// Set shader cache path.
-			mShaderGenerator->setShaderCachePath(shaderCachePath);		
-
-			// Create and register the material manager listener.
-			mMaterialMgrListener = new ShaderGeneratorTechniqueResolverListener(mShaderGenerator);				
-			MaterialManager::getSingleton().addListener(mMaterialMgrListener);
-		}
-
-		return true;
-	}
-
-	virtual void finalizeShaderGenerator()
+	//Adjust mouse clipping area
+	virtual void windowResized(RenderWindow* rw)
 	{
-		// Unregister the material manager listener.
-		if (mMaterialMgrListener != NULL)
-		{			
-			MaterialManager::getSingleton().removeListener(mMaterialMgrListener);
-			delete mMaterialMgrListener;
-			mMaterialMgrListener = NULL;
-		}
+		unsigned int width, height, depth;
+		int left, top;
+		rw->getMetrics(width, height, depth, left, top);
 
-		// Finalize CRTShader system.
-		if (mShaderGenerator != NULL)
-		{
-			RTShader::ShaderGenerator::finalize();
-			mShaderGenerator = NULL;
-		}
+		const OIS::MouseState &ms = mMouse->getMouseState();
+		ms.width = width;
+		ms.height = height;
 	}
-#endif
+
 	/** Configures the application - returns false if the user chooses to abandon configuration. */
 	virtual bool configure(void)
 	{
@@ -352,16 +193,19 @@ protected:
 		mCamera->lookAt(Vector3(0,0,-300));
 		mCamera->setNearClipDistance(5);
 
+
+		mCameraMan = new OgreBites::SdkCameraMan(mCamera);   // create a default camera controller
+
+
 	}
-	virtual void createFrameListener(void)
+	virtual void createListener(void)
 	{
-#if OGRE_PLATFORM == OGRE_PLATFORM_IPHONE
-		mFrameListener= new ExampleFrameListener(mWindow, mCamera, true, true, true);
-#else
-		mFrameListener= new ExampleFrameListener(mWindow, mCamera);
-#endif
-		mFrameListener->showDebugOverlay(true);
-		mRoot->addFrameListener(mFrameListener);
+		//mFrameListener= new NoxFrameListener(mWindow, mCamera);
+		//mFrameListener->showDebugOverlay(true);
+		//mRoot->addFrameListener(mFrameListener);
+
+		//! mouse
+		//mMouseListener = new NoxMouseListener();
 	}
 
 	virtual void createScene(void) = 0;    // pure virtual - this has to be overridden
@@ -375,8 +219,7 @@ protected:
 		vp->setBackgroundColour(ColourValue(0,0,0));
 
 		// Alter the camera aspect ratio to match the viewport
-		mCamera->setAspectRatio(
-			Real(vp->getActualWidth()) / Real(vp->getActualHeight()));
+		mCamera->setAspectRatio( Real(vp->getActualWidth()) / Real(vp->getActualHeight()));
 	}
 
 	/// Method which will define the source of resources (other than current folder)

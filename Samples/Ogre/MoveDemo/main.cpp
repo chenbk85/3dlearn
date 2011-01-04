@@ -1,5 +1,5 @@
 
-#include "MoveDemoApplication.h"
+#include "NoxApplication.h"
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 #define WIN32_LEAN_AND_MEAN
@@ -12,7 +12,7 @@ int main(int argc, char **argv)
 #endif
 {
 	// Create application object
-	MoveDemoApplication app;
+	NoxApplication app;
 
 	try {
 		app.go();
