@@ -1,10 +1,10 @@
 #pragma once
-#include "exampleapplication.h"
+//#include "application.h"
+#include "./Aapplication.h"
 
 #include "MoveDemoListener.h"
 
-class MoveDemoApplication :
-	public ExampleApplication
+class MoveDemoApplication :	public ExampleApplication
 {
 public:
 	MoveDemoApplication(void);

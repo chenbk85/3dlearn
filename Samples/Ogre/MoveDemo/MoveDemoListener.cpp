@@ -1,5 +1,4 @@
 #include "MoveDemoListener.h"
-
 //MoveDemoListener::MoveDemoListener(void)
 //{
 //}
