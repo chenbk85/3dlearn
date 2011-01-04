@@ -1,14 +1,12 @@
 #pragma once
 
-#include "ExampleApplication.h"
+#include "NoxFrameListener.h"
 
-class MoveDemoListener :
-	public ExampleFrameListener
+class MoveDemoListener : public NoxFrameListener
 {
 public:
 
-	MoveDemoListener(RenderWindow* win, Camera* cam, SceneNode *sn,
-		Entity *ent, std::deque<Vector3> &walk);
+	MoveDemoListener(RenderWindow* win, Camera* cam, SceneNode *sn, Entity *ent, std::deque<Vector3> &walk);
 
 	/* This function is called to start the object moving to the next position
 	in mWalkList.
