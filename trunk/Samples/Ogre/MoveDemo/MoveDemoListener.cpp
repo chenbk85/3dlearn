@@ -7,8 +7,10 @@
 //{
 //}
 
-MoveDemoListener::MoveDemoListener(RenderWindow* win, Camera* cam, SceneNode *sn, Entity *ent, std::deque<Vector3> &walk)
- : NoxFrameListener(win, cam, false, false), mNode(sn), mEntity(ent), mWalkList( walk )
+MoveDemoListener::MoveDemoListener(RenderWindow* win, Camera* cam, OgreBites::SdkCameraMan* cameraMan , OgreBites::SdkTrayManager* trayMgr 
+, OIS::Mouse*    mouse,	OIS::Keyboard* keyboard ,  SceneNode *sn, Entity *ent, std::deque<Vector3> &walk
+)
+ : NoxFrameListener(win, cam , cameraMan , trayMgr ,mouse , keyboard ,  false, false), mNode(sn), mEntity(ent), mWalkList( walk )
 {
 
 	//// Set idle animation

@@ -4,14 +4,20 @@
 
 #include <OgreCamera.h>
 #include <OgreSceneNode.h>
+#include <OgreSceneManager.h>
 
 
-NoxMouseListener::NoxMouseListener(Ogre::Camera* camera)
+NoxMouseListener::NoxMouseListener(Ogre::SceneManager* sceneMgr , Ogre::Camera* camera)
  : mCamera(camera)
+ , mSceneMgr(sceneMgr)
  , mVolQuery(0)
  , mSelectionBox(0)  
 {
 
+	mSelectionBox = new SelectionBox("SelectionBox");
+	mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(mSelectionBox);
+
+	mVolQuery = mSceneMgr->createPlaneBoundedVolumeQuery(Ogre::PlaneBoundedVolumeList());
 
 }
 

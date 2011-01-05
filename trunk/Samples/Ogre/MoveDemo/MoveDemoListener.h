@@ -6,7 +6,9 @@ class MoveDemoListener : public NoxFrameListener
 {
 public:
 
-	MoveDemoListener(RenderWindow* win, Camera* cam, SceneNode *sn, Entity *ent, std::deque<Vector3> &walk);
+	MoveDemoListener(RenderWindow* win, Camera* cam, OgreBites::SdkCameraMan* cameraMan ,  OgreBites::SdkTrayManager* trayMgr
+		, OIS::Mouse*    mouse,	OIS::Keyboard* keyboard 
+		, SceneNode *sn, Entity *ent, std::deque<Vector3> &walk);
 
 	/* This function is called to start the object moving to the next position
 	in mWalkList.
