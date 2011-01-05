@@ -24,14 +24,14 @@ public:
 public:
 	virtual BOOL InitInstance();
 
-	inline Ogre::Root *GetOgreRoot() {return m_OgreRoot;}
+	inline Ogre::Root *GetOgreRoot() {return mRoot;}
 
 public:
 	afx_msg void OnAppAbout();
 	DECLARE_MESSAGE_MAP()
 
 private:
-	Ogre::Root         *m_OgreRoot;
+	Ogre::Root         *mRoot;
 
 };
 

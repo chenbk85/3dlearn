@@ -22,12 +22,12 @@ COgreMFCApp::COgreMFCApp()
 {
 	// TODO: add construction code here,
 	// Place all significant initialization in InitInstance
-	m_OgreRoot = 0;
+	mRoot = 0;
 }
 
 COgreMFCApp::~COgreMFCApp()
 {
-	delete m_OgreRoot;
+	delete mRoot;
 }
 
 
@@ -62,9 +62,9 @@ BOOL COgreMFCApp::InitInstance()
 	///////////////////////////////////////////////////////////////////////////
 
 #ifdef DEBUG
-	m_OgreRoot = new Ogre::Root("plugins_d.cfg", "OgreMFC.cfg", "OgreMFC.log"); 
+	mRoot = new Ogre::Root("plugins_d.cfg", "OgreMFC.cfg", "OgreMFC.log"); 
 #else
-	m_OgreRoot = new Ogre::Root("plugins.cfg", "OgreMFC.cfg", "OgreMFC.log"); 
+	mRoot = new Ogre::Root("plugins.cfg", "OgreMFC.cfg", "OgreMFC.log"); 
 #endif
 
 	//
@@ -90,32 +90,16 @@ BOOL COgreMFCApp::InitInstance()
 			ResourceGroupManager::getSingleton().addResourceLocation( archName, typeName, secName);
 		}
 	}
-	//
-	//
-	// Look though the list of rendering systems and find the
-	// OpenGL renderer that we're going to use.
-	//
-	// Note:  I've hard coded the OpenGL renderer here.  To use 
-	// any of the other renderers, just change the line to:
-	//    if (rName == "Direct3D7 Rendering Subsystem")
-	//    if (rName == "Direct3D9 Rendering SubSystem")
-	// 
-	// Or create an appropriate dialog box.
-	// I'm rather an old OpenGL user and generally don't need my
-	// applications to offer a choice.  Besides, shouldn't we question
-	// a graphics "standard" that takes two different renderers depending
-	// on which version you are using?
-	//
-	//
 
-	const RenderSystemList& render =  m_OgreRoot->getAvailableRenderers();
+	const RenderSystemList& render =  mRoot->getAvailableRenderers();
 
 	RenderSystemList::const_iterator pRend = render.begin();
 
 	while (pRend != render.end())
 	{
 		Ogre::String rName = (*pRend)->getName();
-		if (rName == "OpenGL Rendering Subsystem")
+		//if (rName == "OpenGL Rendering Subsystem") //
+		if (rName == "Direct3D9 Rendering Subsystem") //Direct3D9 Rendering Subsystem
 			break;
 		pRend++;
 	}
@@ -137,13 +121,13 @@ BOOL COgreMFCApp::InitInstance()
 	rsys->setConfigOption("VSync", "Yes");
 
 	// Set the rendering system.
-	m_OgreRoot->setRenderSystem(rsys);
+	mRoot->setRenderSystem(rsys);
 
 	//
 	// Initialize the system, but don't create a render window.
 	//
 
-	m_OgreRoot->initialise(false);
+	mRoot->initialise(false);
 
 	// Standard initialization
 	// If you are not using these features and wish to reduce the size
@@ -172,6 +156,25 @@ BOOL COgreMFCApp::InitInstance()
 
 	return TRUE;
 }
+
+
+//bool COgreMFCApp::configure(void)
+//{
+//	// Show the configuration dialog and initialise the system
+//	// You can skip this and use root.restoreConfig() to load configuration
+//	// settings if you were sure there are valid ones saved in ogre.cfg
+//	if(mRoot->restoreConfig() || mRoot->showConfigDialog())
+//	{
+//		// If returned true, user clicked OK so initialise
+//		// Here we choose to let the system create a default rendering window by passing 'true'
+//		mWindow = mRoot->initialise(true);
+//		return true;
+//	}
+//	else
+//	{
+//		return false;
+//	}
+//}
 
 
 // COgreMFCApp message handlers
