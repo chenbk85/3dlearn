@@ -13,7 +13,7 @@ class NoxMouseListener :
 	public OIS::MouseListener
 {
 public:
-	NoxMouseListener(Ogre::Camera* camera);
+	NoxMouseListener(Ogre::SceneManager* sceneMgr , Ogre::Camera* camera);
 	virtual ~NoxMouseListener(void);
 protected:
 	virtual bool mouseMoved(const OIS::MouseEvent& arg);
@@ -35,6 +35,8 @@ private:
 	static void swap(float& x, float& y);
 
 	Ogre::Camera* mCamera;
+
+	Ogre::SceneManager* mSceneMgr;
 
 
 

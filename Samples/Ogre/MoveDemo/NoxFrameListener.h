@@ -43,11 +43,13 @@ F4:	   Toggle default shader generator lighting model from per vertex to per pix
 #include "OgreException.h"
 
 
+
 //Use this define to signify OIS will be used as a DLL
 //(so that dll import/export macros are in effect)
 #define OIS_DYNAMIC_LIB
 #include <OIS/OIS.h>
 #include "NoxTrayListener.h"
+#include <SdkCameraMan.h>
 
 using namespace Ogre;
 
@@ -60,29 +62,20 @@ class NoxFrameListener: public FrameListener, public WindowEventListener
 
 public:
 	// Constructor takes a RenderWindow because it uses that to determine input context
-	NoxFrameListener(RenderWindow* win, Camera* cam, bool bufferedKeys = false, bool bufferedMouse = false,	bool bufferedJoy = false ) 
-		: mCamera(cam), mTranslateVector(Vector3::ZERO), mCurrentSpeed(0), mWindow(win)
+	NoxFrameListener(RenderWindow* win, Camera* cam, OgreBites::SdkCameraMan* cameraMan , OgreBites::SdkTrayManager* trayMgr
+		,OIS::Mouse*    mouse,	OIS::Keyboard* keyboard ,  bool bufferedKeys = false
+		, bool bufferedMouse = false,	bool bufferedJoy = false ) 
+		: mCamera(cam), mWindow(win)
 		, mStatsOn(true), mNumScreenShots(0), mMoveScale(0.0f), mRotScale(0.0f), mTimeUntilNextToggle(0)
 		, mFiltering(TFO_BILINEAR),	mAniso(1), mSceneDetailIndex(0), mMoveSpeed(200), mRotateSpeed(36)
-		, mDebugOverlay(0),	mInputManager(0), mMouse(0), mKeyboard(0)
-		, mTrayMgr(0), mDetailsPanel(0), mMsgPanel(0)
+		, mDebugOverlay(0),	mInputManager(0), mMouse(mouse), mKeyboard(keyboard)
+		, mTrayMgr(trayMgr), mDetailsPanel(0), mMsgPanel(0)
+		, mCameraMan(cameraMan)
 	{
 		mDebugOverlay = OverlayManager::getSingleton().getByName("Core/DebugOverlay");
 
 
-
-
 		showDebugOverlay(true);
-
-		//Register as a Window listener
-
-
-		////! tray
-		//mTrayListener = new NoxTrayListener;
-		//mTrayMgr = new OgreBites::SdkTrayManager("InterfaceName", mWindow, mMouse, mTrayListener);
-		//mTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
-		////mTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
-		//mTrayMgr->hideCursor();
 
 		// create a params panel for displaying sample details
 		Ogre::StringVector items;
@@ -103,7 +96,6 @@ public:
 		mDetailsPanel->setParamValue(10, "Solid");
 		//mDetailsPanel->hide();
 
-
 		//!
 		Ogre::StringVector items_msg;
 		items_msg.push_back("x");
@@ -118,38 +110,8 @@ public:
 	}
 
 
-	////Adjust mouse clipping area
-	//virtual void windowResized(RenderWindow* rw)
-	//{
-	//	unsigned int width, height, depth;
-	//	int left, top;
-	//	rw->getMetrics(width, height, depth, left, top);
-
-	//	const OIS::MouseState &ms = mMouse->getMouseState();
-	//	ms.width = width;
-	//	ms.height = height;
-	//}
-
-	////Unattach OIS before window shutdown (very important under Linux)
-	//virtual void windowClosed(RenderWindow* rw)
-	//{
-	//	//Only close for window that created OIS (the main window in these demos)
-	//	if( rw == mWindow )
-	//	{
-	//		if( mInputManager )
-	//		{
-	//			mInputManager->destroyInputObject( mMouse );
-	//			mInputManager->destroyInputObject( mKeyboard );
-
-	//			OIS::InputManager::destroyInputSystem(mInputManager);
-	//			mInputManager = 0;
-	//		}
-	//	}
-	//}
-
 	virtual ~NoxFrameListener()
 	{		
-
 		if (mTrayMgr)
 			delete mTrayMgr;
 
@@ -309,7 +271,6 @@ public:
 	// Override frameRenderingQueued event to process that (don't care about frameEnded)
 	bool frameRenderingQueued(const FrameEvent& evt)
 	{
-
 		if(mWindow->isClosed())	return false;
 
 		mSpeedLimit = mMoveScale * evt.timeSinceLastFrame;
@@ -318,67 +279,11 @@ public:
 		mKeyboard->capture();
 		mMouse->capture();
 
-
-		Ogre::Vector3 lastMotion = mTranslateVector;
-
-		//Check if one of the devices is not buffered
-		if( !mMouse->buffered() || !mKeyboard->buffered() )
-		{
-			// one of the input modes is immediate, so setup what is needed for immediate movement
-			if (mTimeUntilNextToggle >= 0)
-				mTimeUntilNextToggle -= evt.timeSinceLastFrame;
-
-			// Move about 100 units per second
-			mMoveScale = mMoveSpeed * evt.timeSinceLastFrame;
-			// Take about 10 seconds for full rotation
-			mRotScale = mRotateSpeed * evt.timeSinceLastFrame;
-
-			mRotX = 0;
-			mRotY = 0;
-			mTranslateVector = Ogre::Vector3::ZERO;
-
-		}
-
-		//Check to see which device is not buffered, and handle it
-		if( !mKeyboard->buffered() )
-			if( processUnbufferedKeyInput(evt) == false )
-				return false;
-
-		if( !mMouse->buffered() )
-			if( processUnbufferedMouseInput(evt) == false )
-				return false;
-
-		// ramp up / ramp down speed
-		if (mTranslateVector == Ogre::Vector3::ZERO)
-		{
-			// decay (one third speed)
-			mCurrentSpeed -= evt.timeSinceLastFrame * 0.3;
-			mTranslateVector = lastMotion;
-		}
-		else
-		{
-			// ramp up
-			mCurrentSpeed += evt.timeSinceLastFrame;
-
-		}
-		// Limit motion speed
-		if (mCurrentSpeed > 1.0)
-			mCurrentSpeed = 1.0;
-		if (mCurrentSpeed < 0.0)
-			mCurrentSpeed = 0.0;
-
-		mTranslateVector *= mCurrentSpeed;
-
-
-		if( !mMouse->buffered() || !mKeyboard->buffered() )
-			moveCamera();
-
-
 		mTrayMgr->frameRenderingQueued(evt);
 
 		if (!mTrayMgr->isDialogVisible())
 		{
-			//mCameraMan->frameRenderingQueued(evt);   // if dialog isn't up, then update the camera
+			mCameraMan->frameRenderingQueued(evt);   // if dialog isn't up, then update the camera
 			if (mDetailsPanel->isVisible())   // if details panel is visible, then update its contents
 			{
 				mDetailsPanel->setParamValue(0, Ogre::StringConverter::toString(mCamera->getDerivedPosition().x));
@@ -439,9 +344,7 @@ public:
 
 protected:
 	Camera* mCamera;
-
-	Vector3 mTranslateVector;
-	Real mCurrentSpeed;
+	OgreBites::SdkCameraMan* mCameraMan;
 	RenderWindow* mWindow;
 	bool mStatsOn;
 

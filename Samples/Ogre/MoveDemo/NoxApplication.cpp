@@ -45,30 +45,6 @@ bool NoxApplication::configure(void)
 
 void NoxApplication::createListener(void)
 {
-
-	//! tray
-	mTrayListener = new NoxTrayListener;
-	mTrayMgr = new OgreBites::SdkTrayManager("InterfaceName", mWindow, mMouse, mTrayListener);
-	mTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
-	//mTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
-	mTrayMgr->hideCursor();
-
-
-	mFrameListener= new MoveDemoListener(mWindow, mCamera, mNode, mEntity, mWalkList);
-	mFrameListener->showDebugOverlay(true);
-	mRoot->addFrameListener(mFrameListener);
-
-	//! mouse
-	mMouseListener = new NoxMouseListener(mCamera);
-
-	//! keyboard
-	
-
-}
-
-
-void NoxApplication::createUI()
-{
 	LogManager::getSingletonPtr()->logMessage("*** Initializing OIS ***");
 	OIS::ParamList pl;
 	size_t windowHnd = 0;
@@ -84,15 +60,18 @@ void NoxApplication::createUI()
 	mKeyboard = static_cast<OIS::Keyboard*>(mInputManager->createInputObject( OIS::OISKeyboard, true ));
 	mMouse = static_cast<OIS::Mouse*>(mInputManager->createInputObject( OIS::OISMouse, true ));
 
-
-	//! mouse
-	mMouseListener = new NoxMouseListener(mCamera);
+	//! mouse listener
+	mMouseListener = new NoxMouseListener(mSceneMgr ,mCamera);
 	mMouse->setEventCallback(mMouseListener);
 
-	//! keyboard
-	//Ogre::RenderWindow* window , Ogre::Camera* camera
-	//	, OgreBites::SdkCameraMan* cameraMan , 	OgreBites::SdkTrayManager* trayMgr ,
-	//OgreBites::ParamsPanel* detailsPanel
+	//! tray
+	mTrayListener = new NoxTrayListener;
+	mTrayMgr = new OgreBites::SdkTrayManager("InterfaceName", mWindow, mMouse, mTrayListener);
+	mTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
+	//mTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
+	mTrayMgr->hideCursor();
+
+	//! keyboard listener
 	mKeyboardListener = new NoxKeyboardListener(mWindow , mCamera , mCameraMan , mTrayMgr  , NULL );
 	mKeyboard->setEventCallback(mKeyboardListener);
 
@@ -100,10 +79,23 @@ void NoxApplication::createUI()
 	windowResized(mWindow);
 
 	//! window event
-	//Ogre::RenderWindow* window , OIS::InputManager* inputMgr 
-	//, OIS::Mouse* mouse , OIS::Keyboard* keyboard)
 	mWindowListener = new NoxWindowListener(mWindow , mInputManager , mMouse  , mKeyboard );
 	WindowEventUtilities::addWindowEventListener(mWindow, mWindowListener);	
+
+	//! frame listener
+	mFrameListener= new MoveDemoListener(mWindow, mCamera, mCameraMan , mTrayMgr ,mMouse , mKeyboard ,  mNode, mEntity, mWalkList);
+	mFrameListener->showDebugOverlay(true);
+	mRoot->addFrameListener(mFrameListener);
+
+
+	
+
+}
+
+
+void NoxApplication::createUI()
+{
+
 }
 
 
