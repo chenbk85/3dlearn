@@ -27,17 +27,6 @@ void CScene::CreateScene(Ogre::SceneManager *pSceneManager)
 
 	pSceneManager->setAmbientLight( ColourValue( 1.0f, 1.0f, 1.0f ) );
 
-	//
-	// Create the robot entity
-	//
-
-	// Create the entity
-	//Entity * mEntity = pSceneManager->createEntity( "Robot", "robot.mesh" );
-	//SceneNode* mNode = pSceneManager->getRootSceneNode( )->createChildSceneNode( "RobotNode", Vector3( 0.0f, 0.0f, 25.0f ) );
-	//mNode->attachObject( mEntity );
-	//mNode->showBoundingBox(true);
-
-
 	m_robotEntity = pSceneManager->createEntity("robot", "robot.mesh");
 
 	// Add entity to the scene node
