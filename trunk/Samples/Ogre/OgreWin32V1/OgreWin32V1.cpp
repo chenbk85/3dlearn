@@ -31,14 +31,14 @@ OgreWrap * ogreHandle = 0;
 
 
 int APIENTRY _tWinMain(HINSTANCE hInstance,
-                     HINSTANCE hPrevInstance,
-                     LPTSTR    lpCmdLine,
-                     int       nCmdShow)
+					   HINSTANCE hPrevInstance,
+					   LPTSTR    lpCmdLine,
+					   int       nCmdShow)
 {
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
- 	// TODO: 在此放置代码。
+	// TODO: 在此放置代码。
 	MSG msg;
 	HACCEL hAccelTable;
 
@@ -117,22 +117,22 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 //
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
-   HWND hWnd;
+	HWND hWnd;
 
-   hInst = hInstance; // 将实例句柄存储在全局变量中
+	hInst = hInstance; // 将实例句柄存储在全局变量中
 
-   hWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, NULL, NULL, hInstance, NULL);
+	hWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
+		CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, NULL, NULL, hInstance, NULL);
 
-   if (!hWnd)
-   {
-      return FALSE;
-   }
+	if (!hWnd)
+	{
+		return FALSE;
+	}
 
-   ShowWindow(hWnd, nCmdShow);
-   UpdateWindow(hWnd);
+	ShowWindow(hWnd, nCmdShow);
+	UpdateWindow(hWnd);
 
-   return TRUE;
+	return TRUE;
 }
 
 //
@@ -150,6 +150,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	int wmId, wmEvent;
 	PAINTSTRUCT ps;
 	HDC hdc;
+
+	int i  = 0 ;
 
 	static BOOL firstrun = TRUE;
 
@@ -181,23 +183,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		break;
 	case WM_PAINT:
-		if (firstrun)
 		{
-			firstrun = FALSE;
-
-			InitOgre();
-
-			ogreHandle = new OgreWrap;
-			ogreHandle->SetupOgre(hWnd);
-
-			SetTimer(hWnd , 1 , 100, NULL);
-
+			if (firstrun)
+			{
+				firstrun = FALSE;
+				InitOgre();
+				ogreHandle = new OgreWrap;
+				ogreHandle->SetupOgre(hWnd);
+				SetTimer(hWnd , 1 , 30, NULL);
+			}
+			else
+			{
+				GetOgreRoot()->renderOneFrame();
+			}
+			ValidateRect(hWnd , NULL);
 		}
-		else
-		{
-			GetOgreRoot()->renderOneFrame();
-		}
-
 		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);
