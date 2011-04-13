@@ -7,11 +7,13 @@
 #include <OgreSceneManager.h>
 
 
-NoxMouseListener::NoxMouseListener(Ogre::SceneManager* sceneMgr , Ogre::Camera* camera)
+NoxMouseListener::NoxMouseListener(Ogre::SceneManager* sceneMgr , Ogre::Camera* camera , OgreBites::SdkCameraMan* cameraMan)
  : mCamera(camera)
+ , mCameraMan(cameraMan)
  , mSceneMgr(sceneMgr)
  , mVolQuery(0)
- , mSelectionBox(0)  
+ , mSelectionBox(0)
+ , bRightDown(false)
 {
 
 	mSelectionBox = new SelectionBox("SelectionBox");
@@ -28,6 +30,14 @@ NoxMouseListener::~NoxMouseListener(void)
 
 bool NoxMouseListener::mouseMoved(const OIS::MouseEvent& arg)
 {
+
+	if (bRightDown)
+	{
+		mCameraMan->injectMouseMove(arg);
+
+		return true;
+	}
+
 	//let CEGUI know that the mouse moved
 	CEGUI::System::getSingleton().injectMouseMove(arg.state.X.rel, arg.state.Y.rel);
 
@@ -36,20 +46,35 @@ bool NoxMouseListener::mouseMoved(const OIS::MouseEvent& arg)
 	mStop.y = mouse->getPosition().d_y / float(arg.state.height);
 
 	mSelectionBox->setCorners(mStart, mStop);
+
+
 	return true;
 }
 
 bool NoxMouseListener::mousePressed(const OIS::MouseEvent& arg, OIS::MouseButtonID id)
-{	
-	CEGUI::MouseCursor* mouse = CEGUI::MouseCursor::getSingletonPtr();
-	mStart.x = mouse->getPosition().d_x / float(arg.state.width);
-	mStart.y = mouse->getPosition().d_y / float(arg.state.height);
-	mStop = mStart;
+{
 
-	bSelecting = true;
-	mSelectionBox->clear();
-	mSelectionBox->setVisible(true);
+	//bRightDown = arg.
+	if (id == OIS::MB_Left)
+	{
+		CEGUI::MouseCursor* mouse = CEGUI::MouseCursor::getSingletonPtr();
+		mStart.x = mouse->getPosition().d_x / float(arg.state.width);
+		mStart.y = mouse->getPosition().d_y / float(arg.state.height);
+		mStop = mStart;
+
+		bSelecting = true;
+		mSelectionBox->clear();
+		mSelectionBox->setVisible(true);
+
+		bRightDown = false ;
+	}
+	else if (id == OIS::MB_Right)
+	{
+		bRightDown = true ;
+	}
+
 	return true;
+
 }
 
 bool NoxMouseListener::mouseReleased(const OIS::MouseEvent& arg, OIS::MouseButtonID id)
@@ -57,6 +82,9 @@ bool NoxMouseListener::mouseReleased(const OIS::MouseEvent& arg, OIS::MouseButto
 	performSelection(mStart, mStop);
 	bSelecting = false;
 	mSelectionBox->setVisible(false);
+
+	bRightDown = false ;
+
 	return true;
 }
 

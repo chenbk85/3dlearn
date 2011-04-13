@@ -113,8 +113,7 @@ protected:
 		pluginsPath = mResourcePath + "plugins.cfg";
 #endif
 
-		mRoot = OGRE_NEW Root(pluginsPath, 
-			mConfigPath + "ogre.cfg", mResourcePath + "Ogre.log");
+		mRoot = OGRE_NEW Root(pluginsPath, mConfigPath + "ogre.cfg", mResourcePath + "Ogre.log");
 
 		setupResources();
 
@@ -246,15 +245,7 @@ protected:
 			{
 				typeName = i->first;
 				archName = i->second;
-#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE || OGRE_PLATFORM == OGRE_PLATFORM_IPHONE
-				// OS X does not set the working directory relative to the app,
-				// In order to make things portable on OS X we need to provide
-				// the loading with it's own bundle path location
-				if (!StringUtil::startsWith(archName, "/", false)) // only adjust relative dirs
-					archName = String(macBundlePath() + "/" + archName);
-#endif
 				ResourceGroupManager::getSingleton().addResourceLocation( archName, typeName, secName);
-
 			}
 		}
 	}
