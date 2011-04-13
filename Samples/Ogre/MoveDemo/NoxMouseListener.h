@@ -7,13 +7,15 @@
 
 #include <OgreSceneQuery.h>
 
+#include <SdkCameraMan.h>
+
 #include "SelectionBox.h"
 
 class NoxMouseListener :
 	public OIS::MouseListener
 {
 public:
-	NoxMouseListener(Ogre::SceneManager* sceneMgr , Ogre::Camera* camera);
+	NoxMouseListener(Ogre::SceneManager* sceneMgr , Ogre::Camera* camera , OgreBites::SdkCameraMan* cameraMan );
 	virtual ~NoxMouseListener(void);
 protected:
 	virtual bool mouseMoved(const OIS::MouseEvent& arg);
@@ -35,9 +37,12 @@ private:
 	static void swap(float& x, float& y);
 
 	Ogre::Camera* mCamera;
+	OgreBites::SdkCameraMan* mCameraMan;       // basic camera controller
 
 	Ogre::SceneManager* mSceneMgr;
 
+	//! left mouse is down
+	bool bRightDown;
 
 
 };
