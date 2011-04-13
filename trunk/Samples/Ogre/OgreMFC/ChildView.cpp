@@ -80,6 +80,8 @@ void CChildView::OnPaint()
 	}
 
 	m_OgreRoot->renderOneFrame();
+
+	ValidateRect(NULL);
 }
 // =============================================================================
 // CChildView::SetupOgre(void)
