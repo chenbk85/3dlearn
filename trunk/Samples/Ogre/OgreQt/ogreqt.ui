@@ -1,0 +1,29 @@
+<UI version="4.0" >
+ <class>OgreQtClass</class>
+ <widget class="QMainWindow" name="OgreQtClass" >
+  <property name="objectName" >
+   <string notr="true">OgreQtClass</string>
+  </property>
+  <property name="geometry" >
+   <rect>
+	<x>0</x>
+	<y>0</y>
+	<width>600</width>
+	<height>400</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>OgreQt</string>
+  </property>
+  <widget class="QMenuBar" name="menuBar" />
+  <widget class="QToolBar" name="mainToolBar" />
+  <widget class="QWidget" name="centralWidget" />
+  <widget class="QStatusBar" name="statusBar" />
+ </widget>
+ <layoutDefault spacing="6" margin="11" />
+ <pixmapfunction></pixmapfunction>
+ <resources>
+   <include location="ogreqt.qrc"/>
+ </resources>
+ <connections/>
+</UI>
