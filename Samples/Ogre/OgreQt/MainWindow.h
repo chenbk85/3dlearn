@@ -52,7 +52,6 @@ public:
 	bool                     mAppActive;
 
 	QTimer                  *mTimer;
-	void timerLoop();
 
 
 	OgreWidget*  mOgreWidget;
@@ -66,6 +65,14 @@ public:
 
 
 	void initHiddenRenderWindow();
+
+public Q_SLOTS:
+		void timerLoop();
+
+
+private:
+	QString mstrTime;
+
 
 };
 

@@ -43,13 +43,14 @@ MainWindow::MainWindow(QString args, QWidget *parent)
 	mTimer = new QTimer(this);
 	mTimer->setInterval(0);
 	connect(mTimer, SIGNAL(timeout()), this, SLOT(timerLoop()));
-	mTimer->start(1000);
-
+	mTimer->start();
 
 	//initHiddenRenderWindow();
 
 
 }
+
+
 MainWindow::~MainWindow(void)
 {
 	if (mTimer)
@@ -68,6 +69,14 @@ void MainWindow::setApplicationObject(QObject *obj)
 
 void MainWindow::timerLoop()
 {
+
+	//QDateTime time = QDateTime::currentDateTime();
+	////获取系统现在的时间
+	//mstrTime = time.toString("yyyy-MM-dd hh:mm:ss dddd");
+	////设置系统时间显示格式
+	////ui->label->setText(str);
+	////在标签上显示时间
+
 	mOgreWidget->update();
 
 	//if(mHasFileArgs)
