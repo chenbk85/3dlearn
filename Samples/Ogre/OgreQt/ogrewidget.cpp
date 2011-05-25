@@ -248,7 +248,7 @@ void OgreWidget::paintEvent(QPaintEvent* evt)
 		mOgreRoot->renderOneFrame();
 	}
 
-	mOgreRoot->renderOneFrame(0.01f);
+	//mOgreRoot->renderOneFrame(0.01f);
 	//    if(mOgreInitialised && OgitorsRoot::getSingletonPtr()->IsSceneLoaded() && !mRenderStop)
 	//    {
 	//        if(this->width() > 0 && this->height() > 0)

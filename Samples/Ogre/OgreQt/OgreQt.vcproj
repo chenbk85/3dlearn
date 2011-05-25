@@ -232,6 +232,17 @@
 			<File
 				RelativePath=".\ogreqt.qrc"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="RCC application.qrc"
+						CommandLine="D:\SDK\qt\qt-win-opensource-src-4.5.2\bin\rcc.exe -name ogreqt ogreqt.qrc -o tmp\rcc\debug_shared\qrc_ogreqt.cpp"
+						AdditionalDependencies="D:\SDK\qt\qt-win-opensource-src-4.5.2\bin\rcc.exe;ogreqt.qrc"
+						Outputs="tmp\rcc\debug_shared\qrc_ogreqt.cpp"
+					/>
+				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
@@ -241,37 +252,17 @@
 			SourceControlFiles="false"
 			>
 			<File
+				RelativePath=".\GeneratedFiles\Debug\moc_MainWindow.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\tmp\rcc\debug_shared\qrc_ogreqt.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\GeneratedFiles\ui_ogreqt.h"
 				>
 			</File>
-			<Filter
-				Name="Release"
-				Filter="cpp;moc"
-				SourceControlFiles="false"
-				>
-				<File
-					RelativePath=".\GeneratedFiles\Release\moc_ogreqt.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						ExcludedFromBuild="true"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-				</File>
-			</Filter>
-			<Filter
-				Name="Debug"
-				Filter="cpp;moc"
-				SourceControlFiles="false"
-				>
-				<File
-					RelativePath=".\GeneratedFiles\Debug\moc_MainWindow.cpp"
-					>
-				</File>
-			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\ogrewidget.hxx"
