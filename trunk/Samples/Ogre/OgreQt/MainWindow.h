@@ -40,6 +40,7 @@ typedef Ogre::vector<TabWidgetData>::type TabWidgetDataList;
 
 class MainWindow : public QMainWindow
 {
+ Q_OBJECT
 public:
 	//MainWindow(void);
 	~MainWindow(void);

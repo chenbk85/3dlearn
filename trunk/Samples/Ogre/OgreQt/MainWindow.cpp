@@ -41,7 +41,7 @@ MainWindow::MainWindow(QString args, QWidget *parent)
 	setCentralWidget(mEditorTab);
 
 	mTimer = new QTimer(this);
-	mTimer->setInterval(0);
+	mTimer->setInterval(1000/30);
 	connect(mTimer, SIGNAL(timeout()), this, SLOT(timerLoop()));
 	mTimer->start();
 
