@@ -1,4 +1,3 @@
-#include "ogreqt.h"
 #include <QtGui/QApplication>
 
 #include "MainWindow.h"
