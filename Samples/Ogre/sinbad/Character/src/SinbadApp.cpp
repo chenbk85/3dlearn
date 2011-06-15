@@ -88,21 +88,22 @@ bool SinbadApp::frameRenderingQueued(const FrameEvent& evt)
 		const Vector3& keyDirection  = mCharacter->getKeyDirection();
 		const Vector3& goalDirection  =  mCharacter->getGoaldirection();
 
-		//Ogre::String debuginfo;
-		//debuginfo+="key:[";
-		//debuginfo+=Ogre::StringConverter::toString( keyDirection.x );
-		//debuginfo+=",";
-		//debuginfo+=Ogre::StringConverter::toString( keyDirection.y );
-		//debuginfo+=",";
-		//debuginfo+=Ogre::StringConverter::toString( keyDirection.z );
+		Ogre::String debuginfo;
+		debuginfo+="key:[";
+		debuginfo+=Ogre::StringConverter::toString( keyDirection.x );
+		debuginfo+=",";
+		debuginfo+=Ogre::StringConverter::toString( keyDirection.y );
+		debuginfo+=",";
+		debuginfo+=Ogre::StringConverter::toString( keyDirection.z );
 
-		//debuginfo+="] goal:[";
-		//debuginfo+=Ogre::StringConverter::toString( goalDirection.x );
-		//debuginfo+=",";
-		//debuginfo+=Ogre::StringConverter::toString( goalDirection.y );
-		//debuginfo+=",";
-		//debuginfo+=Ogre::StringConverter::toString( goalDirection.z );
-		//debuginfo+="]";
+		debuginfo+="] goal:[";
+		debuginfo+=Ogre::StringConverter::toString( goalDirection.x );
+		debuginfo+=",";
+		debuginfo+=Ogre::StringConverter::toString( goalDirection.y );
+		debuginfo+=",";
+		debuginfo+=Ogre::StringConverter::toString( goalDirection.z );
+		debuginfo+="]";
+		mDebugInfoPanel->setParamValue(0 , debuginfo.c_str() );
 
 
 
@@ -110,16 +111,10 @@ bool SinbadApp::frameRenderingQueued(const FrameEvent& evt)
 		//Ogre::StringStream oss;
 		//oss<<"key:"<<setprecision(6)<<keyDirection.x<<" "<<keyDirection.y<<" "<<keyDirection.z<<" ";
 
-		Vector3 goalOffset = mCharacter->mCameraGoal->_getDerivedPosition() - mCharacter->mCameraNode->getPosition();
-		Ogre::StringStream ssGoal;
-		//int prec=numeric_limits<Real>::digits10; // 18
-		//ssGoal.precision(3);//¸²¸ÇÄ¬ÈÏ¾«¶È
-
-		//ssGoal<<"camera offset:"<<goalOffset;
-		ssGoal<<"goal:"<<(int)goalOffset.x<<" "<<(int)goalOffset.y<<" "\
-			<<(int)goalOffset.z;
-
-		mDebugInfoPanel->setParamValue(0 , ssGoal.str() );
+		//Vector3 goalOffset = mCharacter->mCameraGoal->_getDerivedPosition() - mCharacter->mCameraNode->getPosition();
+		//Ogre::StringStream ssGoal;
+		//ssGoal<<"goal:"<<(int)goalOffset.x<<" "<<(int)goalOffset.y<<" "<<(int)goalOffset.z;
+		//mDebugInfoPanel->setParamValue(0 , ssGoal.str() );
 
 		//Ogre::StringUtil::trim(str);
 		//Ogre::StringStream ssss;
@@ -160,10 +155,6 @@ bool SinbadApp::frameRenderingQueued(const FrameEvent& evt)
 			ss<<"["<<(int)v2.x<<","<<(int)v2.y<<","<<(int)v2.z<<"]";
 			mLab4->setCaption(ss.str());
 			ss.str("");
-
-
-
-
 		}
 		
 	}
@@ -413,12 +404,12 @@ void SinbadApp::setupContent()
 
 
 	createAxes();
-	createGrid();
-	createPath();
+	//createGrid();
+	//createPath();
 
 	//! 
 
-	setupBuilding(mSceneMgr);
+	//setupBuilding(mSceneMgr);
 
 
 	setupOverlay();

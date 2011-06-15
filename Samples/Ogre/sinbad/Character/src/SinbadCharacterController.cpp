@@ -202,14 +202,14 @@ void SinbadCharacterController::setupBody(SceneManager* sceneMgr)
 	mBodyNode = sceneMgr->getRootSceneNode()->createChildSceneNode("SinbadBody" , Vector3::UNIT_Y * CHAR_HEIGHT);
 	mBodyEnt = sceneMgr->createEntity("SinbadBody", "Sinbad.mesh");
 	mBodyNode->attachObject(mBodyEnt);
-	mBodyNode->showBoundingBox(true);
+	//mBodyNode->showBoundingBox(true);
 
 	//! campass
 	Entity* campass = sceneMgr->createEntity("axes.mesh");
 	SceneNode* node = mBodyNode->createChildSceneNode("campassnode");
 	node->attachObject(campass);
 	node->translate( 0 ,  0 ,5 );
-	node->scale(.5,.5,.5);
+	node->scale(.2,.2,.2);
 	MovableText* mtCampass = new MovableText("campass", "campass");
 	node->attachObject(mtCampass);
 
@@ -305,14 +305,15 @@ void SinbadCharacterController::setupCamera(Camera* cam)
 
 	mCameraGoal->attachObject(axes1);
 	//mCameraGoal->showBoundingBox(true);
-	//mCameraGoal->scale(.5 , .5 , .5);
+	//mCameraGoal->scale(.2 , .2 , .2);
 	mCameraPivot->attachObject(axes2);
-	//mCameraPivot->scale(.1 , .1 , .1);
+	//mCameraPivot->scale(.2 , .2 , .2);
 	//mCameraGoal->showBoundingBox(true);
 	// this is where the camera actually is
 	mCameraNode = cam->getSceneManager()->getRootSceneNode()->createChildSceneNode();
 	mCameraNode->setPosition(mCameraPivot->getPosition() + mCameraGoal->getPosition());
 	mCameraNode->attachObject(axes3);
+	//mCameraNode->scale(.2 , .2 , .2);
 
 
 
@@ -326,11 +327,10 @@ void SinbadCharacterController::setupCamera(Camera* cam)
 	mCameraNode->setFixedYawAxis(true);
 
 	// our model is quite small, so reduce the clipping planes
-	cam->setNearClipDistance(5);
-	cam->setFarClipDistance(300);
-	cam->setPosition(10 , 20 , 30 );
-	cam->lookAt(0,10,0);
-	//mCameraNode->attachObject(cam);
+	cam->setNearClipDistance(0.1);
+	cam->setFarClipDistance(100);
+	cam->setPosition(0 , 5 , 20 );
+	mCameraNode->attachObject(cam);
 
 	mPivotPitch = 0;
 
@@ -380,8 +380,9 @@ void SinbadCharacterController::updateBody(Real deltaTime)
 		//! 移动条件:自由模式、或者受控模式下按键方向不为0
 		if(mFreeLook || (mKeyDirection != Vector3::ZERO))
 		{
-
-			Quaternion toGoal = mBodyNode->getOrientation().zAxis().getRotationTo(mGoalDirection);
+			//! 角色的正前方
+			Vector3 charFront = mBodyNode->getOrientation().zAxis();
+			Quaternion toGoal = charFront.getRotationTo(mGoalDirection);
 
 			// calculate how much the character has to turn to face goal direction
 			Real yawToGoal = toGoal.getYaw().valueDegrees();
@@ -391,8 +392,17 @@ void SinbadCharacterController::updateBody(Real deltaTime)
 			if (mBaseAnimID == ANIM_JUMP_LOOP) yawAtSpeed *= 0.2f;
 
 			// turn as much as we can, but not more than we need to
-			if (yawToGoal < 0) yawToGoal = std::min<Real>(0, std::max<Real>(yawToGoal, yawAtSpeed)); //yawToGoal = Math::Clamp<Real>(yawToGoal, yawAtSpeed, 0);
-			else if (yawToGoal > 0) yawToGoal = std::max<Real>(0, std::min<Real>(yawToGoal, yawAtSpeed)); //yawToGoal = Math::Clamp<Real>(yawToGoal, 0, yawAtSpeed);
+			if (yawToGoal < 0) 
+			{
+				yawToGoal = std::min<Real>(0, std::max<Real>(yawToGoal, yawAtSpeed)); 
+				//yawToGoal = Math::Clamp<Real>(yawToGoal, yawAtSpeed, 0);
+			}
+			else if (yawToGoal > 0)
+			{
+				yawToGoal = std::max<Real>(0, std::min<Real>(yawToGoal, yawAtSpeed)); 
+				//yawToGoal = Math::Clamp<Real>(yawToGoal, 0, yawAtSpeed);
+			}
+			
 
 			mBodyNode->yaw(Degree(yawToGoal));
 
@@ -567,7 +577,6 @@ void SinbadCharacterController::updateCameraGoal(Real deltaYaw, Real deltaPitch,
 {
 	mCameraPivot->yaw(Degree(deltaYaw*2), Node::TS_WORLD);
 
-
 	// bound the pitch
 	if (!(mPivotPitch + deltaPitch > 25 && deltaPitch > 0) &&
 		!(mPivotPitch + deltaPitch < -60 && deltaPitch < 0))
@@ -577,7 +586,6 @@ void SinbadCharacterController::updateCameraGoal(Real deltaYaw, Real deltaPitch,
 	}
 
 	Real dist = mCameraGoal->_getDerivedPosition().distance(mCameraPivot->_getDerivedPosition());
-	Real dist2 = mCameraGoal->getPosition().distance(mCameraPivot->getPosition());
 
 	Real distChange = deltaZoom * dist;
 
