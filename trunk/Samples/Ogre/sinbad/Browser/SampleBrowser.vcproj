@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="9.00"
 	Name="SampleBrowser"
 	ProjectGUID="{F36E03B5-ACF5-4A67-970F-5FD569B8B820}"
+	RootNamespace="SampleBrowser"
 	Keyword="Win32Proj"
+	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform
@@ -16,8 +18,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="Debug"
-			IntermediateDirectory="SampleBrowser.dir\Debug"
+			OutputDirectory="$(Solutiondir)\bin\debug"
+			IntermediateDirectory="$(Solutiondir)\tmp\debug\$(ProjectName)"
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
@@ -50,7 +52,6 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions=" /Zm1000 /fp:fast"
 				Optimization="0"
 				InlineFunctionExpansion="0"
 				EnableIntrinsicFunctions="true"
@@ -82,15 +83,16 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
-				AdditionalOptions=" /STACK:10000000 /machine:X86 /debug"
 				AdditionalDependencies="kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib OgreMain_d.lib OgreRTShaderSystem_d.lib OIS_d.lib freetype2311_D.lib FreeImaged.lib zziplibd.lib zlibd.lib $(NOINHERIT)"
-				OutputFile="..\bin\Debug\SampleBrowser_d.exe"
+				OutputFile="$(OutDir)\SampleBrowser_d.exe"
 				Version="0.0"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(OGRE_HOME)\lib\debug;E:\GameDev\opensource\OGRE\source\ogre_src_v1-7-2\Dependencies\lib\Debug"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="..\..\bin\Debug/SampleBrowser_d.pdb"
 				SubSystem="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				ImportLibrary="..\..\lib\Debug\SampleBrowser_d.lib"
 			/>
 			<Tool
@@ -110,9 +112,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -191,6 +190,8 @@
 				AdditionalLibraryDirectories=""
 				ProgramDatabaseFile="..\..\bin\Release/SampleBrowser.pdb"
 				SubSystem="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				ImportLibrary="..\..\lib\Release\SampleBrowser.lib"
 			/>
 			<Tool
@@ -210,9 +211,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -291,6 +289,8 @@
 				AdditionalLibraryDirectories=""
 				ProgramDatabaseFile="..\..\bin\MinSizeRel/SampleBrowser.pdb"
 				SubSystem="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				ImportLibrary="..\..\lib\MinSizeRel\SampleBrowser.lib"
 			/>
 			<Tool
@@ -310,9 +310,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -393,6 +390,8 @@
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="..\..\bin\RelWithDebInfo/SampleBrowser.pdb"
 				SubSystem="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				ImportLibrary="..\..\lib\RelWithDebInfo\SampleBrowser.lib"
 			/>
 			<Tool
@@ -412,9 +411,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
