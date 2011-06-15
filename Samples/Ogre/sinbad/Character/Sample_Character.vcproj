@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="9.00"
 	Name="SinbadApp"
 	ProjectGUID="{0C5FB3AA-0702-4796-B893-F38793D4B414}"
 	RootNamespace="SinbadApp"
 	Keyword="Win32Proj"
+	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform
@@ -17,8 +18,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="Debug"
-			IntermediateDirectory="Sample_Character.dir\Debug"
+			OutputDirectory="$(Solutiondir)\bin\debug"
+			IntermediateDirectory="$(Solutiondir)\tmp\debug\$(ProjectName)"
 			ConfigurationType="2"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
@@ -51,7 +52,6 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions=" /Zm1000 /fp:fast"
 				Optimization="0"
 				InlineFunctionExpansion="0"
 				EnableIntrinsicFunctions="true"
@@ -82,14 +82,15 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
-				AdditionalOptions=" /STACK:10000000 /machine:X86 /debug"
 				AdditionalDependencies="kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib OgreMain_d.lib OgreRTShaderSystem_d.lib OIS_d.lib freetype2311_D.lib FreeImaged.lib zziplibd.lib zlibd.lib $(NOINHERIT)"
-				OutputFile="..\bin\Debug\Sample_Character_d.dll"
+				OutputFile="$(OutDir)\Sample_Character_d.dll"
 				Version="0.0"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(OGRE_HOME)\lib\debug;E:\GameDev\opensource\OGRE\source\ogre_src_v1-7-2\Dependencies\lib\Debug"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="..\..\bin\Debug\Sample_Character_d.pdb"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				ImportLibrary="..\..\lib\Debug\Sample_Character_d.lib"
 			/>
 			<Tool
@@ -109,9 +110,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -188,6 +186,8 @@
 				LinkIncremental="1"
 				AdditionalLibraryDirectories=""
 				ProgramDatabaseFile="..\..\bin\Release\Sample_Character.pdb"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				ImportLibrary="..\..\lib\Release\Sample_Character.lib"
 			/>
 			<Tool
@@ -207,9 +207,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -286,6 +283,8 @@
 				LinkIncremental="1"
 				AdditionalLibraryDirectories=""
 				ProgramDatabaseFile="..\..\bin\MinSizeRel\Sample_Character.pdb"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				ImportLibrary="..\..\lib\MinSizeRel\Sample_Character.lib"
 			/>
 			<Tool
@@ -305,9 +304,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -386,6 +382,8 @@
 				AdditionalLibraryDirectories=""
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="..\..\bin\RelWithDebInfo\Sample_Character.pdb"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				ImportLibrary="..\..\lib\RelWithDebInfo\Sample_Character.lib"
 			/>
 			<Tool
@@ -405,9 +403,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"

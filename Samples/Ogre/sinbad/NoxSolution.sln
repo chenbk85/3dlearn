@@ -1,12 +1,12 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual Studio 2005
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SampleBrowser", "Browser\SampleBrowser.vcproj", "{F36E03B5-ACF5-4A67-970F-5FD569B8B820}"
 	ProjectSection(ProjectDependencies) = postProject
 		{0C5FB3AA-0702-4796-B893-F38793D4B414} = {0C5FB3AA-0702-4796-B893-F38793D4B414}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sample_Character", "Character\Sample_Character.vcproj", "{0C5FB3AA-0702-4796-B893-F38793D4B414}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SinbadApp", "Character\Sample_Character.vcproj", "{0C5FB3AA-0702-4796-B893-F38793D4B414}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
