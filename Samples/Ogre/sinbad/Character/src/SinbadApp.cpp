@@ -369,7 +369,7 @@ void SinbadApp::setupContent()
 	mCameraMan->setStyle(CS_MANUAL);
 
 	// use a small amount of ambient lighting
-	mSceneMgr->setAmbientLight(ColourValue(0.6, 0.6, 0.6));
+	//mSceneMgr->setAmbientLight(ColourValue(0.6, 0.6, 0.6));
 
 	// add a bright light above the scene
 	Light* light = mSceneMgr->createLight();

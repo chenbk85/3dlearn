@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "NoxTrayListener.h"
 
 using namespace OIS;

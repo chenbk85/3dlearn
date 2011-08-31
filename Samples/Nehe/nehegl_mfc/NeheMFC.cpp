@@ -16,7 +16,7 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-#define	SHOW_DISPLAY_SETTINGS	TRUE		//set to false if you don't want this
+#define	SHOW_DISPLAY_SETTINGS	FALSE		//set to false if you don't want this
 
 #define	CLASS_NAME		"OpenGL"
 #define WINDOW_TITLE	"NeheMFC"

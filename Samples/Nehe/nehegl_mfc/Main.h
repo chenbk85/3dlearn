@@ -9,6 +9,8 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
+#include <gl\glaux.h>		// Header File For The Glaux Library
+
 class CMain  
 {
 public:
@@ -27,6 +29,15 @@ public:
 	virtual ~CMain();
 
 	void DrawAxis();
+
+	float angle,rot1,rot2;
+
+	int LoadGLTextures();
+
+	AUX_RGBImageRec *LoadBMP(char *Filename);
+
+	GLuint	texture[1];			// Storage For One Texture ( NEW )
+
 
 };
 

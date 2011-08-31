@@ -84,7 +84,7 @@ void OgreWrap::CreateCamera(void)
 	m_Camera->setPosition(Vector3(0,0,500));
 	// Look back along -Z
 	m_Camera->lookAt(Vector3(0,0,-300));
-	m_Camera->setNearClipDistance(5);
+	m_Camera->setNearClipDistance(1);
 }
 // =============================================================================
 // CChildView::CreateViewPort(void)
@@ -95,7 +95,7 @@ void OgreWrap::CreateViewPort(RECT& rect)
 {
 	// Create one viewport, entire window
 	Ogre::Viewport* vp = m_Window->addViewport(m_Camera);
-	vp->setBackgroundColour(Ogre::ColourValue(0,0,0));
+	vp->setBackgroundColour(Ogre::ColourValue(0,0,1));
 
 	// Alter the camera aspect ratio to match the viewport
 	float aspact = (rect.right - rect.left)/(rect.bottom - rect.top);
@@ -125,7 +125,7 @@ void OgreWrap::CreateScene(void)
 	Animation::setDefaultRotationInterpolationMode(Animation::RIM_LINEAR);
 
 	// Set ambient light
-	m_SceneManager->setAmbientLight(ColourValue(0.5, 0.5, 0.5));
+	m_SceneManager->setAmbientLight(ColourValue(0.5, 0.5, 1));
 
 	// Create the robot scene
 	m_scene.CreateScene(m_SceneManager);
@@ -133,7 +133,7 @@ void OgreWrap::CreateScene(void)
 	// Give it a little ambience with lights
 	Light* l;
 	l = m_SceneManager->createLight("BlueLight");
-	l->setPosition(-200,-80,-100);
+	l->setPosition(-0,100,100);
 	l->setDiffuseColour(0.5, 0.5, 1.0);
 
 	l = m_SceneManager->createLight("GreenLight");
@@ -141,7 +141,7 @@ void OgreWrap::CreateScene(void)
 	l->setDiffuseColour(0.5, 1.0, 0.5);
 
 	// Position the camera
-	m_Camera->setPosition(0, 50, 200);
+	m_Camera->setPosition(50, 150, 200);
 	m_Camera->lookAt(0, 50, 0);
 
 	// Add the frame listenter

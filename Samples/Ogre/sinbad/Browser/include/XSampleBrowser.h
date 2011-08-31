@@ -688,7 +688,8 @@ namespace XRENREN
 			windowResized(mWindow);   // adjust menus for resolution
 
 			// if this is our first time running, and there's a startup sample, run it
-			if (startupSample && mFirstRun) runSample(startupSample);
+			if (startupSample && mFirstRun)
+				runSample(startupSample);
 		}
 
 	protected:

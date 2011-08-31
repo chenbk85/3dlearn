@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "MoveDemoListener.h"
 //MoveDemoListener::MoveDemoListener(void)
 //{
@@ -8,9 +9,9 @@
 //}
 
 MoveDemoListener::MoveDemoListener(RenderWindow* win, Camera* cam, OgreBites::SdkCameraMan* cameraMan , OgreBites::SdkTrayManager* trayMgr 
-, OIS::Mouse*    mouse,	OIS::Keyboard* keyboard ,  SceneNode *sn, Entity *ent, std::deque<Vector3> &walk
-)
- : NoxFrameListener(win, cam , cameraMan , trayMgr ,mouse , keyboard ,  false, false), mNode(sn), mEntity(ent), mWalkList( walk )
+								   , OIS::Mouse*    mouse,	OIS::Keyboard* keyboard ,  SceneNode *sn, Entity *ent, std::deque<Vector3> &walk
+								   )
+								   : NoxFrameListener(win, cam , cameraMan , trayMgr ,mouse , keyboard ,  false, false), mNode(sn), mEntity(ent), mWalkList( walk )
 {
 
 	//// Set idle animation
@@ -37,7 +38,7 @@ bool MoveDemoListener::nextLocation( )
 
 
 	}
-		//return false;
+	//return false;
 
 	mDestination = mWalkList.front();  // this gets the front of the deque
 	mWalkList.pop_front();             // this removes the front of the deque
@@ -61,8 +62,8 @@ bool MoveDemoListener::nextLocation( )
 		Ogre::Quaternion quat = src.getRotationTo(mDirection);
 		mNode->rotate(quat);
 	} // else
-		
-	
+
+
 	//Ogre::Quaternion quat = src.getRotationTo(mDirection);
 
 	//mNode->rotate(quat);

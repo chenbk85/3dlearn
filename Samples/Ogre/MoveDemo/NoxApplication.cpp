@@ -1,10 +1,11 @@
+#include "stdafx.h"
 #include "NoxApplication.h"
 
 NoxApplication::NoxApplication(void)
- : mGUIRenderer(NULL)
- //, mVolQuery(NULL)
- , mMouseListener(NULL)
- , mFrameListener(NULL)
+: mGUIRenderer(NULL)
+//, mVolQuery(NULL)
+, mMouseListener(NULL)
+, mFrameListener(NULL)
 {
 
 }
@@ -83,12 +84,12 @@ void NoxApplication::createListener(void)
 	WindowEventUtilities::addWindowEventListener(mWindow, mWindowListener);	
 
 	//! frame listener
-	mFrameListener= new MoveDemoListener(mWindow, mCamera, mCameraMan , mTrayMgr ,mMouse , mKeyboard ,  mNode, mEntity, mWalkList);
+	mFrameListener= new MoveDemoListener(mWindow, mCamera, mCameraMan , mTrayMgr ,mMouse , mKeyboard ,  mRobotNode, mEntity, mWalkList);
 	mFrameListener->showDebugOverlay(true);
 	mRoot->addFrameListener(mFrameListener);
 
 
-	
+
 
 }
 
@@ -111,9 +112,9 @@ void NoxApplication::createScene(void)
 
 	// Create the entity
 	mEntity = mSceneMgr->createEntity( "Robot", "robot.mesh" );
-	mNode = mSceneMgr->getRootSceneNode( )->createChildSceneNode( "RobotNode", Vector3( 0.0f, 0.0f, 25.0f ) );
-	mNode->attachObject( mEntity );
-	mNode->showBoundingBox(true);
+	mRobotNode = mSceneMgr->getRootSceneNode( )->createChildSceneNode( "RobotNode", Vector3( 0.0f, 0.0f, 25.0f ) );
+	mRobotNode->attachObject( mEntity );
+	//mRobotNode->showBoundingBox(true);
 
 
 	// Create the walking list
@@ -132,23 +133,23 @@ void NoxApplication::createScene(void)
 	node->yaw( Degree(-180) );
 
 
-	ent = mSceneMgr->createEntity( "Knot1", "knot.mesh" );
+	ent = mSceneMgr->createEntity( "Knot1", "axes.mesh" );
 	node = mSceneMgr->getRootSceneNode( )->createChildSceneNode( "Knot1Node",
-		Vector3(  0.0f, -10.0f,  25.0f ) );
+		Vector3(  0.0f, 0.0f,  25.0f ) );
 	node->attachObject( ent );
-	node->setScale( 0.1f, 0.1f, 0.1f );
+	//node->setScale( 0.1f, 0.1f, 0.1f );
 
-	ent = mSceneMgr->createEntity( "Knot2", "knot.mesh" );
+	ent = mSceneMgr->createEntity( "Knot2", "axes.mesh" );
 	node = mSceneMgr->getRootSceneNode( )->createChildSceneNode( "Knot2Node",
-		Vector3( 550.0f, -10.0f,  50.0f ) );
+		Vector3( 550.0f, -0.0f,  50.0f ) );
 	node->attachObject( ent );
-	node->setScale( 0.1f, 0.1f, 0.1f );
+	//node->setScale( 0.1f, 0.1f, 0.1f );
 
-	ent = mSceneMgr->createEntity( "Knot3", "knot.mesh" );
+	ent = mSceneMgr->createEntity( "Knot3", "axes.mesh" );
 	node = mSceneMgr->getRootSceneNode( )->createChildSceneNode( "Knot3Node",
-		Vector3(-100.0f, -10.0f,-200.0f ) );
+		Vector3(-100.0f, -0.0f,-200.0f ) );
 	node->attachObject( ent );
-	node->setScale( 0.1f, 0.1f, 0.1f );
+	//node->setScale( 0.1f, 0.1f, 0.1f );
 
 
 	// Set the camera to look at our handywork

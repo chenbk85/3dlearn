@@ -20,7 +20,7 @@ public:
 
 protected:
 	Entity *mEntity;                // The entity of the object we are animating
-	SceneNode *mNode;               // The SceneNode of the object we are moving
+	SceneNode *mRobotNode;               // The SceneNode of the object we are moving
 	std::deque<Vector3> mWalkList;  // A deque containing the waypoints
 
 	void createScene(void);
