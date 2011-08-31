@@ -112,7 +112,7 @@ static const struct luaL_Reg arrayLib_m [] =
 	{"set" , setarray	},
 	{"get" , getarray	},
 	{"size", getsize	},
-	{"--tostring", array2string	},
+	{"__tostring", array2string	},
 	{NULL ,  NULL		}
 };
 
@@ -120,7 +120,7 @@ int luaopen_arry(lua_State* L)
 {
 	luaL_newmetatable(L , "LuaBook.array");
 	lua_pushvalue(L ,-1);
-	lua_setfield(L , -2 , "--index");
+	lua_setfield(L , -2 , "__index");
 	
 	luaL_register(L , NULL  , arrayLib_m);
 	luaL_register(L , "array" , arrayLib_f );
