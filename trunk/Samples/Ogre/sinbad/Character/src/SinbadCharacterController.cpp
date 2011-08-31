@@ -205,13 +205,13 @@ void SinbadCharacterController::setupBody(SceneManager* sceneMgr)
 	//mBodyNode->showBoundingBox(true);
 
 	//! campass
-	Entity* campass = sceneMgr->createEntity("axes.mesh");
-	SceneNode* node = mBodyNode->createChildSceneNode("campassnode");
-	node->attachObject(campass);
-	node->translate( 0 ,  0 ,5 );
-	node->scale(.2,.2,.2);
-	MovableText* mtCampass = new MovableText("campass", "campass");
-	node->attachObject(mtCampass);
+	//Entity* campass = sceneMgr->createEntity("axes.mesh");
+	//SceneNode* node = mBodyNode->createChildSceneNode("campassnode");
+	//node->attachObject(campass);
+	//node->translate( 0 ,  0 ,5 );
+	//node->scale(.2,.2,.2);
+	//MovableText* mtCampass = new MovableText("campass", "campass");
+	//node->attachObject(mtCampass);
 
 
 
@@ -299,20 +299,20 @@ void SinbadCharacterController::setupCamera(Camera* cam)
 	mCameraGoal = mCameraPivot->createChildSceneNode(Vector3(0, 0, 15));
 
 
-	Entity* axes1 = cam->getSceneManager()->createEntity("axes.mesh");
-	Entity* axes2 = cam->getSceneManager()->createEntity("axes.mesh");
-	Entity* axes3 = cam->getSceneManager()->createEntity("axes.mesh");
+	//Entity* axes1 = cam->getSceneManager()->createEntity("axes.mesh");
+	//Entity* axes2 = cam->getSceneManager()->createEntity("axes.mesh");
+	//Entity* axes3 = cam->getSceneManager()->createEntity("axes.mesh");
 
-	mCameraGoal->attachObject(axes1);
+	//mCameraGoal->attachObject(axes1);
 	//mCameraGoal->showBoundingBox(true);
 	//mCameraGoal->scale(.2 , .2 , .2);
-	mCameraPivot->attachObject(axes2);
+	//mCameraPivot->attachObject(axes2);
 	//mCameraPivot->scale(.2 , .2 , .2);
 	//mCameraGoal->showBoundingBox(true);
 	// this is where the camera actually is
 	mCameraNode = cam->getSceneManager()->getRootSceneNode()->createChildSceneNode();
 	mCameraNode->setPosition(mCameraPivot->getPosition() + mCameraGoal->getPosition());
-	mCameraNode->attachObject(axes3);
+	//mCameraNode->attachObject(axes3);
 	//mCameraNode->scale(.2 , .2 , .2);
 
 
@@ -332,21 +332,23 @@ void SinbadCharacterController::setupCamera(Camera* cam)
 	cam->setPosition(0 , 5 , 20 );
 	mCameraNode->attachObject(cam);
 
+	// mCameraNode->lookAt(mCameraPivot->_getDerivedPosition(), Node::TS_WORLD);
+
+	//mCameraPivot->lookAt(mBodyNode->_getDerivedPosition() , Node::TS_WORLD);
+
 	mPivotPitch = 0;
-
-
 	{
-		MovableText* pivotNode = new MovableText("pivotNode", "pivotNode");
-		MovableText* goalNode = new MovableText("goalNode", "goalNode");
-		MovableText* camNode = new MovableText("camNode", "camNode");
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   		//MovableText* pivotNode = new MovableText("pivotNode", "pivotNode");
+		//MovableText* goalNode = new MovableText("goalNode", "goalNode");
+		//MovableText* camNode = new MovableText("camNode", "camNode");
 
-		mCameraPivot->attachObject(pivotNode);
-		mCameraGoal->attachObject(goalNode);
-		mCameraNode->attachObject(camNode);
+		//mCameraPivot->attachObject(pivotNode);
+		//mCameraGoal->attachObject(goalNode);
+		//mCameraNode->attachObject(camNode);
 
-		pivotNode->setColor(ColourValue::Red);
-		goalNode->setColor(ColourValue::Green);
-		camNode->setColor(ColourValue::Blue);
+		//pivotNode->setColor(ColourValue::Red);
+		//goalNode->setColor(ColourValue::Green);
+		//camNode->setColor(ColourValue::Blue);
 		
 
 		
@@ -565,6 +567,18 @@ void SinbadCharacterController::updateCamera(Real deltaTime)
 {
 	// place the camera pivot roughly at the character's shoulder
 	mCameraPivot->setPosition(mBodyNode->getPosition() + Vector3::UNIT_Y * CAM_HEIGHT);
+	
+	/*
+	//! 将pivot对准角色的正前方，注意此时相机的+Z必须和角色的+Z相反，因为相机时从+Z看向-Z的
+	//! 这样修改后，就完成了一个第一人称的相机，和魔兽世界类似
+	//! W键始终让角色往自身正前方走，而不是相机的正前方
+	Vector3 front = mCameraPivot->getOrientation().zAxis();
+	Vector3 goal  = -mBodyNode->getOrientation().zAxis();
+	Quaternion toGoal = front.getRotationTo(goal);
+	Real yawToGoal = toGoal.getYaw().valueDegrees();
+	mCameraPivot->yaw(Degree(yawToGoal) , Node::TS_WORLD );
+	*/
+
 	// move the camera smoothly to the goal
 	Vector3 goalOffset = mCameraGoal->_getDerivedPosition() - mCameraNode->getPosition();
 
@@ -575,7 +589,7 @@ void SinbadCharacterController::updateCamera(Real deltaTime)
 
 void SinbadCharacterController::updateCameraGoal(Real deltaYaw, Real deltaPitch, Real deltaZoom)
 {
-	mCameraPivot->yaw(Degree(deltaYaw*2), Node::TS_WORLD);
+	mCameraPivot->yaw(Degree(deltaYaw*10), Node::TS_WORLD);
 
 	// bound the pitch
 	if (!(mPivotPitch + deltaPitch > 25 && deltaPitch > 0) &&

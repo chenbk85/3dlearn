@@ -237,11 +237,6 @@ void OgreWidget::paintEvent(QPaintEvent* evt)
 		//InitOgre();
 		mogreHandle = new OgreWrap;
 		mogreHandle->SetupOgre(this->winId());
-
-		//SetTimer(1 , 30, NULL);
-		//mTimer.Stop();
-		//mTimer.Start(1000 / mTargetFPS);
-
 	}
 	else
 	{

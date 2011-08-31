@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "SelectionBox.h"
 
 SelectionBox::SelectionBox(const Ogre::String& name): Ogre::ManualObject(name)

@@ -1,5 +1,5 @@
+#include "stdafx.h"
 #include "NoxWindowListener.h"
-#include <OgreRenderWindow.h>
 
 
 NoxWindowListener::NoxWindowListener(Ogre::RenderWindow* window , OIS::InputManager* inputMgr 

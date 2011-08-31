@@ -122,102 +122,102 @@ public:
 
 	virtual bool processUnbufferedKeyInput(const FrameEvent& evt)
 	{
-//		Real moveScale = mMoveScale;
-//		if(mKeyboard->isKeyDown(OIS::KC_LSHIFT))
-//			moveScale *= 10;
-//
-//		if(mKeyboard->isKeyDown(OIS::KC_A))
-//			mTranslateVector.x = -moveScale;	// Move camera left
-//
-//		if(mKeyboard->isKeyDown(OIS::KC_D))
-//			mTranslateVector.x = moveScale;	// Move camera RIGHT
-//
-//		if(mKeyboard->isKeyDown(OIS::KC_UP) || mKeyboard->isKeyDown(OIS::KC_W) )
-//			mTranslateVector.z = -moveScale;	// Move camera forward
-//
-//		if(mKeyboard->isKeyDown(OIS::KC_DOWN) || mKeyboard->isKeyDown(OIS::KC_S) )
-//			mTranslateVector.z = moveScale;	// Move camera backward
-//
-//		if(mKeyboard->isKeyDown(OIS::KC_PGUP))
-//			mTranslateVector.y = moveScale;	// Move camera up
-//
-//		if(mKeyboard->isKeyDown(OIS::KC_PGDOWN))
-//			mTranslateVector.y = -moveScale;	// Move camera down
-//
-//		if(mKeyboard->isKeyDown(OIS::KC_RIGHT))
-//			mCamera->yaw(-mRotScale);
-//
-//		if(mKeyboard->isKeyDown(OIS::KC_LEFT))
-//			mCamera->yaw(mRotScale);
-//
-//		if( mKeyboard->isKeyDown(OIS::KC_ESCAPE) || mKeyboard->isKeyDown(OIS::KC_Q) )
-//			return false;
-//
-//		if( mKeyboard->isKeyDown(OIS::KC_F) && mTimeUntilNextToggle <= 0 )
-//		{
-//			mStatsOn = !mStatsOn;
-//			showDebugOverlay(mStatsOn);
-//			mTimeUntilNextToggle = 1;
-//		}
-//
-//		if( mKeyboard->isKeyDown(OIS::KC_T) && mTimeUntilNextToggle <= 0 )
-//		{
-//			switch(mFiltering)
-//			{
-//			case TFO_BILINEAR:
-//				mFiltering = TFO_TRILINEAR;
-//				mAniso = 1;
-//				break;
-//			case TFO_TRILINEAR:
-//				mFiltering = TFO_ANISOTROPIC;
-//				mAniso = 8;
-//				break;
-//			case TFO_ANISOTROPIC:
-//				mFiltering = TFO_BILINEAR;
-//				mAniso = 1;
-//				break;
-//			default: break;
-//			}
-//			MaterialManager::getSingleton().setDefaultTextureFiltering(mFiltering);
-//			MaterialManager::getSingleton().setDefaultAnisotropy(mAniso);
-//
-//			showDebugOverlay(mStatsOn);
-//			mTimeUntilNextToggle = 1;
-//		}
-//
-//		if(mKeyboard->isKeyDown(OIS::KC_SYSRQ) && mTimeUntilNextToggle <= 0)
-//		{
-//			std::ostringstream ss;
-//			ss << "screenshot_" << ++mNumScreenShots << ".png";
-//			mWindow->writeContentsToFile(ss.str());
-//			mTimeUntilNextToggle = 0.5;
-//			mDebugText = "Saved: " + ss.str();
-//		}
-//
-//		if(mKeyboard->isKeyDown(OIS::KC_R) && mTimeUntilNextToggle <=0)
-//		{
-//			mSceneDetailIndex = (mSceneDetailIndex+1)%3 ;
-//			switch(mSceneDetailIndex) {
-//case 0 : mCamera->setPolygonMode(PM_SOLID); break;
-//case 1 : mCamera->setPolygonMode(PM_WIREFRAME); break;
-//case 2 : mCamera->setPolygonMode(PM_POINTS); break;
-//			}
-//			mTimeUntilNextToggle = 0.5;
-//		}
-//
-//		static bool displayCameraDetails = false;
-//		if(mKeyboard->isKeyDown(OIS::KC_P) && mTimeUntilNextToggle <= 0)
-//		{
-//			displayCameraDetails = !displayCameraDetails;
-//			mTimeUntilNextToggle = 0.5;
-//			if (!displayCameraDetails)
-//				mDebugText = "";
-//		}
-//
-//		// Print camera details
-//		if(displayCameraDetails)
-//			mDebugText = "P: " + StringConverter::toString(mCamera->getDerivedPosition()) +
-//			" " + "O: " + StringConverter::toString(mCamera->getDerivedOrientation());
+		//		Real moveScale = mMoveScale;
+		//		if(mKeyboard->isKeyDown(OIS::KC_LSHIFT))
+		//			moveScale *= 10;
+		//
+		//		if(mKeyboard->isKeyDown(OIS::KC_A))
+		//			mTranslateVector.x = -moveScale;	// Move camera left
+		//
+		//		if(mKeyboard->isKeyDown(OIS::KC_D))
+		//			mTranslateVector.x = moveScale;	// Move camera RIGHT
+		//
+		//		if(mKeyboard->isKeyDown(OIS::KC_UP) || mKeyboard->isKeyDown(OIS::KC_W) )
+		//			mTranslateVector.z = -moveScale;	// Move camera forward
+		//
+		//		if(mKeyboard->isKeyDown(OIS::KC_DOWN) || mKeyboard->isKeyDown(OIS::KC_S) )
+		//			mTranslateVector.z = moveScale;	// Move camera backward
+		//
+		//		if(mKeyboard->isKeyDown(OIS::KC_PGUP))
+		//			mTranslateVector.y = moveScale;	// Move camera up
+		//
+		//		if(mKeyboard->isKeyDown(OIS::KC_PGDOWN))
+		//			mTranslateVector.y = -moveScale;	// Move camera down
+		//
+		//		if(mKeyboard->isKeyDown(OIS::KC_RIGHT))
+		//			mCamera->yaw(-mRotScale);
+		//
+		//		if(mKeyboard->isKeyDown(OIS::KC_LEFT))
+		//			mCamera->yaw(mRotScale);
+		//
+		//		if( mKeyboard->isKeyDown(OIS::KC_ESCAPE) || mKeyboard->isKeyDown(OIS::KC_Q) )
+		//			return false;
+		//
+		//		if( mKeyboard->isKeyDown(OIS::KC_F) && mTimeUntilNextToggle <= 0 )
+		//		{
+		//			mStatsOn = !mStatsOn;
+		//			showDebugOverlay(mStatsOn);
+		//			mTimeUntilNextToggle = 1;
+		//		}
+		//
+		//		if( mKeyboard->isKeyDown(OIS::KC_T) && mTimeUntilNextToggle <= 0 )
+		//		{
+		//			switch(mFiltering)
+		//			{
+		//			case TFO_BILINEAR:
+		//				mFiltering = TFO_TRILINEAR;
+		//				mAniso = 1;
+		//				break;
+		//			case TFO_TRILINEAR:
+		//				mFiltering = TFO_ANISOTROPIC;
+		//				mAniso = 8;
+		//				break;
+		//			case TFO_ANISOTROPIC:
+		//				mFiltering = TFO_BILINEAR;
+		//				mAniso = 1;
+		//				break;
+		//			default: break;
+		//			}
+		//			MaterialManager::getSingleton().setDefaultTextureFiltering(mFiltering);
+		//			MaterialManager::getSingleton().setDefaultAnisotropy(mAniso);
+		//
+		//			showDebugOverlay(mStatsOn);
+		//			mTimeUntilNextToggle = 1;
+		//		}
+		//
+		//		if(mKeyboard->isKeyDown(OIS::KC_SYSRQ) && mTimeUntilNextToggle <= 0)
+		//		{
+		//			std::ostringstream ss;
+		//			ss << "screenshot_" << ++mNumScreenShots << ".png";
+		//			mWindow->writeContentsToFile(ss.str());
+		//			mTimeUntilNextToggle = 0.5;
+		//			mDebugText = "Saved: " + ss.str();
+		//		}
+		//
+		//		if(mKeyboard->isKeyDown(OIS::KC_R) && mTimeUntilNextToggle <=0)
+		//		{
+		//			mSceneDetailIndex = (mSceneDetailIndex+1)%3 ;
+		//			switch(mSceneDetailIndex) {
+		//case 0 : mCamera->setPolygonMode(PM_SOLID); break;
+		//case 1 : mCamera->setPolygonMode(PM_WIREFRAME); break;
+		//case 2 : mCamera->setPolygonMode(PM_POINTS); break;
+		//			}
+		//			mTimeUntilNextToggle = 0.5;
+		//		}
+		//
+		//		static bool displayCameraDetails = false;
+		//		if(mKeyboard->isKeyDown(OIS::KC_P) && mTimeUntilNextToggle <= 0)
+		//		{
+		//			displayCameraDetails = !displayCameraDetails;
+		//			mTimeUntilNextToggle = 0.5;
+		//			if (!displayCameraDetails)
+		//				mDebugText = "";
+		//		}
+		//
+		//		// Print camera details
+		//		if(displayCameraDetails)
+		//			mDebugText = "P: " + StringConverter::toString(mCamera->getDerivedPosition()) +
+		//			" " + "O: " + StringConverter::toString(mCamera->getDerivedOrientation());
 
 		// Return true to continue rendering
 		return true;
@@ -305,42 +305,42 @@ public:
 		return true;
 	}
 
-	protected:
-		virtual void updateStats(void)
-		{
-			static String currFps = "Current FPS: ";
-			static String avgFps = "Average FPS: ";
-			static String bestFps = "Best FPS: ";
-			static String worstFps = "Worst FPS: ";
-			static String tris = "Triangle Count: ";
-			static String batches = "Batch Count: ";
+protected:
+	virtual void updateStats(void)
+	{
+		static String currFps = "Current FPS: ";
+		static String avgFps = "Average FPS: ";
+		static String bestFps = "Best FPS: ";
+		static String worstFps = "Worst FPS: ";
+		static String tris = "Triangle Count: ";
+		static String batches = "Batch Count: ";
 
-			// update stats when necessary
-			try {
-				OverlayElement* guiAvg = OverlayManager::getSingleton().getOverlayElement("Core/AverageFps");
-				OverlayElement* guiCurr = OverlayManager::getSingleton().getOverlayElement("Core/CurrFps");
-				OverlayElement* guiBest = OverlayManager::getSingleton().getOverlayElement("Core/BestFps");
-				OverlayElement* guiWorst = OverlayManager::getSingleton().getOverlayElement("Core/WorstFps");
+		// update stats when necessary
+		try {
+			OverlayElement* guiAvg = OverlayManager::getSingleton().getOverlayElement("Core/AverageFps");
+			OverlayElement* guiCurr = OverlayManager::getSingleton().getOverlayElement("Core/CurrFps");
+			OverlayElement* guiBest = OverlayManager::getSingleton().getOverlayElement("Core/BestFps");
+			OverlayElement* guiWorst = OverlayManager::getSingleton().getOverlayElement("Core/WorstFps");
 
-				const RenderTarget::FrameStats& stats = mWindow->getStatistics();
-				guiAvg->setCaption(avgFps + StringConverter::toString(stats.avgFPS));
-				guiCurr->setCaption(currFps + StringConverter::toString(stats.lastFPS));
-				guiBest->setCaption(bestFps + StringConverter::toString(stats.bestFPS)
-					+" "+StringConverter::toString(stats.bestFrameTime)+" ms");
-				guiWorst->setCaption(worstFps + StringConverter::toString(stats.worstFPS)
-					+" "+StringConverter::toString(stats.worstFrameTime)+" ms");
+			const RenderTarget::FrameStats& stats = mWindow->getStatistics();
+			guiAvg->setCaption(avgFps + StringConverter::toString(stats.avgFPS));
+			guiCurr->setCaption(currFps + StringConverter::toString(stats.lastFPS));
+			guiBest->setCaption(bestFps + StringConverter::toString(stats.bestFPS)
+				+" "+StringConverter::toString(stats.bestFrameTime)+" ms");
+			guiWorst->setCaption(worstFps + StringConverter::toString(stats.worstFPS)
+				+" "+StringConverter::toString(stats.worstFrameTime)+" ms");
 
-				OverlayElement* guiTris = OverlayManager::getSingleton().getOverlayElement("Core/NumTris");
-				guiTris->setCaption(tris + StringConverter::toString(stats.triangleCount));
+			OverlayElement* guiTris = OverlayManager::getSingleton().getOverlayElement("Core/NumTris");
+			guiTris->setCaption(tris + StringConverter::toString(stats.triangleCount));
 
-				OverlayElement* guiBatches = OverlayManager::getSingleton().getOverlayElement("Core/NumBatches");
-				guiBatches->setCaption(batches + StringConverter::toString(stats.batchCount));
+			OverlayElement* guiBatches = OverlayManager::getSingleton().getOverlayElement("Core/NumBatches");
+			guiBatches->setCaption(batches + StringConverter::toString(stats.batchCount));
 
-				OverlayElement* guiDbg = OverlayManager::getSingleton().getOverlayElement("Core/DebugText");
-				guiDbg->setCaption(mDebugText);
-			}
-			catch(...) { /* ignore */ }
+			OverlayElement* guiDbg = OverlayManager::getSingleton().getOverlayElement("Core/DebugText");
+			guiDbg->setCaption(mDebugText);
 		}
+		catch(...) { /* ignore */ }
+	}
 
 protected:
 	Camera* mCamera;
@@ -371,7 +371,7 @@ protected:
 	OgreBites::ParamsPanel* mDetailsPanel;     // sample details panel
 	OgreBites::ParamsPanel* mMsgPanel;
 
-	
+
 	//NoxTrayListener* mTrayListener;
 
 

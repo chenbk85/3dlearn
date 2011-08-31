@@ -21,11 +21,11 @@ static char THIS_FILE[]=__FILE__;
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-static float angle=0,rot1,rot2;
 
 CMain::CMain()
 {
 	// Start Of User Initialization	
+	angle= rot1 = rot2 = 0 ;
 }
 
 CMain::~CMain()
@@ -55,18 +55,19 @@ BOOL CMain::KeyPressed(int nCode)
 //					  return TRUE on success or FALSE on error (example :texture/model not found = FALSE)
 BOOL CMain::Initialize()
 {
-	angle		= 0.0f;											// Set Starting Angle To Zero
 
-	glClearColor (0.0f, 0.0f, 0.0f, 0.5f);						// Black Background
-	glClearDepth (1.0f);										// Depth Buffer Setup
-	glDepthFunc (GL_LEQUAL);									// The Type Of Depth Testing (Less Or Equal)
-	glEnable (GL_DEPTH_TEST);									// Enable Depth Testing
-	glShadeModel (GL_SMOOTH);									// Select Smooth Shading
-	glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);			// Set Perspective Calculations To Most Accurate
+	if (!LoadGLTextures())								// Jump To Texture Loading Routine ( NEW )
+	{
+		return FALSE;									// If Texture Didn't Load Return FALSE
+	}
 
-
-	//// 设置视口的大小
-	//gluPerspective(45.0f,(GLfloat)width/(GLfloat)height,0.1f,100.0f);
+	glEnable(GL_TEXTURE_2D);							// Enable Texture Mapping ( NEW )
+	glShadeModel(GL_SMOOTH);							// Enable Smooth Shading
+	glClearColor(0.0f, 0.0f, 0.0f, 0.5f);				// Black Background
+	glClearDepth(1.0f);									// Depth Buffer Setup
+	glEnable(GL_DEPTH_TEST);							// Enables Depth Testing
+	glDepthFunc(GL_LEQUAL);								// The Type Of Depth Testing To Do
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);	// Really Nice Perspective Calculations
 
 	return TRUE;
 }
@@ -99,6 +100,12 @@ void CMain::Update(DWORD milliseconds)
 		theApp.ToggleFullScreen ();							// Toggle Fullscreen Mode
 	}
 
+	if (KeyPressed(VK_SPACE ) == TRUE)							// Is F1 Being Pressed?
+	{		
+		theApp.ToggleFullScreen ();							// Toggle Fullscreen Mode
+	}
+
+
 	angle += (float)(milliseconds) / 5.0f;					// Update angle Based On The Clock
 }
 
@@ -106,28 +113,55 @@ void CMain::Update(DWORD milliseconds)
 // Function name	: CMain::Draw
 // Description	    : this function will draw (blt) your opengl scene to the window
 // Return type		: void 
-void CMain::Draw()
-{
-	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);		// Clear Screen And Depth Buffer
-	glLoadIdentity ();	
-
-	gluLookAt(5.0f, 5.0f , 5.0f , 0.0f ,0.0f ,0.0f ,0.0f ,0.0f , 1.0f );
-	// Translate 6 Units Into The Screen
-	
+	//glRotatef (angle, 0.0f, 1.0f, 0.0f);						// Rotate On The Y-Axis By angle
 	//glTranslatef (0.0f, 0.0f, -6.0f);
 
-	DrawAxis();
-	glRotatef (angle, 0.0f, 1.0f, 0.0f);						// Rotate On The Y-Axis By angle
+void CMain::Draw()
+{
 
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear The Screen And The Depth Buffer
+	glLoadIdentity();									// Reset The View
+	glTranslatef(0.0f,0.0f,-5.0f);
 
-	glColor3f(1.0f , 1.0f,0.0f);
+	glRotatef(angle,1.0f,0.0f,0.0f);
+	glRotatef(angle,0.0f,1.0f,0.0f);
+	glRotatef(angle,0.0f,0.0f,1.0f);
 
-	glBegin(GL_LINE_LOOP);							//  绘制正方形
-	glVertex3f(-1.0f, 1.0f, 0.0f);					// 左上
-	glVertex3f( 1.0f, 1.0f, 0.0f);					// 右上
-	glVertex3f( 1.0f,-1.0f, 0.0f);					// 左下
-	glVertex3f(-1.0f,-1.0f, 0.0f);					// 右下
-	glEnd();		
+	glBindTexture(GL_TEXTURE_2D, texture[0]);
+
+	glBegin(GL_QUADS);
+	// Front Face
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f, -1.0f,  1.0f);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f( 1.0f, -1.0f,  1.0f);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f( 1.0f,  1.0f,  1.0f);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f,  1.0f,  1.0f);
+	// Back Face
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f, -1.0f);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f,  1.0f, -1.0f);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f( 1.0f,  1.0f, -1.0f);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f( 1.0f, -1.0f, -1.0f);
+	// Top Face
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f,  1.0f, -1.0f);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f,  1.0f,  1.0f);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f( 1.0f,  1.0f,  1.0f);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f( 1.0f,  1.0f, -1.0f);
+	// Bottom Face
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f, -1.0f, -1.0f);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f( 1.0f, -1.0f, -1.0f);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f( 1.0f, -1.0f,  1.0f);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f,  1.0f);
+	// Right face
+	glTexCoord2f(1.0f, 0.0f); glVertex3f( 1.0f, -1.0f, -1.0f);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f( 1.0f,  1.0f, -1.0f);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f( 1.0f,  1.0f,  1.0f);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f( 1.0f, -1.0f,  1.0f);
+	// Left Face
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f, -1.0f, -1.0f);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f,  1.0f);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f,  1.0f,  1.0f);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f,  1.0f, -1.0f);
+	glEnd();
+
 
 	glFlush ();													// Flush The GL Rendering Pipeline
 }
@@ -135,21 +169,80 @@ void CMain::Draw()
 
 void CMain::DrawAxis()
 {
-	CONST float axsisLen = 4.0f;
+
 	glBegin(GL_LINES);	
 	glColor3f(1.0f , 0.0f,0.0f);
-	glVertex3f(-0, 0.0f, 0.0f);		
-	glVertex3f( axsisLen, 0.0f, 0.0f);	
+	glVertex3f(-0, 0.0f, 0.0f);	
+	glColor3f(0.0f , 0.0f,0.0f);
+	glVertex3f( 4.0f, 0.0f, 0.0f);	
 
 	glColor3f(0.0f , 1.0f,0.0f);
-	glVertex3f( 0.0f,-0, 0.0f);		
-	glVertex3f(0.0f,axsisLen, 0.0f);		
+	glVertex3f( 0.0f,0.0, 0.0f);	
+	glColor3f(0.0f , 0.0f,0.0f);
+	glVertex3f(0.0f,2, 0.0f);		
 
 	glColor3f(0.0f , 0.0f,1.0f);
-	glVertex3f( 0.0f,-0.0f, -0 );		
-	glVertex3f(0.0f,-0.0f, axsisLen );		
+	glVertex3f( 0.0f,0.0f, 0 );	
+	glColor3f(0.0f , 0.0f,0.0f);
+	glVertex3f(0.0f,0.0f, 4.0f );		
 
 	glEnd();		
 
 
+}
+
+int CMain::LoadGLTextures()									// Load Bitmaps And Convert To Textures
+{
+	int Status=FALSE;									// Status Indicator
+
+	AUX_RGBImageRec *TextureImage[1];					// Create Storage Space For The Texture
+
+	memset(TextureImage,0,sizeof(void *)*1);           	// Set The Pointer To NULL
+
+	// Load The Bitmap, Check For Errors, If Bitmap's Not Found Quit
+	if (TextureImage[0]=LoadBMP("Data/cube.bmp"))
+	{
+		Status=TRUE;									// Set The Status To TRUE
+
+		glGenTextures(1, &texture[0]);					// Create The Texture
+
+		// Typical Texture Generation Using Data From The Bitmap
+		glBindTexture(GL_TEXTURE_2D, texture[0]);
+		glTexImage2D(GL_TEXTURE_2D, 0, 3, TextureImage[0]->sizeX, TextureImage[0]->sizeY, 0, \
+			GL_RGB, GL_UNSIGNED_BYTE, TextureImage[0]->data);
+		glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+	}
+
+	if (TextureImage[0])									// If Texture Exists
+	{
+		if (TextureImage[0]->data)							// If Texture Image Exists
+		{
+			free(TextureImage[0]->data);					// Free The Texture Image Memory
+		}
+
+		free(TextureImage[0]);								// Free The Image Structure
+	}
+
+	return Status;										// Return The Status
+}
+
+AUX_RGBImageRec *CMain::LoadBMP(char *Filename)				// Loads A Bitmap Image
+{
+	FILE *File=NULL;									// File Handle
+
+	if (!Filename)										// Make Sure A Filename Was Given
+	{
+		return NULL;									// If Not Return NULL
+	}
+
+	File=fopen(Filename,"r");							// Check To See If The File Exists
+
+	if (File)											// Does The File Exist?
+	{
+		fclose(File);									// Close The Handle
+		return auxDIBImageLoad(Filename);				// Load The Bitmap And Return A Pointer
+	}
+
+	return NULL;										// If Load Failed Return NULL
 }

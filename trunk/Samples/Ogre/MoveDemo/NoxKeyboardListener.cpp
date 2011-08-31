@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "NoxKeyboardListener.h"
 
 NoxKeyboardListener::NoxKeyboardListener(Ogre::RenderWindow* window , Ogre::Camera* camera
@@ -94,7 +95,7 @@ bool NoxKeyboardListener::keyPressed( const OIS::KeyEvent &arg )
 		}
 
 		mCamera->setPolygonMode(pm);
-		mDetailsPanel->setParamValue(10, newVal);
+		//mDetailsPanel->setParamValue(10, newVal);
 	}
 	else if(arg.key == OIS::KC_F5)   // refresh all textures
 	{
@@ -107,6 +108,10 @@ bool NoxKeyboardListener::keyPressed( const OIS::KeyEvent &arg )
 	else if (arg.key == OIS::KC_ESCAPE)
 	{
 		//mShutDown = true;
+		//mWindow->destroy();
+
+
+
 	}
 
 	mCameraMan->injectKeyDown(arg);

@@ -1,10 +1,6 @@
+#include "stdafx.h"
 #include "NoxMouseListener.h"
 
-#include <CEGUI.h>
-
-#include <OgreCamera.h>
-#include <OgreSceneNode.h>
-#include <OgreSceneManager.h>
 
 
 NoxMouseListener::NoxMouseListener(Ogre::SceneManager* sceneMgr , Ogre::Camera* camera , OgreBites::SdkCameraMan* cameraMan)
