@@ -1,6 +1,6 @@
 #summary 本页列出 PixelLight 中使用的各种开源库
 
-= PixelLight依赖库 =
+= PixelLight 依赖库 =
 
 [http://pixellight.sourceforge.net/externals/]
 
