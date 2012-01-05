@@ -17,13 +17,13 @@
 // the application.
 //
 
-uniform matrix ViewMatrix;
-uniform matrix ViewProjMatrix;
+matrix ViewMatrix;
+matrix ViewProjMatrix;
 
-uniform vector AmbientMtrl;
-uniform vector DiffuseMtrl;
+vector AmbientMtrl;
+vector DiffuseMtrl;
 
-uniform vector LightDirection;
+vector LightDirection;
 
 //
 // Global variables used to hold the ambient light intensity (ambient
