@@ -104,8 +104,8 @@ bool Setup()
 		0,
 		0,
 		"Main", // entry point function name
-		"vs_1_1",
-		D3DXSHADER_DEBUG, 
+		"vs_2_0",
+		D3DXSHADER_ENABLE_BACKWARDS_COMPATIBILITY | D3DXSHADER_DEBUG, 
 		&toonCompiledCode,
 		&toonErrorBuffer,
 		&ToonConstTable);
