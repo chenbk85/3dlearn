@@ -62,7 +62,6 @@ bool Setup()
 	D3DXMatrixTranslation(&WorldMatrices[2], -3.0f,  0.0f, 0.0f);
 	D3DXMatrixTranslation(&WorldMatrices[3],  3.0f,  0.0f, 0.0f);
 
-	//! RGBA
 	MeshColors[0] = D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f);
 	MeshColors[1] = D3DXVECTOR4(0.0f, 1.0f, 0.0f, 1.0f);
 	MeshColors[2] = D3DXVECTOR4(0.0f, 0.0f, 1.0f, 1.0f);
