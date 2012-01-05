@@ -15,12 +15,12 @@
 // Globals
 //
 
-static  matrix WorldViewMatrix;
-static  matrix WorldViewProjMatrix;
+uniform  matrix WorldViewMatrix;
+uniform  matrix WorldViewProjMatrix;
 
-static  vector Color;
+uniform  vector Color;
 
-static  vector LightDirection;
+uniform  vector LightDirection;
 
 //
 // Structures
