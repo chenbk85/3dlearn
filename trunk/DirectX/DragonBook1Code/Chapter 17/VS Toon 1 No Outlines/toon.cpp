@@ -46,7 +46,6 @@ D3DXHANDLE LightDirHandle      = 0;
 bool Setup()
 {
 	HRESULT hr = 0;
-	Device->SetRenderState(D3DRS_FILLMODE  ,  D3DFILL_WIREFRAME );
 
 	//
 	// Create geometry and compute corresponding world matrix and color
@@ -63,6 +62,7 @@ bool Setup()
 	D3DXMatrixTranslation(&WorldMatrices[2], -3.0f,  0.0f, 0.0f);
 	D3DXMatrixTranslation(&WorldMatrices[3],  3.0f,  0.0f, 0.0f);
 
+	//! RGBA
 	MeshColors[0] = D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f);
 	MeshColors[1] = D3DXVECTOR4(0.0f, 1.0f, 0.0f, 1.0f);
 	MeshColors[2] = D3DXVECTOR4(0.0f, 0.0f, 1.0f, 1.0f);
@@ -188,6 +188,20 @@ bool Display(float timeDelta)
 
 		if( ::GetAsyncKeyState(VK_DOWN) & 0x8000f )
 			height -= 5.0f * timeDelta;
+
+		if( ::GetAsyncKeyState(VK_SPACE))
+		{
+			DWORD dwRS;
+			Device->GetRenderState(D3DRS_FILLMODE  , &dwRS);
+			++dwRS;
+			if (dwRS>D3DFILL_SOLID)
+			{
+				dwRS=0;
+			}
+			Device->SetRenderState(D3DRS_FILLMODE  ,  dwRS );
+
+			Sleep(200);
+		}
 
 		D3DXVECTOR3 position( cosf(angle) * 7.0f, height, sinf(angle) * 7.0f );
 		D3DXVECTOR3 target(0.0f, 0.0f, 0.0f);
