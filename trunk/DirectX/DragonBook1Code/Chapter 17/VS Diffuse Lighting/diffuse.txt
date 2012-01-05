@@ -17,13 +17,13 @@
 // the application.
 //
 
-static matrix ViewMatrix;
-static matrix ViewProjMatrix;
+uniform matrix ViewMatrix;
+uniform matrix ViewProjMatrix;
 
-static vector AmbientMtrl;
-static vector DiffuseMtrl;
+uniform vector AmbientMtrl;
+uniform vector DiffuseMtrl;
 
-static vector LightDirection;
+uniform vector LightDirection;
 
 //
 // Global variables used to hold the ambient light intensity (ambient
