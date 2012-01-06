@@ -192,12 +192,9 @@ bool Setup()
 	std::vector<DWORD> adjacencyBuffer(Mesh->GetNumFaces() * 3);
 	Mesh->GenerateAdjacency(0.0f, &adjacencyBuffer[0]);
 
-	hr = Mesh->OptimizeInplace(		
-		D3DXMESHOPT_ATTRSORT |
-		D3DXMESHOPT_COMPACT  |
-		D3DXMESHOPT_VERTEXCACHE,
-		&adjacencyBuffer[0],
-		0, 0, 0);
+	//! 如果不执行优化,则不会有熟悉表
+	hr = Mesh->OptimizeInplace(D3DXMESHOPT_ATTRSORT |D3DXMESHOPT_COMPACT  |D3DXMESHOPT_VERTEXCACHE
+		,&adjacencyBuffer[0],0, 0, 0);
 
 	//
 	// Dump the Mesh Data to file.
@@ -290,25 +287,23 @@ bool Display(float timeDelta)
 {
 	if( Device )
 	{
-		if ( ::GetAsyncKeyState('R') & 0x8000f)
+		static float timeAccumulative=timeDelta;
+		timeAccumulative+=timeDelta;
+		if (timeAccumulative>0.1)
 		{
-			DWORD dwState=-1;
-			Device->GetRenderState(D3DRS_FILLMODE , &dwState);
-			if (dwState == D3DFILL_SOLID)
+			if( ::GetAsyncKeyState('R'))
 			{
-				Device->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME );
+				DWORD dwRS;
+				Device->GetRenderState(D3DRS_FILLMODE  , &dwRS);
+				++dwRS;
+				if (dwRS>D3DFILL_SOLID)
+				{
+					dwRS=1;
+				}
+				Device->SetRenderState(D3DRS_FILLMODE  ,  dwRS );
+				timeAccumulative = 0;
 			}
-			else if (dwState == D3DFILL_WIREFRAME)
-			{
-				Device->SetRenderState(D3DRS_FILLMODE, D3DFILL_POINT );
-			}
-			else if (dwState == D3DFILL_POINT)
-			{
-				Device->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID );
-			}
-
 		}
-
 		//
 		// Update: Rotate the cube.
 		//
@@ -321,15 +316,9 @@ bool Display(float timeDelta)
 		D3DXMatrixRotationY(&yRot, y);
 		y += timeDelta;
 
-		if( y >= 6.28f )
-			y = 0.0f;
-
-		D3DXMATRIX World = xRot * yRot;
-
-
-		//
-		// Render
-		//
+		//if( y >= 6.28f )
+		//	y = 0.0f;
+		//D3DXMATRIX World = xRot * yRot;
 
 		Device->Clear(0, 0, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 0x00000000, 1.0f, 0);
 		Device->BeginScene();
