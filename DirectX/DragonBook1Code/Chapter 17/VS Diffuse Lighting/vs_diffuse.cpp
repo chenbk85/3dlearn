@@ -114,12 +114,11 @@ bool Setup()
 
 	// Light direction:
 	D3DXVECTOR4 directionToLight(-0.57f, 0.57f, -0.57f, 0.0f);
-	DiffuseConstTable->SetVector(Device, LightDirHandle, &directionToLight);
-
 	// Materials:
 	D3DXVECTOR4 ambientMtrl(0.0f, 0.0f, 1.0f, 1.0f);
 	D3DXVECTOR4 diffuseMtrl(0.0f, 0.0f, 1.0f, 1.0f);
 
+	DiffuseConstTable->SetVector(Device, LightDirHandle, &directionToLight);
 	DiffuseConstTable->SetVector(Device,AmbientMtrlHandle,&ambientMtrl);
 	DiffuseConstTable->SetVector(Device,DiffuseMtrlHandle,&diffuseMtrl);
 	DiffuseConstTable->SetDefaults(Device);
