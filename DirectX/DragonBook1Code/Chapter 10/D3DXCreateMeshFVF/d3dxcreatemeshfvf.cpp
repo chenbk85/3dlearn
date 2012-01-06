@@ -52,9 +52,9 @@ struct Vertex
 	Vertex(float x, float y, float z, 
 		float nx, float ny, float nz, float u, float v)
 	{
-		 _x = x;   _y = y;   _z = z;
+		_x = x;   _y = y;   _z = z;
 		_nx = nx; _ny = ny; _nz = nz;
-		 _u = u;   _v = v;
+		_u = u;   _v = v;
 	}
 
 	float _x, _y, _z, _nx, _ny, _nz, _u, _v;
@@ -213,7 +213,7 @@ bool Setup()
 
 	//std::ostringstream oss(OutFile);
 	//OutputDebugString(OutFile);
-	
+
 	OutFile.close();
 
 	//
@@ -268,11 +268,11 @@ bool Setup()
 
 	D3DXMATRIX proj;
 	D3DXMatrixPerspectiveFovLH(
-			&proj,
-			D3DX_PI * 0.5f, // 90 - degree
-			(float)Width / (float)Height,
-			1.0f,
-			1000.0f);
+		&proj,
+		D3DX_PI * 0.5f, // 90 - degree
+		(float)Width / (float)Height,
+		1.0f,
+		1000.0f);
 	Device->SetTransform(D3DTS_PROJECTION, &proj);
 
 	return true;
@@ -365,7 +365,7 @@ LRESULT CALLBACK d3d::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	case WM_DESTROY:
 		::PostQuitMessage(0);
 		break;
-		
+
 	case WM_KEYDOWN:
 		if( wParam == VK_ESCAPE )
 			::DestroyWindow(hwnd);
@@ -388,7 +388,7 @@ int WINAPI WinMain(HINSTANCE hinstance,
 		::MessageBox(0, "InitD3D() - FAILED", 0, 0);
 		return 0;
 	}
-		
+
 	if(!Setup())
 	{
 		::MessageBox(0, "Setup() - FAILED", 0, 0);
