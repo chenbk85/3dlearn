@@ -42,7 +42,7 @@ namespace d3d
 			t = 0;
 		}
 	}
-		
+
 	template<class T> void Delete(T t)
 	{
 		if( t )
