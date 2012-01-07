@@ -13,6 +13,31 @@ http://code.google.com/p/3dlearn/source/browse/trunk/DirectX/DragonBook1Code/Cha
 对面片的三条边分别进行重描，重描的方式是用蜕化的四边形表示一条边。退化的四边形就是2个退化的三角形。
 
 [http://3dlearn.googlecode.com/files/edge.png]
+{{{
+EdgeVertex A0, B0, C0, D0;
+
+A0.position    = v0.position;
+A0.normal      = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+A0.faceNormal1 = currentFaceNormal;
+A0.faceNormal2 = adjFaceNormals[0];
+
+B0.position    = v1.position;
+B0.normal      = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+B0.faceNormal1 = currentFaceNormal;
+B0.faceNormal2 = adjFaceNormals[0];
+
+C0 = A0;
+C0.normal = v0.normal;
+
+D0 = B0;
+D0.normal = v1.normal;
+
+*edgeVertices = A0; ++edgeVertices;
+*edgeVertices = B0; ++edgeVertices;
+*edgeVertices = C0; ++edgeVertices;
+*edgeVertices = D0; ++edgeVertices;	
+
+}}}
 
 === 重构网格顶点 ===
 前面提到重秒边的方式是用蜕化的四边形表示一条边，这个四边形的顶点创建方法如下,4个顶点的坐标和原始顶点一致.这里可以看到 A0\C0\V0坐标一致，A0\C0只是区别在C0有完整的法线数据。
