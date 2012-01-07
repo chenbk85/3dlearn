@@ -1,6 +1,7 @@
-#summary Direct3D 卡通描边
-
+#summary Direct3D 卡通剪影
+#labels Outlines,silhouetteedge,direct3d
 = Direct3D Cartoon Outline Shader =
+_ keywords:Outlines,silhouette edge _
 _source code _
 http://code.google.com/p/3dlearn/source/browse/trunk/DirectX/DragonBook1Code/Chapter+17/VS+Toon+2+With+Outlines/silhouetteEdges.cpp
 
@@ -67,11 +68,11 @@ output.diffuse = Black;
 }}}
 
 === 轮廓顶点算法 ===
-算法思想:判断一条边是不是轮廓边，只需要用视线方向分别与轮廓的2个相邻2个面的法线点积，只要2个点积的结果正负相反，则此边是轮廓变。
+算法思想:判断一条边是不是轮廓边，只需要用视线方向分别与轮廓的2个相邻2个面的法线点积，只要2个点积的结果正负相反，则此边是轮廓边。
 
 === 顶点计算 ===
 使用轮廓顶点算法即可找出所有轮廓顶点。考察对A0、C0如何进行脱化(un-degenerate)处理。
-    脱化处理很简单，就一步操作:
+脱化处理很简单，就一步操作:
 {{{
 input.position += 0.1f * input.normal;
 }}}
