@@ -1,9 +1,4 @@
-#summary Direct3D 卡通描边
+#summary Direct3D 卡通着色
 
 = Direct3D Cartoon Outline Shader =
-_source:http://code.google.com/p/3dlearn/source/browse/trunk/DirectX/DragonBook1Code/Chapter%2017/VS%20Toon%202%20With%20Outlines/silhouetteEdges.cpp_
-
-== 准备顶点 ==
-[http://3dlearn.googlecode.com/files/edgevertex.png]
-
-== 计算轮廓 ==
+_source:http://code.google.com/p/3dlearn/source/browse/trunk/DirectX/DragonBook1Code/Chapter%2017/VS%20Toon%201%20No%20Outlines/toon.cpp_
