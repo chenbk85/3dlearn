@@ -5,11 +5,58 @@ _source:http://code.google.com/p/3dlearn/source/browse/trunk/DirectX/DragonBook1
 
 === 重描边 ===
 对面片的三条边分别进行重描，重秒的方式是用蜕化的四边形表示一条边。
-
+[http://3dlearn.googlecode.com/files/edge.png]
 
 === 重构网格顶点 ===
 [http://3dlearn.googlecode.com/files/edgevertex.png]
 
 === 重构网格 ===
+顶点格式
+{{{
+struct EdgeVertex
+{
+	D3DXVECTOR3 position;
+	D3DXVECTOR3 normal;
+	D3DXVECTOR3 faceNormal1;
+	D3DXVECTOR3 faceNormal2;
+};
+}}}
+声明此顶点格式
+{{{
+	D3DVERTEXELEMENT9 decl[] = 
+	{
+		// offsets in bytes
+		{0,  0, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION, 0},
+		{0, 12, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_NORMAL,   0},
+		{0, 24, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_NORMAL,   1},
+		{0, 36, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_NORMAL,   2},
+		D3DDECL_END()
+	};
+
+	HRESULT hr  = _device->CreateVertexDeclaration(decl, &_decl);
+
+}}}
 
 === 计算轮廓 ===
+[http://code.google.com/p/3dlearn/source/browse/trunk/DirectX/DragonBook1Code/Chapter+17/VS+Toon+2+With+Outlines/toon.txt]
+{{{
+float dot0 = dot(eyeToVertex, input.faceNormal1);
+float dot1 = dot(eyeToVertex, input.faceNormal2);
+
+// if cosines are different signs (positive/negative)
+// than we are on a silhouette edge.  Do the signs
+// differ?
+if( (dot0 * dot1) < 0.0f )
+{
+	 // yes, then this vertex is on a silhouette edge, 
+	 // offset the vertex position by some scalar in the
+	 // direction of the vertex normal.
+	 input.position += 0.1f * input.normal;
+}
+
+// transform to homogeneous clip space
+output.position = mul(input.position, ProjMatrix);
+
+// set outline color
+output.diffuse = Black;
+}}}
