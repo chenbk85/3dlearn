@@ -66,10 +66,6 @@ output.position = mul(input.position, ProjMatrix);
 output.diffuse = Black;
 }}}
 
-=== 画出轮廓 ===
-||Solid||Point||
-||[http://3dlearn.googlecode.com/files/CartoonOutlineSolid.png]||http://3dlearn.googlecode.com/files/CartoonOutlinePoint.png]||
-
 === 轮廓顶点算法 ===
 
 
@@ -79,3 +75,8 @@ output.diffuse = Black;
 
 === 非轮廓点 ===
 ???
+
+=== 画出轮廓 ===
+
+||Solid||Point||
+||[http://3dlearn.googlecode.com/files/CartoonOutlineSolid.png]||http://3dlearn.googlecode.com/files/CartoonOutlinePoint.png]||
