@@ -1,4 +1,6 @@
 #summary Direct3D 卡通描边
 
 = Direct3D Cartoon Shader =
+_source:http://code.google.com/p/3dlearn/source/browse/trunk/DirectX/DragonBook1Code/Chapter%2017/VS%20Toon%202%20With%20Outlines/silhouetteEdges.cpp_
+
 [http://3dlearn.googlecode.com/files/edgevertex.png]
