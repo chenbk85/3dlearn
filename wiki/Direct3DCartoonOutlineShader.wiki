@@ -10,7 +10,7 @@ http://code.google.com/p/3dlearn/source/browse/trunk/DirectX/DragonBook1Code/Cha
 [http://3dlearn.googlecode.com/files/edge.png]
 
 === 重构网格顶点 ===
-前面提到重秒边的方式是用蜕化的四边形表示一条边，这个四边形的顶点创建方法如下,4个顶点的坐标和原始顶点一致(A0\C0\V0坐标一致)，只是C0有完整的法线数据。
+前面提到重秒边的方式是用蜕化的四边形表示一条边，这个四边形的顶点创建方法如下,4个顶点的坐标和原始顶点一致.这里可以看到 A0\C0\V0坐标一致，A0\C0只是区别在C0有完整的法线数据。
 
 [http://3dlearn.googlecode.com/files/edgevertex.png]
 
