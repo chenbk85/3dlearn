@@ -109,6 +109,7 @@ output.diffuse = Black;
 input.position += 0.1f * input.normal;
 }}}
 A0的法线是0，坐标是不会改变的，而C0的法线是原始顶点法线，则沿法线方向向外“发胖”一丁点。如此这般，原来被退化的四边形的4个顶点A0\B0\C0\D0 现在脱化了，变成了一个窄边。对于轮廓描边来说，这种处理很生动、很精准！
+[http://3dlearn.googlecode.com/svn/trunk/DirectX/DragonBook1Code/Chapter%2017/VS%20Toon%202%20With%20Outlines/outlines.png]
 
 === 非轮廓点 ===
 没有通过轮廓顶点算法的顶点，三角形均是退化三角形，结局大家都知道，Disappeared！
