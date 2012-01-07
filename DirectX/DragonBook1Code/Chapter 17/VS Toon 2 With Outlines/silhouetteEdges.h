@@ -28,7 +28,7 @@ struct MeshVertex
 {
 	D3DXVECTOR3 position;
 	D3DXVECTOR3 normal;
-	static const DWORD FVF;
+	//static const DWORD FVF;
 };
 
 class SilhouetteEdges
