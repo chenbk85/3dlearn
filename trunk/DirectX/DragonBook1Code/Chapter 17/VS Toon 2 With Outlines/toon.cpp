@@ -206,14 +206,11 @@ bool Setup()
 	//
 	// Set shader constants:
 	//
-	
+
 	// Light direction:
 	D3DXVECTOR4 directionToLight(-0.57f, 0.57f, -0.57f, 0.0f);
 
-	ToonConstTable->SetVector(
-		Device, 
-		ToonLightDirHandle,
-		&directionToLight);
+	ToonConstTable->SetVector(Device, ToonLightDirHandle,&directionToLight);
 
 	ToonConstTable->SetDefaults(Device);
 	OutlineConstTable->SetDefaults(Device);
@@ -221,10 +218,7 @@ bool Setup()
 	//
 	// Calculate projection matrix.
 	//
-
-	D3DXMatrixPerspectiveFovLH(
-		&ProjMatrix, D3DX_PI * 0.25f, 
-		(float)Width / (float)Height, 1.0f, 1000.0f);
+	D3DXMatrixPerspectiveFovLH(&ProjMatrix, D3DX_PI * 0.25f, (float)Width / (float)Height, 1.0f, 1000.0f);
 
 	return true;
 }
@@ -250,12 +244,11 @@ bool Display(float timeDelta)
 		// 
 		// Update the scene: Allow user to rotate around scene.
 		//
-		
 		static float angle  = (3.0f * D3DX_PI) / 2.0f;
 		static float height = 5.0f;
 		static bool drawCartoon = true;
 		static bool drawOutline = true;
-	
+
 		if( ::GetAsyncKeyState(VK_LEFT) & 0x8000f )
 			angle -= 0.5f * timeDelta;
 
@@ -268,11 +261,35 @@ bool Display(float timeDelta)
 		if( ::GetAsyncKeyState(VK_DOWN) & 0x8000f )
 			height -= 5.0f * timeDelta;
 
-		if( ::GetAsyncKeyState('C') & 0x8000f )
-			drawCartoon=!drawCartoon;
+		static float timeAccumulative=timeDelta;
+		timeAccumulative+=timeDelta;
+		if (timeAccumulative>0.2)
+		{
+			if( ::GetAsyncKeyState('C') & 0x8000f )
+			{
+				drawCartoon=!drawCartoon;
+				timeAccumulative = 0;
+			}
 
-		if( ::GetAsyncKeyState('O') & 0x8000f )
-			drawOutline=!drawOutline;
+			if( ::GetAsyncKeyState('O') & 0x8000f )
+			{
+				drawOutline=!drawOutline;
+				timeAccumulative = 0;
+			}
+
+			if( ::GetAsyncKeyState(VK_SPACE))
+			{
+				DWORD dwRS;
+				Device->GetRenderState(D3DRS_FILLMODE  , &dwRS);
+				++dwRS;
+				if (dwRS>D3DFILL_SOLID)
+				{
+					dwRS=1;
+				}
+				Device->SetRenderState(D3DRS_FILLMODE  ,  dwRS );
+				timeAccumulative = 0;
+			}
+		}
 
 
 		D3DXVECTOR3 position( cosf(angle) * 7.0f, height, sinf(angle) * 7.0f );
@@ -284,7 +301,6 @@ bool Display(float timeDelta)
 		//
 		// Render
 		//
-
 		Device->Clear(0, 0, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 0xffffffff, 1.0f, 0);
 		Device->BeginScene();
 
@@ -302,20 +318,9 @@ bool Display(float timeDelta)
 				worldView = WorldMatrices[i] * view;
 				worldViewProj = WorldMatrices[i] * view * ProjMatrix;
 
-				ToonConstTable->SetMatrix(
-					Device, 
-					ToonWorldViewHandle,
-					&worldView);
-
-				ToonConstTable->SetMatrix(
-					Device, 
-					ToonWorldViewProjHandle,
-					&worldViewProj);
-
-				ToonConstTable->SetVector(
-					Device,
-					ToonColorHandle,
-					&MeshColors[i]);
+				ToonConstTable->SetMatrix(Device,ToonWorldViewHandle,&worldView);
+				ToonConstTable->SetMatrix(Device,ToonWorldViewProjHandle,&worldViewProj);
+				ToonConstTable->SetVector(Device,ToonColorHandle,&MeshColors[i]);
 
 				Meshes[i]->DrawSubset(0);
 			}
@@ -334,15 +339,9 @@ bool Display(float timeDelta)
 			{
 				worldView = WorldMatrices[i] * view;
 
-				OutlineConstTable->SetMatrix(
-					Device, 
-					OutlineWorldViewHandle,
-					&worldView);
+				OutlineConstTable->SetMatrix(Device,OutlineWorldViewHandle,&worldView);
 
-				OutlineConstTable->SetMatrix(
-					Device, 
-					OutlineProjHandle,
-					&ProjMatrix);
+				OutlineConstTable->SetMatrix(Device,OutlineProjHandle,&ProjMatrix);
 
 				MeshOutlines[i]->render();
 			}
@@ -366,7 +365,7 @@ LRESULT CALLBACK d3d::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	case WM_DESTROY:
 		::PostQuitMessage(0);
 		break;
-		
+
 	case WM_KEYDOWN:
 		if( wParam == VK_ESCAPE )
 			::DestroyWindow(hwnd);
@@ -390,7 +389,7 @@ int WINAPI WinMain(HINSTANCE hinstance,
 		::MessageBox(0, "InitD3D() - FAILED", 0, 0);
 		return 0;
 	}
-		
+
 	if(!Setup())
 	{
 		::MessageBox(0, "Setup() - FAILED", 0, 0);

@@ -13,7 +13,7 @@
 
 #include "silhouetteEdges.h"
 
-const DWORD MeshVertex::FVF = D3DFVF_XYZ | D3DFVF_NORMAL;
+//const DWORD MeshVertex::FVF = D3DFVF_XYZ | D3DFVF_NORMAL;
 
 SilhouetteEdges::SilhouetteEdges(IDirect3DDevice9* device,
 								 ID3DXMesh* mesh, 
@@ -62,9 +62,7 @@ bool SilhouetteEdges::createVertexDeclaration()
 	return true;
 }
 
-void SilhouetteEdges::getFaceNormal(ID3DXMesh* mesh,
-									DWORD faceIndex,
-									D3DXVECTOR3* faceNormal)
+void SilhouetteEdges::getFaceNormal(ID3DXMesh* mesh,DWORD faceIndex,D3DXVECTOR3* faceNormal)
 {
 	MeshVertex* vertices = 0;
 	mesh->LockVertexBuffer(0, (void**)&vertices);
@@ -200,8 +198,7 @@ void SilhouetteEdges::getFaceNormals(ID3DXMesh*   mesh,
 	mesh->UnlockIndexBuffer();
 }
 
-void SilhouetteEdges::genEdgeVertices(ID3DXMesh* mesh,
-									  ID3DXBuffer* adjBuffer)
+void SilhouetteEdges::genEdgeVertices(ID3DXMesh* mesh,ID3DXBuffer* adjBuffer)
 {
 	// 3 edges per face and 4 vertices per edge
 	_numVerts = mesh->GetNumFaces() * 3 * 4;
@@ -248,6 +245,7 @@ void SilhouetteEdges::genEdgeVertices(ID3DXMesh* mesh,
 		// such that the quad is degenerate.  The vertex shader
 		// will un-degenerate the quad if it is a silhouette edge.
 
+		// 第1条边的退化四角形
 		// compute edge0 v0->v1, note adjacent face
 		// normal is faceNormal0
 		EdgeVertex A0, B0, C0, D0;
@@ -273,6 +271,7 @@ void SilhouetteEdges::genEdgeVertices(ID3DXMesh* mesh,
 		*edgeVertices = C0; ++edgeVertices;
 		*edgeVertices = D0; ++edgeVertices;	
 
+		// 第2条边的退化四角形
 		// compute edge0 v1->v2, note adjacent face
 		// normal is faceNormal1
 		EdgeVertex A1, B1, C1, D1;
@@ -298,6 +297,7 @@ void SilhouetteEdges::genEdgeVertices(ID3DXMesh* mesh,
 		*edgeVertices = C1; ++edgeVertices;
 		*edgeVertices = D1; ++edgeVertices;	
 
+		// 第3条边的退化四角形
 		// compute edge0 v0->v2, note adjacent face
 		// normal is faceNormal2
 		EdgeVertex A2, B2, C2, D2;
@@ -377,6 +377,5 @@ void SilhouetteEdges::render()
 	_device->SetStreamSource(0, _vb, 0, sizeof(EdgeVertex));
 	_device->SetIndices(_ib);
 
-	_device->DrawIndexedPrimitive(
-		D3DPT_TRIANGLELIST, 0, 0, _numVerts, 0, _numFaces);
+	_device->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, _numVerts, 0, _numFaces);
 }
