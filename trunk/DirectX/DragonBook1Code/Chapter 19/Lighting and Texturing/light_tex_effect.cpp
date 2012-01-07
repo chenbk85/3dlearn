@@ -230,12 +230,14 @@ bool Display(float timeDelta)
 
 		for(int i = 0; i < numPasses; i++)
 		{
-			LightTexEffect->GetPass( 0 , i);
+			LightTexEffect->BeginPass(i);
 
 			for(int j = 0; j < Mtrls.size(); j++)
 			{
 				Mesh->DrawSubset(j);
 			}
+
+			LightTexEffect->EndPass();
 		}
 		LightTexEffect->End();
 

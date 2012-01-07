@@ -69,7 +69,7 @@ bool Setup()
 		"fog.txt",
 		0,                // no preprocessor definitions
 		0,                // no ID3DXInclude interface
-		D3DXSHADER_DEBUG, // compile flags
+		D3DXSHADER_DEBUG/* | D3DXSHADER_ENABLE_BACKWARDS_COMPATIBILITY*/, // compile flags
 		0,                // don't share parameters
 		&FogEffect,
 		&errorBuffer);
@@ -167,10 +167,13 @@ bool Display(float timeDelta)
 		D3DXMatrixIdentity(&I);
 		for(int i = 0; i < numPasses; i++)
 		{
-			FogEffect->GetPass(0 , i);
+			FogEffect->BeginPass(i);
 
 			if( TheTerrain )
 				TheTerrain->draw(&I, false);
+
+			//FogEffect->CommitChanges();
+			FogEffect->EndPass();
 		}
 		FogEffect->End();
 

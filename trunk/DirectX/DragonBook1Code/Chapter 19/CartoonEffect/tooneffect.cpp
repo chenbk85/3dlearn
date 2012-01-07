@@ -78,7 +78,7 @@ bool Setup()
 		"tooneffect.txt", // effect filename
 		0,                // no preprocessor definitions
 		0,                // no ID3DXInclude interface
-		D3DXSHADER_DEBUG, // compile flags
+		D3DXSHADER_DEBUG | D3DXSHADER_ENABLE_BACKWARDS_COMPATIBILITY, // compile flags
 		0,                // don't share parameters
 		&ToonEffect,      // return effect
 		&errorBuffer);    // return error messages
@@ -187,7 +187,7 @@ bool Display(float timeDelta)
 		D3DXMATRIX WorldViewProj;
 		for(int i = 0; i < numPasses; i++)
 		{
-			ToonEffect->GetPass( 0 , i);
+			ToonEffect->BeginPass(i);
 
 			for(int j = 0; j < 4; j++)
 			{
@@ -197,8 +197,12 @@ bool Display(float timeDelta)
 				ToonEffect->SetMatrix(WorldViewHandle, &WorldView);
 				ToonEffect->SetMatrix(WorldViewProjHandle, &WorldViewProj);
 				ToonEffect->SetVector(ColorHandle, &MeshColors[j]);
+
+				ToonEffect->CommitChanges();
+
 				Meshes[j]->DrawSubset(0);
 			}
+			ToonEffect->EndPass();
 		}
 		ToonEffect->End();
 
