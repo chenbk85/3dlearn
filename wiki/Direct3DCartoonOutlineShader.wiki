@@ -69,3 +69,13 @@ output.diffuse = Black;
 === 画出轮廓 ===
 ||Solid||Point||
 ||[http://3dlearn.googlecode.com/files/CartoonOutlineSolid.png]||http://3dlearn.googlecode.com/files/CartoonOutlinePoint.png]||
+
+=== 轮廓顶点算法 ===
+
+
+=== 顶点计算 ===
+使用轮廓顶点算法即可找出所有轮廓顶点。
+考察对A0、C0分别计算
+
+=== 非轮廓点 ===
+???
