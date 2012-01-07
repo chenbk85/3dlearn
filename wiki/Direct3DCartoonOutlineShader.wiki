@@ -2,8 +2,7 @@
 #labels Outlines,silhouetteedge,direct3d
 = Direct3D Cartoon Outline Shader =
 _ keywords:Outlines,silhouette edge _
-_source code _
-http://code.google.com/p/3dlearn/source/browse/trunk/DirectX/DragonBook1Code/Chapter+17/VS+Toon+2+With+Outlines/silhouetteEdges.cpp
+
 实现卡通剪影效果大概的原理是，先构造一个用退化的四边形表示原始网格所有边的退化网格。然后在着色脚本里将轮廓顶点计算出来，并进行反退化处理。由此得出的顶点可以构成原始网格的轮廓顶点。
 
 === 重描边 ===
@@ -42,6 +41,9 @@ struct EdgeVertex
 	HRESULT hr  = _device->CreateVertexDeclaration(decl, &_decl);
 
 }}}
+
+_source code _
+http://code.google.com/p/3dlearn/source/browse/trunk/DirectX/DragonBook1Code/Chapter+17/VS+Toon+2+With+Outlines/silhouetteEdges.cpp
 
 === 计算轮廓 ===
 顶点着色脚本
@@ -90,5 +92,5 @@ A0的法线是0，坐标是不会改变的，而C0的法线是原始顶点法线
 
 === 画出轮廓 ===
 
-||Solid||Point||
-||[http://3dlearn.googlecode.com/files/CartoonOutlineSolid.png]||http://3dlearn.googlecode.com/files/CartoonOutlinePoint.png]||
+||[http://3dlearn.googlecode.com/files/CartoonOutlineSolid.png]||Solid||
+||[http://3dlearn.googlecode.com/files/CartoonOutlinePoint.png]||Point||
