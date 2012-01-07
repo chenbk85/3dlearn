@@ -10,7 +10,7 @@ _ 完整源码下载:
 http://code.google.com/p/3dlearn/source/browse/trunk/DirectX/DragonBook1Code/Chapter+17/VS+Toon+2+With+Outlines/ _
 
 === 重描边 ===
-对面片的三条边分别进行重描，重描的方式是用蜕化的四边形表示一条边。退化的四边形就是2个退化的三角形。
+对面片的三条边分别进行重描，重描的方式是用退化的四边形表示一条边。退化的四边形就是2个退化的三角形。
 
 [http://3dlearn.googlecode.com/files/edge.png]
 {{{
