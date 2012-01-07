@@ -19,8 +19,8 @@ You probably have not optimized the mesh after defining the face attributes. If 
  * D3DXCreateMeshFVF
 
 ==格式==
- Source: Direct3D sdk Performance Optimizations (Direct3D 9).
- DirectX9\\windows_graphics.chm::Performance_Optimizations.htm#Using_Meshe
+Source: Direct3D sdk Performance Optimizations (Direct3D 9).
+DirectX9\\windows_graphics.chm::Performance_Optimizations.htm\#Using_Meshe
 
 || *Vertices*||
 || *Indices* ||
@@ -53,8 +53,9 @@ typedef struct _D3DXATTRIBUTERANGE
 ===Adjacency Buffer===
 {三角形0的邻接三角形, 三角形1的邻接三角形,…}
 
-===OptimizedMesh===
+=== OptimizedMesh ===
 Source:Direct3d sdk OptimizedMesh Sample
+
 
 顶点声明
 Source:
