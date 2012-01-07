@@ -47,26 +47,18 @@ typedef struct _D3DXATTRIBUTERANGE
 } D3DXATTRIBUTERANGE;
 }}}
 
-
-
 ===Attribute Buffer===
 {三角形0所在的子集, 三角形1所在的子集,… }
-
 
 ===Adjacency Buffer===
 {三角形0的邻接三角形, 三角形1的邻接三角形,…}
 
-
-===OptimizedMesh Sample===
+===OptimizedMesh===
 Source:Direct3d sdk OptimizedMesh Sample
-
-
 
 顶点声明
 Source:
 http://code.google.com/p/3dlearn/source/browse/trunk/DirectX/DragonBook1Code/Chapter%2017/VS%20Toon%202%20With%20Outlines/silhouetteEdges.cpp
-
-http://code.google.com/p
 
 按自己的格式格式创建顶点
 {{{
