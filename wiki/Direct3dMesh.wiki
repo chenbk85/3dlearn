@@ -1,0 +1,23 @@
+#summary Direct3d网格模型
+=Direct3d网格模型=
+
+== Why does rendering of an ID3DXMesh object slow down significantly after I define subsets? ==
+
+Source:Direct3d sdk DirectX Frequently Asked Questions
+You probably have not optimized the mesh after defining the face attributes. If you specify attributes and then call ID3DXMesh::DrawSubset(), this method must perform a search of the mesh for all faces containing the requested attributes. In addition, the rendered faces are likely in a random access pattern, thus not utilizing vertex cache. After defining the face attributes for your subsets, call the ID3DXMesh::Optimize or ID3DXMesh::OptimizeInPlace methods and specifying an optimization method of D3DXMESHOPT_ATTRSORT or stronger. Note that for optimum performance you should optimize with the D3DXMESHOPT_VERTEXCACHE flag, which will also reorder vertices for optimum vertex cache utilization. The adjacency array generated for a D3DX Mesh has three entries per face, but some faces may not have adjacent faces on all three edges. How is this encoded? Entries where there are no adjacent faces are encoded as 0xffffffff.
+
+== 创建mesh ==
+
+ * D3DXCreateMesh
+ * D3DXCreateMeshFVF
+
+==格式==
+
+Source: Direct3D sdk Performance Optimizations (Direct3D 9)
+mk:@MSITStore:D:\Program%20Files\Microsoft%20DirectX%20SDK%20(February%202010)\Documentation\DirectX9\windows_graphics.chm::/Performance_Optimizations.htm#Using_Meshe
+
+Vertices
+Indices
+Attribute Table
+Attribute Buffer
+Adjacency Buffer
