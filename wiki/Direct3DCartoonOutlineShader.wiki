@@ -67,9 +67,5 @@ output.diffuse = Black;
 }}}
 
 === 画出轮廓 ===
-Solid
-
-[http://3dlearn.googlecode.com/files/CartoonOutlineSolid.png]
-Point
-
-[http://3dlearn.googlecode.com/files/CartoonOutlinePoint.png]
+||Solid||Point||
+||[http://3dlearn.googlecode.com/files/CartoonOutlineSolid.png]||http://3dlearn.googlecode.com/files/CartoonOutlinePoint.png]||
