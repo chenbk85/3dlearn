@@ -4,10 +4,12 @@
 _source:http://code.google.com/p/3dlearn/source/browse/trunk/DirectX/DragonBook1Code/Chapter%2017/VS%20Toon%202%20With%20Outlines/silhouetteEdges.cpp_
 
 === 重描边 ===
-对面片的三条边分别进行重描，重秒的方式是用蜕化的四边形表示一条边。
+对面片的三条边分别进行重描，重描的方式是用蜕化的四边形表示一条边。
+
 [http://3dlearn.googlecode.com/files/edge.png]
 
 === 重构网格顶点 ===
+前面提到重秒边的方式是用蜕化的四边形表示一条边，这个四边形的顶点创建方法如下,4个顶点的坐标和原始顶点一致(A0\C0\V0坐标一致)，只是C0有完整的法线数据。
 [http://3dlearn.googlecode.com/files/edgevertex.png]
 
 === 重构网格 ===
@@ -38,6 +40,7 @@ struct EdgeVertex
 }}}
 
 === 计算轮廓 ===
+顶点着色脚本
 [http://code.google.com/p/3dlearn/source/browse/trunk/DirectX/DragonBook1Code/Chapter+17/VS+Toon+2+With+Outlines/toon.txt]
 {{{
 float dot0 = dot(eyeToVertex, input.faceNormal1);
