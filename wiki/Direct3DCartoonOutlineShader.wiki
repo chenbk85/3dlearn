@@ -1,11 +1,12 @@
 #summary Direct3D 卡通剪影
 #labels Outlines,silhouetteedge,direct3d
 = Direct3D Cartoon Outline Shader =
+<g:plusone size="medium"></g:plusone>
 _ keywords:Outlines,silhouette edge _
 
 实现卡通剪影效果大概的原理是，先构造一个用退化的四边形表示原始网格所有边的退化网格。然后在着色脚本里将轮廓顶点计算出来，并进行反退化处理。由此得出的顶点可以构成原始网格的轮廓顶点。
-<g:plusone size="medium"></g:plusone>
-_ 完整源码下载:
+
+ _ 完整源码下载:
 http://code.google.com/p/3dlearn/source/browse/trunk/DirectX/DragonBook1Code/Chapter+17/VS+Toon+2+With+Outlines/ _
 
 === 重描边 ===
