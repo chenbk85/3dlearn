@@ -1,4 +1,11 @@
 #summary Direct3d网格模型
+<g:plusone size="medium"></g:plusone>
+
+<wiki:comment>
+This text will be removed from the rendered page.
+</wiki:comment>
+
+
 =Direct3d网格模型=
 
 == Why does rendering of an ID3DXMesh object slow down significantly after I define subsets? ==
@@ -12,9 +19,8 @@ You probably have not optimized the mesh after defining the face attributes. If 
  * D3DXCreateMeshFVF
 
 ==格式==
-
-Source: Direct3D sdk Performance Optimizations (Direct3D 9)
-mk:@MSITStore:D:\Program%20Files\Microsoft%20DirectX%20SDK%20(February%202010)\Documentation\DirectX9\windows_graphics.chm::/Performance_Optimizations.htm#Using_Meshe
+[Source: Direct3D sdk Performance Optimizations (Direct3D 9)
+mk:@MSITStore:D:\Program%20Files\Microsoft%20DirectX%20SDK%20(February%202010)\Documentation\DirectX9\windows_graphics.chm::/Performance_Optimizations.htm#Using_Meshe]
 
 || *Vertices*||
 || *Indices* ||
@@ -57,7 +63,8 @@ Source:Direct3d sdk OptimizedMesh Sample
 
 
  * 顶点声明
-Source: http://code.google.com/p/3dlearn/source/browse/trunk/DirectX/DragonBook1Code/Chapter%2017/VS%20Toon%202%20With%20Outlines/silhouetteEdges.cpp
+Source:
+ http://code.google.com/p/3dlearn/source/browse/trunk/DirectX/DragonBook1Code/Chapter%2017/VS%20Toon%202%20With%20Outlines/silhouetteEdges.cpp
 
 按自己的格式格式创建顶点
 {{{
