@@ -4,9 +4,10 @@
 _ keywords:Outlines,silhouette edge _
 _source code _
 http://code.google.com/p/3dlearn/source/browse/trunk/DirectX/DragonBook1Code/Chapter+17/VS+Toon+2+With+Outlines/silhouetteEdges.cpp
+实现卡通剪影效果大概的原理是，先构造一个用退化的四边形表示原始网格所有边的退化网格。然后在着色脚本里将轮廓顶点计算出来，并进行反退化处理。由此得出的顶点可以构成原始网格的轮廓顶点。
 
 === 重描边 ===
-对面片的三条边分别进行重描，重描的方式是用蜕化的四边形表示一条边。
+对面片的三条边分别进行重描，重描的方式是用蜕化的四边形表示一条边。退化的四边形就是2个退化的三角形。
 
 [http://3dlearn.googlecode.com/files/edge.png]
 
