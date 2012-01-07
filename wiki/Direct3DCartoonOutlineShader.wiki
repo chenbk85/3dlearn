@@ -3,7 +3,13 @@
 = Direct3D Cartoon Outline Shader =
 _source:http://code.google.com/p/3dlearn/source/browse/trunk/DirectX/DragonBook1Code/Chapter%2017/VS%20Toon%202%20With%20Outlines/silhouetteEdges.cpp_
 
-== 准备顶点 ==
+=== 重描边 ===
+对面片的三条边分别进行重描，重秒的方式是用蜕化的四边形表示一条边。
+
+
+=== 重构网格顶点 ===
 [http://3dlearn.googlecode.com/files/edgevertex.png]
 
-== 计算轮廓 ==
+=== 重构网格 ===
+
+=== 计算轮廓 ===
