@@ -1,4 +1,4 @@
-#summary main 函数反汇编
+#summary main 函数反汇编:函数创建和恢复现场
 
 [http://3dlearn.googlecode.com/files/main_disassembly.png]
 
