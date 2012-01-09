@@ -1,3 +1,17 @@
 #summary main 函数反汇编
 
 [http://3dlearn.googlecode.com/files/main_disassembly.png]
+
+===提示===
+以上逐行分析了一次函数创建和恢复现场的汇编过程.
+
+
+=== References===
+ * 寄存器的常用含义还有那些？
+http://bbs.pediy.com/showthread.php?t=29791
+
+ * 各寄存器作用
+http://blog.csdn.net/shentao17792/article/details/5556315
+
+ * Where the top of the stack is on x86
+http://eli.thegreenplace.net/2011/02/04/where-the-top-of-the-stack-is-on-x86/
