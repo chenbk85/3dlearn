@@ -62,11 +62,11 @@ bool Setup()
 
 	D3DXMATRIX proj;
 	D3DXMatrixPerspectiveFovLH(
-			&proj,
-			D3DX_PI * 0.25f, // 45 - degree
-			(float)Width / (float)Height,
-			1.0f,
-			1000.0f);
+		&proj,
+		D3DX_PI * 0.25f, // 45 - degree
+		(float)Width / (float)Height,
+		1.0f,
+		1000.0f);
 	Device->SetTransform(D3DTS_PROJECTION, &proj);
 
 	return true;
@@ -94,7 +94,7 @@ bool Display(float timeDelta)
 
 		if( ::GetAsyncKeyState(VK_LEFT) & 0x8000f )
 			TheCamera.yaw(-1.0f * timeDelta);
-		
+
 		if( ::GetAsyncKeyState(VK_RIGHT) & 0x8000f )
 			TheCamera.yaw(1.0f * timeDelta);
 
@@ -110,30 +110,25 @@ bool Display(float timeDelta)
 		if( ::GetAsyncKeyState('S') & 0x8000f )
 			TheCamera.pitch(-1.0f * timeDelta);
 
-		static float __count = 0;
-		__count+=1.0f * timeDelta;
-		if ( (::GetAsyncKeyState('R') & 0x8000f) && (__count>=0.1))
+		static float timeAccumulative=timeDelta;
+		timeAccumulative+=timeDelta;
+		if (timeAccumulative>0.3)
 		{
-
-			__count=0;
-
-			DWORD dwState=-1;
-			Device->GetRenderState(D3DRS_FILLMODE , &dwState);
-			if (dwState == D3DFILL_SOLID)
+			if( ::GetAsyncKeyState('R'))
 			{
-				Device->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME );
+				DWORD dwRS;
+				Device->GetRenderState(D3DRS_FILLMODE  , &dwRS);
+				++dwRS;
+				if (dwRS>D3DFILL_SOLID)
+				{
+					dwRS=1;
+				}
+				Device->SetRenderState(D3DRS_FILLMODE  ,  dwRS );
+				timeAccumulative = 0;
 			}
-			else if (dwState == D3DFILL_WIREFRAME)
-			{
-				Device->SetRenderState(D3DRS_FILLMODE, D3DFILL_POINT );
-			}
-			else if (dwState == D3DFILL_POINT)
-			{
-				Device->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID );
-			}
-
-
 		}
+
+
 
 		D3DXVECTOR3 pos;
 		TheCamera.getPosition(&pos);
@@ -156,7 +151,7 @@ bool Display(float timeDelta)
 		D3DXMatrixIdentity(&I);
 
 		if( TheTerrain )
-			TheTerrain->draw(&I, true);
+			TheTerrain->draw(&I, false);
 
 		if( FPS )
 			FPS->render(0xffffffff, timeDelta);
@@ -177,7 +172,7 @@ LRESULT CALLBACK d3d::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	case WM_DESTROY:
 		::PostQuitMessage(0);
 		break;
-		
+
 	case WM_KEYDOWN:
 		if( wParam == VK_ESCAPE )
 			::DestroyWindow(hwnd);
@@ -200,7 +195,7 @@ int WINAPI WinMain(HINSTANCE hinstance,
 		::MessageBox(0, "InitD3D() - FAILED", 0, 0);
 		return 0;
 	}
-		
+
 	if(!Setup())
 	{
 		::MessageBox(0, "Setup() - FAILED", 0, 0);
