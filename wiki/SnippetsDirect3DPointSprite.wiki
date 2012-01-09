@@ -154,6 +154,8 @@ D3DRS_POINTSCALEENABLE
 
 <hr>
 ==ID3DXSprite使用步骤 ==
+SOURCE:[http://code.google.com/p/3dlearn/source/browse/trunk/DirectX/DragonBook2ShaderCode/Chapter%205/PageFlipDemo/PageFlipDemo.cpp]
+
 === 创建 ===
 
 {{{
