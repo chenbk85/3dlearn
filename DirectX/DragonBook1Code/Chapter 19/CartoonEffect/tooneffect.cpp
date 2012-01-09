@@ -106,7 +106,7 @@ bool Setup()
 	WorldViewProjHandle = ToonEffect->GetParameterByName(0, "WorldViewProjMatrix");
 	ColorHandle    = ToonEffect->GetParameterByName(0, "Color");
 	LightDirHandle = ToonEffect->GetParameterByName(0, "LightDirection");
-	
+
 	//
 	// Set Effect Parameters
 	//
@@ -149,10 +149,10 @@ bool Display(float timeDelta)
 		// 
 		// Update the scene: Allow user to rotate around scene.
 		//
-		
+
 		static float angle  = (3.0f * D3DX_PI) / 2.0f;
 		static float height = 5.0f;
-	
+
 		if( ::GetAsyncKeyState(VK_LEFT) & 0x8000f )
 			angle -= 0.5f * timeDelta;
 
@@ -164,6 +164,25 @@ bool Display(float timeDelta)
 
 		if( ::GetAsyncKeyState(VK_DOWN) & 0x8000f )
 			height -= 5.0f * timeDelta;
+
+		static float timeAccumulative=timeDelta;
+		timeAccumulative+=timeDelta;
+		if (timeAccumulative>0.1)
+		{
+			if( ::GetAsyncKeyState('R'))
+			{
+				DWORD dwRS;
+				Device->GetRenderState(D3DRS_FILLMODE  , &dwRS);
+				++dwRS;
+				if (dwRS>D3DFILL_SOLID)
+				{
+					dwRS=1;
+				}
+				Device->SetRenderState(D3DRS_FILLMODE  ,  dwRS );
+				timeAccumulative = 0;
+			}
+		}
+
 
 		D3DXVECTOR3 position( cosf(angle) * 10.0f, height, sinf(angle) * 10.0f );
 		D3DXVECTOR3 target(0.0f, 0.0f, 0.0f);
@@ -181,7 +200,7 @@ bool Display(float timeDelta)
 		ToonEffect->SetTechnique( ToonTechHandle );
 
 		UINT numPasses = 0;
-    	ToonEffect->Begin(&numPasses, 0);
+		ToonEffect->Begin(&numPasses, 0);
 
 		D3DXMATRIX WorldView;
 		D3DXMATRIX WorldViewProj;
@@ -222,7 +241,7 @@ LRESULT CALLBACK d3d::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	case WM_DESTROY:
 		::PostQuitMessage(0);
 		break;
-		
+
 	case WM_KEYDOWN:
 		if( wParam == VK_ESCAPE )
 			::DestroyWindow(hwnd);
@@ -246,7 +265,7 @@ int WINAPI WinMain(HINSTANCE hinstance,
 		::MessageBox(0, "InitD3D() - FAILED", 0, 0);
 		return 0;
 	}
-		
+
 	if(!Setup())
 	{
 		::MessageBox(0, "Setup() - FAILED", 0, 0);
