@@ -151,3 +151,66 @@ D3DRS_POINTSCALEENABLE
 
 
 粒子渲染的api其实非常简单，渲染逻辑也不复杂，简单来说就是在帧渲染中用批处理思想执行一个update操作和一个render操作。update交给cpu更新啊，render交给gpu处理啊，cpu和gpu你都上伤起啊。
+
+<hr>
+==ID3DXSprite使用步骤 ==
+=== 创建 ===
+
+{{{
+ID3DXSprite* mSprite;
+HR(D3DXCreateSprite(gd3dDevice, &mSprite));
+
+}}}
+
+===更新===
+{{{
+...
+HR(mSprite->OnLostDevice());
+
+...
+HR(mSprite->OnResetDevice());
+
+}}}
+=== 渲染 ===
+{{{
+HR(mSprite->Begin(D3DXSPRITE_OBJECTSPACE|D3DXSPRITE_DONOTMODIFY_RENDERSTATE));
+
+// Turn on alpha blending.
+HR(gd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true));
+
+// Don't move explosion--set identity matrix.
+D3DXMATRIX M;
+D3DXMatrixIdentity(&M);
+HR(mSprite->SetTransform(&M));
+HR(mSprite->Draw(mFrames, &R, &mSpriteCenter, 0, D3DCOLOR_XRGB(255, 255, 255)));
+HR(mSprite->End());
+
+// Turn off alpha blending.
+HR(gd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false));
+
+mGfxStats->display();
+
+HR(gd3dDevice->EndScene());
+
+// Present the backbuffer.
+HR(gd3dDevice->Present(0, 0, 0, 0));
+}}}
+
+=== 销毁 ===
+{{{
+#define ReleaseCOM(x) { if(x){ x->Release();x = 0; } }
+ReleaseCOM(mSprite);
+
+}}}
+
+
+_ 补充 _
+{{{
+#define HR(x)                                      \
+{                                                  \
+	HRESULT hr = x;                                \
+	if(FAILED(hr))                                 \
+{                                              \
+	DXTrace(__FILE__, __LINE__, hr, #x, TRUE); \
+}                                              \
+}}}
