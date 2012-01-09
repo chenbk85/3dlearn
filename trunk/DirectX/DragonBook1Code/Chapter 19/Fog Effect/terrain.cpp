@@ -231,7 +231,7 @@ bool Terrain::genTexture(D3DXVECTOR3* directionToLight)
 	// that fills the texture is hard coded to a 32 bit pixel depth.
 	if( textureDesc.Format != D3DFMT_X8R8G8B8 )
 		return false;
-		
+
 	D3DLOCKED_RECT lockedRect;
 	_tex->LockRect(0/*lock top surface*/, &lockedRect, 
 		0 /* lock entire tex*/, 0/*flags*/);         
@@ -266,7 +266,7 @@ bool Terrain::genTexture(D3DXVECTOR3* directionToLight)
 		::MessageBox(0, "lightTerrain() - FAILED", 0, 0);
 		return false;
 	}
-	
+
 	hr = D3DXFilterTexture(
 		_tex,
 		0, // default palette
@@ -293,7 +293,7 @@ bool Terrain::lightTerrain(D3DXVECTOR3* directionToLight)
 	// texture is hard coded to a 32 bit pixel depth.
 	if( textureDesc.Format != D3DFMT_X8R8G8B8 )
 		return false;
-		
+
 	D3DLOCKED_RECT lockedRect;
 	_tex->LockRect(
 		0,          // lock top surface level in mipmap chain
@@ -405,11 +405,11 @@ float Terrain::getHeight(float x, float z)
 
 	// get the heights of the quad we're in:
 	// 
-    //  A   B
-    //  *---*
-    //  | / |
-    //  *---*  
-    //  C   D
+	//  A   B
+	//  *---*
+	//  | / |
+	//  *---*  
+	//  C   D
 
 	float A = getHeightmapEntry(row,   col);
 	float B = getHeightmapEntry(row,   col+1);
@@ -466,7 +466,7 @@ bool Terrain::draw(D3DXMATRIX* world, bool drawTris)
 		_device->SetStreamSource(0, _vb, 0, sizeof(TerrainVertex));
 		_device->SetFVF(TerrainVertex::FVF);
 		_device->SetIndices(_ib);
-		
+
 		_device->SetTexture(0, _tex);
 
 		// turn off lighting since we're lighting it ourselves

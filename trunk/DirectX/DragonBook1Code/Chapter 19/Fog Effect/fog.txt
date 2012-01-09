@@ -14,6 +14,9 @@
 // Effect
 //
 
+extern bool fogSwitch;
+
+
 technique Fog
 {
     pass P0
@@ -36,6 +39,6 @@ technique Fog
         FogEnd        = 300.0f; // fog ends 300 units away from viewpoint
 
         FogColor      = 0x00CCCCCC; // gray
-        FogEnable     = true;       // enable
+        FogEnable     = fogSwitch;       // enable
     }
 }
