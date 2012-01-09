@@ -29,6 +29,8 @@ Camera   TheCamera(Camera::AIRCRAFT);
 ID3DXEffect* FogEffect   = 0;
 D3DXHANDLE FogTechHandle = 0;
 
+D3DXHANDLE FogSwitchHandle  = 0;
+
 //
 // Framework functions
 //
@@ -92,7 +94,7 @@ bool Setup()
 	//
 
 	FogTechHandle = FogEffect->GetTechniqueByName("Fog");
-	
+
 	//
 	// Set Projection.
 	//
@@ -104,6 +106,8 @@ bool Setup()
 		1.0f, 1000.0f);
 
 	Device->SetTransform(D3DTS_PROJECTION, &P);
+
+	FogSwitchHandle  = FogEffect->GetParameterByName(0, "fogSwitch");
 
 	return true;
 }
@@ -121,7 +125,7 @@ bool Display(float timeDelta)
 		// 
 		// Update the scene: Allow user to rotate around scene.
 		//
-		
+
 		if( ::GetAsyncKeyState(VK_UP) & 0x8000f )
 			TheCamera.walk(100.0f * timeDelta);
 
@@ -130,7 +134,7 @@ bool Display(float timeDelta)
 
 		if( ::GetAsyncKeyState(VK_LEFT) & 0x8000f )
 			TheCamera.yaw(-1.0f * timeDelta);
-		
+
 		if( ::GetAsyncKeyState(VK_RIGHT) & 0x8000f )
 			TheCamera.yaw(1.0f * timeDelta);
 
@@ -146,6 +150,39 @@ bool Display(float timeDelta)
 		if( ::GetAsyncKeyState('S') & 0x8000f )
 			TheCamera.pitch(-1.0f * timeDelta);
 
+		static float timeAccumulative=timeDelta;
+		timeAccumulative+=timeDelta;
+		if (timeAccumulative>0.3)
+		{
+			if( ::GetAsyncKeyState('R'))
+			{
+				DWORD dwRS;
+				Device->GetRenderState(D3DRS_FILLMODE  , &dwRS);
+				++dwRS;
+				if (dwRS>D3DFILL_SOLID)
+				{
+					dwRS=1;
+				}
+				Device->SetRenderState(D3DRS_FILLMODE  ,  dwRS );
+
+				timeAccumulative = 0;
+			}
+
+			if( ::GetAsyncKeyState('F'))
+			{
+				BOOL LightSwitch = TRUE;
+
+				FogEffect->GetBool(FogSwitchHandle , &LightSwitch );
+
+				FogEffect->SetBool(FogSwitchHandle, !LightSwitch );
+
+				timeAccumulative = 0;
+			}
+
+
+		}
+
+
 		D3DXMATRIX V;
 		TheCamera.getViewMatrix(&V);
 		Device->SetTransform(D3DTS_VIEW, &V);
@@ -160,8 +197,11 @@ bool Display(float timeDelta)
 		// set the technique to use
 		FogEffect->SetTechnique( FogTechHandle );
 
+
+
+
 		UINT numPasses = 0;
-    	FogEffect->Begin(&numPasses, 0);
+		FogEffect->Begin(&numPasses, 0);
 
 		D3DXMATRIX I;
 		D3DXMatrixIdentity(&I);
@@ -172,7 +212,7 @@ bool Display(float timeDelta)
 			if( TheTerrain )
 				TheTerrain->draw(&I, false);
 
-			//FogEffect->CommitChanges();
+			FogEffect->CommitChanges();
 			FogEffect->EndPass();
 		}
 		FogEffect->End();
@@ -193,7 +233,7 @@ LRESULT CALLBACK d3d::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	case WM_DESTROY:
 		::PostQuitMessage(0);
 		break;
-		
+
 	case WM_KEYDOWN:
 		if( wParam == VK_ESCAPE )
 			::DestroyWindow(hwnd);
@@ -217,7 +257,7 @@ int WINAPI WinMain(HINSTANCE hinstance,
 		::MessageBox(0, "InitD3D() - FAILED", 0, 0);
 		return 0;
 	}
-		
+
 	if(!Setup())
 	{
 		::MessageBox(0, "Setup() - FAILED", 0, 0);
