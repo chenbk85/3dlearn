@@ -1,18 +1,19 @@
 #summary Direct3D点精灵
 
 ===粒子的定义===
-粒子是dx9的基本图元，叫点精灵：Point Sprite。点精灵也没啥特别，只是一个概念而已，在这个概率里，你按照MS给你指定的流程去渲染buffer就认为你做了点精灵操作了,大概就是本文中红色文字那几行相关代码就表明了是一个粒子操作。JST SOSO.
+粒子是dx9的基本图元，叫点精灵：Point Sprite。点精灵也没啥特别，只是一个概念而已，在这个概率里，你按照MS给你指定的流程去渲染buffer就认为你做了点精灵操作了。
+
 
 ===创建===
+_ [D3DUSAGE_POINTS]  _
 {{{
- 
-    hr = device->CreateVertexBuffer(
-        _vbSize * sizeof(Particle),
-        D3DUSAGE_DYNAMIC | D3DUSAGE_POINTS | D3DUSAGE_WRITEONLY,
-        Particle::FVF,
-        D3DPOOL_DEFAULT, // D3DPOOL_MANAGED can't be used with D3DUSAGE_DYNAMIC 
-        &_vb,
-        0);
+hr = device->CreateVertexBuffer(_vbSize * sizeof(Particle),
+	D3DUSAGE_DYNAMIC | D3DUSAGE_POINTS | D3DUSAGE_WRITEONLY,
+	Particle::FVF,
+	D3DPOOL_DEFAULT, // D3DPOOL_MANAGED can't be used with D3DUSAGE_DYNAMIC 
+	&_vb,
+	0);
+}
 }}}
 
 
@@ -22,6 +23,7 @@ const DWORD Particle::FVF = D3DFVF_XYZ | D3DFVF_DIFFUSE;
 }}}
 
 ===打开渲染状态===
+_ D3DRS_POINTSPRITEENABLE _
 {{{
 _device->SetRenderState(D3DRS_LIGHTING, false);
 _device->SetRenderState(D3DRS_POINTSPRITEENABLE, true);
@@ -51,6 +53,7 @@ _device->SetRenderState(D3DRS_ALPHABLENDENABLE,  false);
 }}}
 
 ===执行渲染===
+_ D3DPT_POINTLIST _
 {{{
 _device->SetFVF(Particle::FVF);
 _device->SetStreamSource(0, _vb, 0, sizeof(Particle));
@@ -81,7 +84,6 @@ void Firework::update(float timeDelta)
 }
 
 }}}
-
 
 
 * 其二:粒子属性。VB里只包含了例子的坐标和颜色信息，你得给每个例子指定一个属性，这样在update的时候可以修改属性，例如例子的颜色，位置，年龄，婚否，在世否。然后在渲染的时候去访问VB，并重新给VB的元素赋值。大概像这样： *
