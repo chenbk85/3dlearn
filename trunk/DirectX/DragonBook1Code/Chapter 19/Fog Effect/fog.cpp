@@ -210,7 +210,7 @@ bool Display(float timeDelta)
 			FogEffect->BeginPass(i);
 
 			if( TheTerrain )
-				TheTerrain->draw(&I, false);
+				TheTerrain->draw(&I, true);
 
 			FogEffect->CommitChanges();
 			FogEffect->EndPass();
