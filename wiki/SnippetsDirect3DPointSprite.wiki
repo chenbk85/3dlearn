@@ -139,7 +139,9 @@ if 批处理计数!=0
 以上其实就是一个非常简单的将一个巨量元素进行分批次处理的逻辑。不知道是不是OGRE中的BATCH处理的原型。反正3D API没多聪明，你将巨量元素交给它，它是不会进行智能处理的。这样也好，容易理解多了。也方便我们智能处理。
 
 * 其四:纹理。 *
- D3DRS_POINTSPRITEENABLE
+{{{
+D3DRS_POINTSPRITEENABLE
+}}}
 这个影响默认贴图方式。当设置为true时，贴图会完全贴上Point Sprites粒子；如果设置为false,那么，当粒子的顶点结构中有UV坐标时贴图才有效，并且根据不同粒子的UV坐标贴到不同的位置。默认是FALSE。
 
 D3DRS_POINTSCALEENABLE 
