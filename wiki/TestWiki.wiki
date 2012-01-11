@@ -1,7 +1,7 @@
 #summary One-sentence summary of this page.
 #sidebar TableOfContents
 
- * [Articles HOWTO articles]
+ * [Articles Introduction ]
     * [ArticlesXSS Web security]
     * [ArticlesDom DOM manipulation]
     * [ArticlesStyle CSS and style]
