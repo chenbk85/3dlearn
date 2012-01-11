@@ -1,4 +1,5 @@
 #summary One-sentence summary of this page.
+#sidebar TableOfContents
 
  * [Articles HOWTO articles]
     * [ArticlesXSS Web security]
@@ -8,6 +9,8 @@
   * [DOMReference DOM reference]
   * [HTMLElements HTML reference]
   * [CSSReference CSS reference]
+
+
 = Introduction =
 
 Add your content here.
