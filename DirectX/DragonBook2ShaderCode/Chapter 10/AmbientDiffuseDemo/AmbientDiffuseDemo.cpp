@@ -167,8 +167,18 @@ void AmbientDiffuseDemo::updateScene(float dt)
 		mCameraHeight   -= 25.0f * dt;
 
 	// Divide by 50 to make mouse less sensitive. 
-	mCameraRotationY += gDInput->mouseDX() / 100.0f;
-	mCameraRadius    += gDInput->mouseDY() / 25.0f;
+	//mCameraRotationY += gDInput->mouseDX() / 100.0f;
+	//mCameraRadius    += gDInput->mouseDY() / 25.0f;
+	if( gDInput->keyDown(DIK_LEFT) )	 
+		mCameraRotationY += 1.0f * dt;
+	if( gDInput->keyDown(DIK_RIGHT) )	 
+		mCameraRotationY -= 1.0f * dt;
+
+	if( gDInput->keyDown(DIK_UP) )	 
+		mCameraRadius -= 3.0f * dt;
+	if( gDInput->keyDown(DIK_DOWN) )	 
+		mCameraRadius += 3.0f * dt;
+
 
 	// If we rotate over 360 degrees, just roll back to 0
 	if( fabsf(mCameraRotationY) >= 2.0f * D3DX_PI ) 
