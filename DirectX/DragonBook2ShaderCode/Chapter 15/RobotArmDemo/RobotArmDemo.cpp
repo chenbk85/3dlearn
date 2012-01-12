@@ -244,22 +244,33 @@ void RobotArmDemo::updateScene(float dt)
 	if( gDInput->keyDown(DIK_D) )	 
 		mBones[mBoneSelected].zAngle -= 1.0f * dt;
 
+
 	// If we rotate over 360 degrees, just roll back to 0
 	if( fabsf(mBones[mBoneSelected].zAngle) >= 2.0f*D3DX_PI)
 		mBones[mBoneSelected].zAngle = 0.0f;
 
 
 	// Divide by 50 to make mouse less sensitive. 
-	mCameraRotationY += gDInput->mouseDX() / 100.0f;
-	mCameraRadius    += gDInput->mouseDY() / 25.0f;
+	//mCameraRotationY += gDInput->mouseDX() / 100.0f;
+	//mCameraRadius    += gDInput->mouseDY() / 25.0f;
+	if( gDInput->keyDown(DIK_LEFT) )	 
+		mCameraRotationY += 1.0f * dt;
+	if( gDInput->keyDown(DIK_RIGHT) )	 
+		mCameraRotationY -= 1.0f * dt;
+
+	if( gDInput->keyDown(DIK_UP) )	 
+		mCameraRadius -= 1.0f * dt;
+	if( gDInput->keyDown(DIK_DOWN) )	 
+		mCameraRadius += 1.0f * dt;
+
 
 	// If we rotate over 360 degrees, just roll back to 0
 	if( fabsf(mCameraRotationY) >= 2.0f * D3DX_PI ) 
 		mCameraRotationY = 0.0f;
 
 	// Don't let radius get too small.
-	if( mCameraRadius < 2.0f )
-		mCameraRadius = 2.0f;
+	//if( mCameraRadius < 2.0f )
+	//	mCameraRadius = 2.0f;
 
 	// The camera position/orientation relative to world space can 
 	// change every frame based on input, so we need to rebuild the
