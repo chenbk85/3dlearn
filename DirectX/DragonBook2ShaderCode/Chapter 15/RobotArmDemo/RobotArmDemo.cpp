@@ -302,12 +302,15 @@ void RobotArmDemo::drawScene()
 		// Append the transformation with a slight translation to better
 		// center the skeleton at the center of the scene.
 		mWorld = mBones[i].toWorldXForm * T;
+		HR(mFX->SetMatrix(mhWorld, &mWorld));
+
 		HR(mFX->SetMatrix(mhWVP, &(mWorld*mView*mProj)));
 		D3DXMATRIX worldInvTrans;
+		//! ÄæÏò
 		D3DXMatrixInverse(&worldInvTrans, 0, &mWorld);
+		//! ×ªÖÃ
 		D3DXMatrixTranspose(&worldInvTrans, &worldInvTrans);
 		HR(mFX->SetMatrix(mhWorldInvTrans, &worldInvTrans));
-		HR(mFX->SetMatrix(mhWorld, &mWorld));
 		for(int j = 0; j < mMtrl.size(); ++j)
 		{
 			HR(mFX->SetValue(mhMtrl, &mMtrl[j], sizeof(Mtrl)));
@@ -412,6 +415,9 @@ void RobotArmDemo::buildBoneWorldTransforms()
 		for(int j = i; j >= 0; --j)
 		{
 			mBones[i].toWorldXForm *= mBones[j].toParentXForm;
+
+			int ___i=0;
 		}
 	}
 }
+
