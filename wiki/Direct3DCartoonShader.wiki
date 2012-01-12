@@ -1,4 +1,0 @@
-#summary Direct3D 卡通着色
-
-= Direct3D Cartoon Outline Shader =
-_source:http://code.google.com/p/3dlearn/source/browse/trunk/DirectX/DragonBook1Code/Chapter%2017/VS%20Toon%201%20No%20Outlines/toon.cpp_
