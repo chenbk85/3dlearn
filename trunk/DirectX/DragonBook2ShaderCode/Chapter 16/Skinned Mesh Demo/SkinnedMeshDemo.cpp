@@ -182,8 +182,40 @@ void SkinnedMeshDemo::updateScene(float dt)
 		mCameraHeight   -= 25.0f * dt;
 
 	// Divide by 50 to make mouse less sensitive. 
-	mCameraRotationY += gDInput->mouseDX() / 100.0f;
-	mCameraRadius    += gDInput->mouseDY() / 25.0f;
+	//mCameraRotationY += gDInput->mouseDX() / 100.0f;
+	//mCameraRadius    += gDInput->mouseDY() / 25.0f;
+
+	if( gDInput->keyDown(DIK_LEFT) )	 
+		mCameraRotationY += 10.0f * dt;
+	if( gDInput->keyDown(DIK_RIGHT) )	 
+		mCameraRotationY -= 10.0f * dt;
+
+	if( gDInput->keyDown(DIK_UP) )	 
+		mCameraRadius -= 5.0f * dt;
+	if( gDInput->keyDown(DIK_DOWN) )	 
+		mCameraRadius += 5.0f * dt;
+
+	static float timeAccumulative=dt;
+	timeAccumulative+=dt;
+	if (timeAccumulative>0.3)
+	{
+		if( gDInput->keyDown(DIK_R) )	 
+		{
+			DWORD dwRS;
+			gd3dDevice->GetRenderState(D3DRS_FILLMODE  , &dwRS);
+			++dwRS;
+			if (dwRS>D3DFILL_SOLID)
+			{
+				dwRS = D3DFILL_POINT;
+			}
+			gd3dDevice->SetRenderState(D3DRS_FILLMODE , dwRS );
+
+		}
+
+		timeAccumulative = 0;
+	}
+
+
 
 	// If we rotate over 360 degrees, just roll back to 0
 	if( fabsf(mCameraRotationY) >= 2.0f * D3DX_PI ) 

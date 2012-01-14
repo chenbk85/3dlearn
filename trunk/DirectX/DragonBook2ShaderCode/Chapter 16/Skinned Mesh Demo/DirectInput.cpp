@@ -61,7 +61,7 @@ void DirectInput::poll()
 	}
 }
 
-bool DirectInput::keyDown(char key)
+bool DirectInput::keyDown(unsigned char key)
 {
 	return (mKeyboardState[key] & 0x80) != 0;
 }
